@@ -1,0 +1,44 @@
+using AuroraIgloosAPI.Models.Contexts;
+using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
+
+namespace AuroraIgloosAPI
+{
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            var builder = WebApplication.CreateBuilder(args);
+
+            // Pobierz connection string z appsettings.json
+            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+            // Zarejestruj CompanyContext w DI
+            builder.Services.AddDbContext<CompanyContext>(options =>
+                options.UseSqlServer(connectionString));
+
+            // Dodaj kontrolery i inne serwisy
+            builder.Services.AddControllers().AddJsonOptions(options =>
+            {
+                //options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+            });
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen();
+
+
+            var app = builder.Build();
+
+            // Konfiguracja œrodowiska
+            if (app.Environment.IsDevelopment())
+            {
+                app.UseSwagger();
+                app.UseSwaggerUI();
+            }
+
+            app.UseHttpsRedirection();
+            app.UseAuthorization();
+            app.MapControllers();
+            app.Run();
+        }
+    }
+}

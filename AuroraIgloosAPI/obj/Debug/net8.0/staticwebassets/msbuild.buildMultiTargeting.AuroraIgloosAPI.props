@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\AuroraIgloosAPI.props" />
+</Project>

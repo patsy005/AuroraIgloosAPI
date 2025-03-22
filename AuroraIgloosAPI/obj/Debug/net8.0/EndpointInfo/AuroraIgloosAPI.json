@@ -1,0 +1,3185 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "AuroraIgloosAPI",
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/Addresses": {
+      "get": {
+        "tags": [
+          "Addresses"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Address"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Address"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Address"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Addresses"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Address"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Address"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Address"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Address"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Address"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Address"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Addresses/{id}": {
+      "get": {
+        "tags": [
+          "Addresses"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Address"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Address"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Address"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Addresses"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Address"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Address"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Address"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Addresses"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Bookings": {
+      "get": {
+        "tags": [
+          "Bookings"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Booking"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Booking"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Booking"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Bookings"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Booking"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Booking"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Booking"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Booking"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Booking"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Booking"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Bookings/{id}": {
+      "get": {
+        "tags": [
+          "Bookings"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Booking"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Booking"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Booking"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Bookings"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Booking"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Booking"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Booking"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Bookings"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Customers": {
+      "get": {
+        "tags": [
+          "Customers"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Customer"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Customer"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Customer"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Customers"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Customer"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Customer"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Customer"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Customer"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Customer"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Customer"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Customers/{id}": {
+      "get": {
+        "tags": [
+          "Customers"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Customer"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Customer"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Customer"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Customers"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Customer"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Customer"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Customer"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Customers"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Discounts": {
+      "get": {
+        "tags": [
+          "Discounts"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Discount"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Discount"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Discount"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Discounts"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Discount"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Discount"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Discount"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Discount"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Discount"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Discount"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Discounts/{id}": {
+      "get": {
+        "tags": [
+          "Discounts"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Discount"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Discount"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Discount"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Discounts"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Discount"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Discount"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Discount"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Discounts"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/EmployeeRoles": {
+      "get": {
+        "tags": [
+          "EmployeeRoles"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EmployeeRole"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EmployeeRole"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EmployeeRole"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "EmployeeRoles"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EmployeeRole"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EmployeeRole"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/EmployeeRole"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/EmployeeRole"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EmployeeRole"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EmployeeRole"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/EmployeeRoles/{id}": {
+      "get": {
+        "tags": [
+          "EmployeeRoles"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/EmployeeRole"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EmployeeRole"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EmployeeRole"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "EmployeeRoles"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EmployeeRole"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EmployeeRole"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/EmployeeRole"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "EmployeeRoles"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Employees": {
+      "get": {
+        "tags": [
+          "Employees"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Employee"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Employee"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Employee"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Employees"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Employee"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Employee"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Employee"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Employee"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Employee"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Employee"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Employees/{id}": {
+      "get": {
+        "tags": [
+          "Employees"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Employee"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Employee"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Employee"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Employees"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Employee"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Employee"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Employee"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Employees"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/ForumCategories": {
+      "get": {
+        "tags": [
+          "ForumCategories"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ForumCategory"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ForumCategory"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ForumCategory"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "ForumCategories"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ForumCategory"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ForumCategory"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ForumCategory"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForumCategory"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForumCategory"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForumCategory"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ForumCategories/{id}": {
+      "get": {
+        "tags": [
+          "ForumCategories"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForumCategory"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForumCategory"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForumCategory"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "ForumCategories"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ForumCategory"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ForumCategory"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ForumCategory"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "ForumCategories"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/ForumComments": {
+      "get": {
+        "tags": [
+          "ForumComments"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ForumComment"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ForumComment"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ForumComment"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "ForumComments"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ForumComment"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ForumComment"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ForumComment"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForumComment"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForumComment"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForumComment"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ForumComments/{id}": {
+      "get": {
+        "tags": [
+          "ForumComments"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForumComment"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForumComment"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForumComment"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "ForumComments"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ForumComment"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ForumComment"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ForumComment"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "ForumComments"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/ForumPosts": {
+      "get": {
+        "tags": [
+          "ForumPosts"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ForumPost"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ForumPost"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ForumPost"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "ForumPosts"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ForumPost"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ForumPost"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ForumPost"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForumPost"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForumPost"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForumPost"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ForumPosts/{id}": {
+      "get": {
+        "tags": [
+          "ForumPosts"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForumPost"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForumPost"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForumPost"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "ForumPosts"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ForumPost"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ForumPost"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ForumPost"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "ForumPosts"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Igloos": {
+      "get": {
+        "tags": [
+          "Igloos"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Igloo"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Igloo"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Igloo"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Igloos"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Igloo"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Igloo"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Igloo"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Igloo"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Igloo"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Igloo"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Igloos/{id}": {
+      "get": {
+        "tags": [
+          "Igloos"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Igloo"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Igloo"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Igloo"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Igloos"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Igloo"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Igloo"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Igloo"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Igloos"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/PaymentMethods": {
+      "get": {
+        "tags": [
+          "PaymentMethods"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PaymentMethod"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PaymentMethod"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PaymentMethod"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "PaymentMethods"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PaymentMethod"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PaymentMethod"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PaymentMethod"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaymentMethod"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaymentMethod"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaymentMethod"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/PaymentMethods/{id}": {
+      "get": {
+        "tags": [
+          "PaymentMethods"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaymentMethod"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaymentMethod"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaymentMethod"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "PaymentMethods"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PaymentMethod"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PaymentMethod"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PaymentMethod"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "PaymentMethods"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Users": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/User"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/User"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/User"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Users/{id}": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Users"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Users"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/WeatherForecast": {
+      "get": {
+        "tags": [
+          "WeatherForecast"
+        ],
+        "operationId": "GetWeatherForecast",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WeatherForecast"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WeatherForecast"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WeatherForecast"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Address": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "street": {
+            "maxLength": 255,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "streetNumber": {
+            "maxLength": 10,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "houseNumber": {
+            "maxLength": 10,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "city": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "country": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "postalCode": {
+            "maxLength": 20,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "user": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/User"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Booking": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "idCustomer": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "idIgloo": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "checkIn": {
+            "type": "string",
+            "format": "date",
+            "nullable": true
+          },
+          "checkOut": {
+            "type": "string",
+            "format": "date",
+            "nullable": true
+          },
+          "paymentMethodId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "amount": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "idStatus": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "bookingDate": {
+            "type": "string",
+            "format": "date",
+            "nullable": true
+          },
+          "lastModifiedDate": {
+            "type": "string",
+            "format": "date",
+            "nullable": true
+          },
+          "notes": {
+            "type": "string",
+            "nullable": true
+          },
+          "cancellationReason": {
+            "maxLength": 50,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "createdById": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "earlyCheckInRequest": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "lateCheckOutRequest": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "currencyId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "bookingChannelId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "bookingChannel": {
+            "$ref": "#/components/schemas/BookingChannel"
+          },
+          "employee": {
+            "$ref": "#/components/schemas/Employee"
+          },
+          "currency": {
+            "$ref": "#/components/schemas/Currency"
+          },
+          "customer": {
+            "$ref": "#/components/schemas/Customer"
+          },
+          "igloo": {
+            "$ref": "#/components/schemas/Igloo"
+          },
+          "status": {
+            "$ref": "#/components/schemas/BookingStatus"
+          },
+          "paymentMethod": {
+            "$ref": "#/components/schemas/PaymentMethod"
+          }
+        },
+        "additionalProperties": false
+      },
+      "BookingChannel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nazwa": {
+            "maxLength": 10,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "booking": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Booking"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "BookingStatus": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "statusName": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "booking": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Booking"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Currency": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "currency1": {
+            "maxLength": 10,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "booking": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Booking"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Customer": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nationality": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "idUser": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "customerNotification": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CustomerNotification"
+            },
+            "nullable": true
+          },
+          "user": {
+            "$ref": "#/components/schemas/User"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CustomerNotification": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "idCustomer": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "notificationTypeId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "notificationPriorityId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "idCustomerNavigation": {
+            "$ref": "#/components/schemas/Customer"
+          },
+          "notificationPriority": {
+            "$ref": "#/components/schemas/NotificationPriority"
+          },
+          "notificationType": {
+            "$ref": "#/components/schemas/NotificationType"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Discount": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "idIgloo": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "name": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "discount1": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "igloo": {
+            "$ref": "#/components/schemas/Igloo"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Employee": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "idUser": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "roleId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "booking": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Booking"
+            },
+            "nullable": true
+          },
+          "forumComment": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ForumComment"
+            },
+            "nullable": true
+          },
+          "forumPost": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ForumPost"
+            },
+            "nullable": true
+          },
+          "user": {
+            "$ref": "#/components/schemas/User"
+          },
+          "role": {
+            "$ref": "#/components/schemas/EmployeeRole"
+          },
+          "task": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Task"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "EmployeeRole": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "roleName": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "employee": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Employee"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ForumCategory": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "forumPost": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ForumPost"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ForumComment": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "idPost": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "idEmployee": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "comment": {
+            "type": "string",
+            "nullable": true
+          },
+          "commentDate": {
+            "type": "string",
+            "format": "date",
+            "nullable": true
+          },
+          "employee": {
+            "$ref": "#/components/schemas/Employee"
+          },
+          "forumPost": {
+            "$ref": "#/components/schemas/ForumPost"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ForumPost": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "idEmployee": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "title": {
+            "maxLength": 255,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "postContent": {
+            "type": "string",
+            "nullable": true
+          },
+          "postDate": {
+            "type": "string",
+            "format": "date",
+            "nullable": true
+          },
+          "categoryId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "statusId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "tags": {
+            "type": "string",
+            "nullable": true
+          },
+          "category": {
+            "$ref": "#/components/schemas/ForumCategory"
+          },
+          "forumComment": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ForumComment"
+            },
+            "nullable": true
+          },
+          "employee": {
+            "$ref": "#/components/schemas/Employee"
+          },
+          "status": {
+            "$ref": "#/components/schemas/ForumStatus"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ForumStatus": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "forumPost": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ForumPost"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Gender": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "maxLength": 50,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "user": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/User"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Igloo": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "capacity": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "pricePerNight": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "discount": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Discount"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Language": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "maxLength": 50,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "user": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/User"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "NotificationPriority": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "maxLength": 10,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "customerNotification": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CustomerNotification"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "NotificationType": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "type": {
+            "maxLength": 50,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "customerNotification": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CustomerNotification"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "PaymentMethod": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "booking": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Booking"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Task": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "idEmployee": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "title": {
+            "maxLength": 255,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "date": {
+            "type": "string",
+            "format": "date",
+            "nullable": true
+          },
+          "idStatus": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "employee": {
+            "$ref": "#/components/schemas/Employee"
+          },
+          "taskStatus": {
+            "$ref": "#/components/schemas/TaskStatus"
+          }
+        },
+        "additionalProperties": false
+      },
+      "TaskStatus": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "statusName": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "task": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Task"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Timezone": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "maxLength": 50,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "offset": {
+            "maxLength": 10,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "user": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/User"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "surname": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "phoneNumber": {
+            "maxLength": 20,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "idAddress": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "genderId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "securityQuestion": {
+            "type": "string",
+            "nullable": true
+          },
+          "securityAnswer": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "languageId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "timezoneId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "customer": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Customer"
+            },
+            "nullable": true
+          },
+          "employee": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Employee"
+            },
+            "nullable": true
+          },
+          "gender": {
+            "$ref": "#/components/schemas/Gender"
+          },
+          "address": {
+            "$ref": "#/components/schemas/Address"
+          },
+          "language": {
+            "$ref": "#/components/schemas/Language"
+          },
+          "timezone": {
+            "$ref": "#/components/schemas/Timezone"
+          }
+        },
+        "additionalProperties": false
+      },
+      "WeatherForecast": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date"
+          },
+          "temperatureC": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "temperatureF": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "summary": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  }
+}

@@ -1,0 +1,1331 @@
+[
+  {
+    "ContainingType": "AuroraIgloosAPI.Controllers.AddressesController",
+    "Method": "GetAddress",
+    "RelativePath": "api/Addresses",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[AuroraIgloosAPI.Models.Address, AuroraIgloosAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "AuroraIgloosAPI.Controllers.AddressesController",
+    "Method": "PostAddress",
+    "RelativePath": "api/Addresses",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "address",
+        "Type": "AuroraIgloosAPI.Models.Address",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "AuroraIgloosAPI.Models.Address",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "AuroraIgloosAPI.Controllers.AddressesController",
+    "Method": "GetAddress",
+    "RelativePath": "api/Addresses/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "AuroraIgloosAPI.Models.Address",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "AuroraIgloosAPI.Controllers.AddressesController",
+    "Method": "PutAddress",
+    "RelativePath": "api/Addresses/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "address",
+        "Type": "AuroraIgloosAPI.Models.Address",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AuroraIgloosAPI.Controllers.AddressesController",
+    "Method": "DeleteAddress",
+    "RelativePath": "api/Addresses/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AuroraIgloosAPI.Controllers.BookingsController",
+    "Method": "GetBooking",
+    "RelativePath": "api/Bookings",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[AuroraIgloosAPI.Models.Booking, AuroraIgloosAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "AuroraIgloosAPI.Controllers.BookingsController",
+    "Method": "PostBooking",
+    "RelativePath": "api/Bookings",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "booking",
+        "Type": "AuroraIgloosAPI.Models.Booking",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "AuroraIgloosAPI.Models.Booking",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "AuroraIgloosAPI.Controllers.BookingsController",
+    "Method": "GetBooking",
+    "RelativePath": "api/Bookings/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "AuroraIgloosAPI.Models.Booking",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "AuroraIgloosAPI.Controllers.BookingsController",
+    "Method": "PutBooking",
+    "RelativePath": "api/Bookings/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "booking",
+        "Type": "AuroraIgloosAPI.Models.Booking",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AuroraIgloosAPI.Controllers.BookingsController",
+    "Method": "DeleteBooking",
+    "RelativePath": "api/Bookings/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AuroraIgloosAPI.Controllers.CustomersController",
+    "Method": "GetCustomer",
+    "RelativePath": "api/Customers",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[AuroraIgloosAPI.Models.Customer, AuroraIgloosAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "AuroraIgloosAPI.Controllers.CustomersController",
+    "Method": "PostCustomer",
+    "RelativePath": "api/Customers",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "customer",
+        "Type": "AuroraIgloosAPI.Models.Customer",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "AuroraIgloosAPI.Models.Customer",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "AuroraIgloosAPI.Controllers.CustomersController",
+    "Method": "GetCustomer",
+    "RelativePath": "api/Customers/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "AuroraIgloosAPI.Models.Customer",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "AuroraIgloosAPI.Controllers.CustomersController",
+    "Method": "PutCustomer",
+    "RelativePath": "api/Customers/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "customer",
+        "Type": "AuroraIgloosAPI.Models.Customer",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AuroraIgloosAPI.Controllers.CustomersController",
+    "Method": "DeleteCustomer",
+    "RelativePath": "api/Customers/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AuroraIgloosAPI.Controllers.DiscountsController",
+    "Method": "GetDiscount",
+    "RelativePath": "api/Discounts",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[AuroraIgloosAPI.Models.Discount, AuroraIgloosAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "AuroraIgloosAPI.Controllers.DiscountsController",
+    "Method": "PostDiscount",
+    "RelativePath": "api/Discounts",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "discount",
+        "Type": "AuroraIgloosAPI.Models.Discount",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "AuroraIgloosAPI.Models.Discount",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "AuroraIgloosAPI.Controllers.DiscountsController",
+    "Method": "GetDiscount",
+    "RelativePath": "api/Discounts/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "AuroraIgloosAPI.Models.Discount",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "AuroraIgloosAPI.Controllers.DiscountsController",
+    "Method": "PutDiscount",
+    "RelativePath": "api/Discounts/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "discount",
+        "Type": "AuroraIgloosAPI.Models.Discount",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AuroraIgloosAPI.Controllers.DiscountsController",
+    "Method": "DeleteDiscount",
+    "RelativePath": "api/Discounts/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AuroraIgloosAPI.Controllers.EmployeeRolesController",
+    "Method": "GetEmployeeRole",
+    "RelativePath": "api/EmployeeRoles",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[AuroraIgloosAPI.Models.EmployeeRole, AuroraIgloosAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "AuroraIgloosAPI.Controllers.EmployeeRolesController",
+    "Method": "PostEmployeeRole",
+    "RelativePath": "api/EmployeeRoles",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "employeeRole",
+        "Type": "AuroraIgloosAPI.Models.EmployeeRole",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "AuroraIgloosAPI.Models.EmployeeRole",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "AuroraIgloosAPI.Controllers.EmployeeRolesController",
+    "Method": "GetEmployeeRole",
+    "RelativePath": "api/EmployeeRoles/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "AuroraIgloosAPI.Models.EmployeeRole",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "AuroraIgloosAPI.Controllers.EmployeeRolesController",
+    "Method": "PutEmployeeRole",
+    "RelativePath": "api/EmployeeRoles/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "employeeRole",
+        "Type": "AuroraIgloosAPI.Models.EmployeeRole",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AuroraIgloosAPI.Controllers.EmployeeRolesController",
+    "Method": "DeleteEmployeeRole",
+    "RelativePath": "api/EmployeeRoles/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AuroraIgloosAPI.Controllers.EmployeesController",
+    "Method": "GetEmployee",
+    "RelativePath": "api/Employees",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[AuroraIgloosAPI.Models.Employee, AuroraIgloosAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "AuroraIgloosAPI.Controllers.EmployeesController",
+    "Method": "PostEmployee",
+    "RelativePath": "api/Employees",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "employee",
+        "Type": "AuroraIgloosAPI.Models.Employee",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "AuroraIgloosAPI.Models.Employee",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "AuroraIgloosAPI.Controllers.EmployeesController",
+    "Method": "GetEmployee",
+    "RelativePath": "api/Employees/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "AuroraIgloosAPI.Models.Employee",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "AuroraIgloosAPI.Controllers.EmployeesController",
+    "Method": "PutEmployee",
+    "RelativePath": "api/Employees/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "employee",
+        "Type": "AuroraIgloosAPI.Models.Employee",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AuroraIgloosAPI.Controllers.EmployeesController",
+    "Method": "DeleteEmployee",
+    "RelativePath": "api/Employees/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AuroraIgloosAPI.Controllers.ForumCategoriesController",
+    "Method": "GetForumCategory",
+    "RelativePath": "api/ForumCategories",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[AuroraIgloosAPI.Models.ForumCategory, AuroraIgloosAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "AuroraIgloosAPI.Controllers.ForumCategoriesController",
+    "Method": "PostForumCategory",
+    "RelativePath": "api/ForumCategories",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "forumCategory",
+        "Type": "AuroraIgloosAPI.Models.ForumCategory",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "AuroraIgloosAPI.Models.ForumCategory",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "AuroraIgloosAPI.Controllers.ForumCategoriesController",
+    "Method": "GetForumCategory",
+    "RelativePath": "api/ForumCategories/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "AuroraIgloosAPI.Models.ForumCategory",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "AuroraIgloosAPI.Controllers.ForumCategoriesController",
+    "Method": "PutForumCategory",
+    "RelativePath": "api/ForumCategories/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "forumCategory",
+        "Type": "AuroraIgloosAPI.Models.ForumCategory",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AuroraIgloosAPI.Controllers.ForumCategoriesController",
+    "Method": "DeleteForumCategory",
+    "RelativePath": "api/ForumCategories/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AuroraIgloosAPI.Controllers.ForumCommentsController",
+    "Method": "GetForumComment",
+    "RelativePath": "api/ForumComments",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[AuroraIgloosAPI.Models.ForumComment, AuroraIgloosAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "AuroraIgloosAPI.Controllers.ForumCommentsController",
+    "Method": "PostForumComment",
+    "RelativePath": "api/ForumComments",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "forumComment",
+        "Type": "AuroraIgloosAPI.Models.ForumComment",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "AuroraIgloosAPI.Models.ForumComment",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "AuroraIgloosAPI.Controllers.ForumCommentsController",
+    "Method": "GetForumComment",
+    "RelativePath": "api/ForumComments/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "AuroraIgloosAPI.Models.ForumComment",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "AuroraIgloosAPI.Controllers.ForumCommentsController",
+    "Method": "PutForumComment",
+    "RelativePath": "api/ForumComments/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "forumComment",
+        "Type": "AuroraIgloosAPI.Models.ForumComment",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AuroraIgloosAPI.Controllers.ForumCommentsController",
+    "Method": "DeleteForumComment",
+    "RelativePath": "api/ForumComments/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AuroraIgloosAPI.Controllers.ForumPostsController",
+    "Method": "GetForumPost",
+    "RelativePath": "api/ForumPosts",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[AuroraIgloosAPI.Models.ForumPost, AuroraIgloosAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "AuroraIgloosAPI.Controllers.ForumPostsController",
+    "Method": "PostForumPost",
+    "RelativePath": "api/ForumPosts",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "forumPost",
+        "Type": "AuroraIgloosAPI.Models.ForumPost",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "AuroraIgloosAPI.Models.ForumPost",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "AuroraIgloosAPI.Controllers.ForumPostsController",
+    "Method": "GetForumPost",
+    "RelativePath": "api/ForumPosts/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "AuroraIgloosAPI.Models.ForumPost",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "AuroraIgloosAPI.Controllers.ForumPostsController",
+    "Method": "PutForumPost",
+    "RelativePath": "api/ForumPosts/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "forumPost",
+        "Type": "AuroraIgloosAPI.Models.ForumPost",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AuroraIgloosAPI.Controllers.ForumPostsController",
+    "Method": "DeleteForumPost",
+    "RelativePath": "api/ForumPosts/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AuroraIgloosAPI.Controllers.IgloosController",
+    "Method": "GetIgloo",
+    "RelativePath": "api/Igloos",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[AuroraIgloosAPI.Models.Igloo, AuroraIgloosAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "AuroraIgloosAPI.Controllers.IgloosController",
+    "Method": "PostIgloo",
+    "RelativePath": "api/Igloos",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "igloo",
+        "Type": "AuroraIgloosAPI.Models.Igloo",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "AuroraIgloosAPI.Models.Igloo",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "AuroraIgloosAPI.Controllers.IgloosController",
+    "Method": "GetIgloo",
+    "RelativePath": "api/Igloos/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "AuroraIgloosAPI.Models.Igloo",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "AuroraIgloosAPI.Controllers.IgloosController",
+    "Method": "PutIgloo",
+    "RelativePath": "api/Igloos/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "igloo",
+        "Type": "AuroraIgloosAPI.Models.Igloo",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AuroraIgloosAPI.Controllers.IgloosController",
+    "Method": "DeleteIgloo",
+    "RelativePath": "api/Igloos/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AuroraIgloosAPI.Controllers.PaymentMethodsController",
+    "Method": "GetPaymentMethod",
+    "RelativePath": "api/PaymentMethods",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[AuroraIgloosAPI.Models.PaymentMethod, AuroraIgloosAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "AuroraIgloosAPI.Controllers.PaymentMethodsController",
+    "Method": "PostPaymentMethod",
+    "RelativePath": "api/PaymentMethods",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "paymentMethod",
+        "Type": "AuroraIgloosAPI.Models.PaymentMethod",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "AuroraIgloosAPI.Models.PaymentMethod",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "AuroraIgloosAPI.Controllers.PaymentMethodsController",
+    "Method": "GetPaymentMethod",
+    "RelativePath": "api/PaymentMethods/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "AuroraIgloosAPI.Models.PaymentMethod",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "AuroraIgloosAPI.Controllers.PaymentMethodsController",
+    "Method": "PutPaymentMethod",
+    "RelativePath": "api/PaymentMethods/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "paymentMethod",
+        "Type": "AuroraIgloosAPI.Models.PaymentMethod",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AuroraIgloosAPI.Controllers.PaymentMethodsController",
+    "Method": "DeletePaymentMethod",
+    "RelativePath": "api/PaymentMethods/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AuroraIgloosAPI.Controllers.UsersController",
+    "Method": "GetUser",
+    "RelativePath": "api/Users",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[AuroraIgloosAPI.Models.User, AuroraIgloosAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "AuroraIgloosAPI.Controllers.UsersController",
+    "Method": "PostUser",
+    "RelativePath": "api/Users",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "user",
+        "Type": "AuroraIgloosAPI.Models.User",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "AuroraIgloosAPI.Models.User",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "AuroraIgloosAPI.Controllers.UsersController",
+    "Method": "GetUser",
+    "RelativePath": "api/Users/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "AuroraIgloosAPI.Models.User",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "AuroraIgloosAPI.Controllers.UsersController",
+    "Method": "PutUser",
+    "RelativePath": "api/Users/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "user",
+        "Type": "AuroraIgloosAPI.Models.User",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AuroraIgloosAPI.Controllers.UsersController",
+    "Method": "DeleteUser",
+    "RelativePath": "api/Users/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AuroraIgloosAPI.Controllers.WeatherForecastController",
+    "Method": "Get",
+    "RelativePath": "WeatherForecast",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[AuroraIgloosAPI.WeatherForecast, AuroraIgloosAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ],
+    "EndpointName": "GetWeatherForecast"
+  }
+]

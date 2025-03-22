@@ -1,0 +1,6 @@
+@AuroraIgloosAPI_HostAddress = http://localhost:5212
+
+GET {{AuroraIgloosAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
