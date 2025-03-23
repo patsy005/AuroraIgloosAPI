@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AuroraIgloosAPI.Models;
 using AuroraIgloosAPI.Models.Contexts;
+using AuroraIgloosAPI.DTOs;
 
 namespace AuroraIgloosAPI.Controllers
 {
@@ -23,12 +24,31 @@ namespace AuroraIgloosAPI.Controllers
 
         // GET: api/Employees
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Employee>>> GetEmployee()
+        public async Task<ActionResult<IEnumerable<EmployeeDTO>>> GetEmployee()
         {
-            return await _context.Employee
-                .Include(e => e.Role)
+            var employees = await _context.Employee
                 .Include(e => e.User)
+                .Include(e => e.Role)
+                .Select(e => new EmployeeDTO
+                {
+                    Id = e.Id,
+                    RoleId = e.RoleId,
+                    Name = e.User.Name ?? "",
+                    Surname = e.User.Surname ?? "",
+                    Email = e.User.Email ?? "",
+                    PhoneNumber = e.User.PhoneNumber ?? "",
+                    Street = e.User.Address.Street ?? "",
+                    StreetNumber = e.User.Address.StreetNumber ?? "",
+                    HouseNumber = e.User.Address.HouseNumber ?? "",
+                    City = e.User.Address.City ?? "",
+                    Country = e.User.Address.Country ?? "",
+                    PostalCode = e.User.Address.PostalCode ?? "",
+                    Role = e.Role.RoleName ?? "",
+                    PhotoUrl = e.PhotoUrl ?? ""
+                })
                 .ToListAsync();
+
+            return Ok(employees);
         }
 
         // GET: api/Employees/5

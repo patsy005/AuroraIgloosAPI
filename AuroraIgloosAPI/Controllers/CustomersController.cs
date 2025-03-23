@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AuroraIgloosAPI.Models;
 using AuroraIgloosAPI.Models.Contexts;
+using AuroraIgloosAPI.DTOs;
 
 namespace AuroraIgloosAPI.Controllers
 {
@@ -22,13 +23,41 @@ namespace AuroraIgloosAPI.Controllers
         }
 
         // GET: api/Customers
+        //[HttpGet]
+        //public async Task<ActionResult<IEnumerable<Customer>>> GetCustomer()
+        //{
+        //    //return await _context.Customer.ToListAsync();
+        //    return await _context.Customer
+        //        .Include(c => c.User)
+        //        .ToListAsync();
+        //}
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Customer>>> GetCustomer()
+        public async Task<ActionResult<IEnumerable<CustomerDTO>>> GetCustomer()
         {
             //return await _context.Customer.ToListAsync();
-            return await _context.Customer
+
+
+
+            var customers =  await _context.Customer
                 .Include(c => c.User)
+                .Select(c => new CustomerDTO
+                {
+                    Id = c.Id,
+                    Name = c.User.Name ?? "",
+                    Surname = c.User.Surname ?? "",
+                    Email = c.User.Email ?? "",
+                    Phone = c.User.PhoneNumber ?? "",
+                    Street = c.User.Address.Street ?? "",
+                    StreetNumber = c.User.Address.StreetNumber ?? "",
+                    HouseNumber = c.User.Address.HouseNumber ?? "",
+                    City = c.User.Address.City ?? "",
+                    Country = c.User.Address.Country ?? "",
+                    PostalCode = c.User.Address.PostalCode ?? "",
+                })
                 .ToListAsync();
+
+            return Ok(customers);
+
         }
 
         // GET: api/Customers/5

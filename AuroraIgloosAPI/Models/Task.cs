@@ -8,31 +8,36 @@ namespace AuroraIgloosAPI.Models;
 
 public partial class Task
 {
-    [Key]
-    [Column("id")]
+    //[Key]
+    //[Column("id")]
     public int Id { get; set; }
 
-    [Column("idEmployee")]
+    //[Column("idEmployee")]
     public int? IdEmployee { get; set; }
 
-    [Column("title")]
-    [StringLength(255)]
+    //[Column("title")]
+    //[StringLength(255)]
     public string? Title { get; set; }
 
-    [Column("description")]
+    //[Column("description")]
     public string? Description { get; set; }
 
-    [Column("date")]
+    //[Column("date")]
     public DateOnly? Date { get; set; }
 
-    [Column("idStatus")]
+    //[Column("idStatus")]
     public int? IdStatus { get; set; }
 
-    [ForeignKey("IdEmployee")]
-    [InverseProperty("Task")]
-    public virtual Employee? Employee { get; set; }
+    //[ForeignKey("IdEmployee")]
+    //[InverseProperty("Task")]
+    //public virtual Employee? Employee { get; set; }
 
-    [ForeignKey("IdStatus")]
-    [InverseProperty("Task")]
-    public virtual TaskStatus? TaskStatus { get; set; }
+    //[ForeignKey("IdStatus")]
+    //[InverseProperty("Task")]
+    //public virtual TaskStatus? TaskStatus { get; set; }
+
+    public required Employee Employee { get; set; }
+    public required TaskStatus TaskStatus { get; set; }
+
+
 }

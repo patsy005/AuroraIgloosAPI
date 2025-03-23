@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AuroraIgloosAPI.Models;
 using AuroraIgloosAPI.Models.Contexts;
+using AutoMapper;
+using AuroraIgloosAPI.DTOs;
 
 namespace AuroraIgloosAPI.Controllers
 {
@@ -15,25 +17,63 @@ namespace AuroraIgloosAPI.Controllers
     public class BookingsController : ControllerBase
     {
         private readonly CompanyContext _context;
+        //private readonly IMapper _mapper;
 
         public BookingsController(CompanyContext context)
         {
             _context = context;
+            //_mapper = mapper;
         }
 
         // GET: api/Bookings
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Booking>>> GetBooking()
+        public async Task<ActionResult<IEnumerable<BookingDTO>>> GetBooking()
         {
             //return await _context.Booking.ToListAsync();
-            return await _context.Booking
+            //return await _context.Booking
+            //    .Include(b => b.Customer)
+            //        .ThenInclude(c => c.User)
+            //    .Include(b => b.Employee)
+            //        .ThenInclude(e => e.User)
+            //    .Include(b => b.Igloo)
+            //    .Include(b => b.PaymentMethod)
+            //    .ToListAsync();
+
+            var booking = await _context.Booking
                 .Include(b => b.Customer)
                     .ThenInclude(c => c.User)
-                .Include(b => b.Employee)
-                    .ThenInclude(e => e.User)
+                    .ThenInclude(u => u.Address)
                 .Include(b => b.Igloo)
                 .Include(b => b.PaymentMethod)
+                .Include(b => b.Employee)
+                    .ThenInclude(e => e.User)
+                    .ThenInclude(u => u.Address)
+                .Select(b => new BookingDTO
+                {
+                    Id = b.Id,
+                    IdIgloo = b.IdIgloo,
+                    IdCustomer = b.IdCustomer,
+                    CreatedById = b.CreatedById,
+                    BookingDate = b.BookingDate,
+                    CheckIn = b.CheckIn,
+                    CheckOut = b.CheckOut,
+                    Amount = b.Amount,
+                    CustomerName = b.Customer.User.Name,
+                    CustomerSurname = b.Customer.User.Surname,
+                    CustomerEmail = b.Customer.User.Email,
+                    CustomerPhone = b.Customer.User.PhoneNumber,
+                    EmployeeName = b.Employee.User.Name,
+                    EmployeeSurname = b.Employee.User.Surname,
+                    IglooName = b.Igloo.Name,
+                    PaymentMethodName = b.PaymentMethod.Name,
+
+                })
                 .ToListAsync();
+
+            return Ok(booking);
+
+
+
 
         }
 

@@ -203,7 +203,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Booking"
+                    "$ref": "#/components/schemas/BookingDTO"
                   }
                 }
               },
@@ -211,7 +211,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Booking"
+                    "$ref": "#/components/schemas/BookingDTO"
                   }
                 }
               },
@@ -219,7 +219,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Booking"
+                    "$ref": "#/components/schemas/BookingDTO"
                   }
                 }
               }
@@ -388,7 +388,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Customer"
+                    "$ref": "#/components/schemas/CustomerDTO"
                   }
                 }
               },
@@ -396,7 +396,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Customer"
+                    "$ref": "#/components/schemas/CustomerDTO"
                   }
                 }
               },
@@ -404,7 +404,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Customer"
+                    "$ref": "#/components/schemas/CustomerDTO"
                   }
                 }
               }
@@ -573,7 +573,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Discount"
+                    "$ref": "#/components/schemas/DiscountDTO"
                   }
                 }
               },
@@ -581,7 +581,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Discount"
+                    "$ref": "#/components/schemas/DiscountDTO"
                   }
                 }
               },
@@ -589,7 +589,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Discount"
+                    "$ref": "#/components/schemas/DiscountDTO"
                   }
                 }
               }
@@ -758,7 +758,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/EmployeeRole"
+                    "$ref": "#/components/schemas/EmployeeRoleDTO"
                   }
                 }
               },
@@ -766,7 +766,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/EmployeeRole"
+                    "$ref": "#/components/schemas/EmployeeRoleDTO"
                   }
                 }
               },
@@ -774,7 +774,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/EmployeeRole"
+                    "$ref": "#/components/schemas/EmployeeRoleDTO"
                   }
                 }
               }
@@ -943,7 +943,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Employee"
+                    "$ref": "#/components/schemas/EmployeeDTO"
                   }
                 }
               },
@@ -951,7 +951,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Employee"
+                    "$ref": "#/components/schemas/EmployeeDTO"
                   }
                 }
               },
@@ -959,7 +959,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Employee"
+                    "$ref": "#/components/schemas/EmployeeDTO"
                   }
                 }
               }
@@ -1498,7 +1498,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/ForumPost"
+                    "$ref": "#/components/schemas/ForumPostDTO"
                   }
                 }
               },
@@ -1506,7 +1506,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/ForumPost"
+                    "$ref": "#/components/schemas/ForumPostDTO"
                   }
                 }
               },
@@ -1514,7 +1514,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/ForumPost"
+                    "$ref": "#/components/schemas/ForumPostDTO"
                   }
                 }
               }
@@ -1683,7 +1683,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Igloo"
+                    "$ref": "#/components/schemas/IglooDTO"
                   }
                 }
               },
@@ -1691,7 +1691,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Igloo"
+                    "$ref": "#/components/schemas/IglooDTO"
                   }
                 }
               },
@@ -1699,7 +1699,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Igloo"
+                    "$ref": "#/components/schemas/IglooDTO"
                   }
                 }
               }
@@ -2275,52 +2275,42 @@
             "format": "int32"
           },
           "street": {
-            "maxLength": 255,
-            "minLength": 0,
             "type": "string",
             "nullable": true
           },
           "streetNumber": {
-            "maxLength": 10,
-            "minLength": 0,
             "type": "string",
             "nullable": true
           },
           "houseNumber": {
-            "maxLength": 10,
-            "minLength": 0,
             "type": "string",
             "nullable": true
           },
           "city": {
-            "maxLength": 100,
-            "minLength": 0,
             "type": "string",
             "nullable": true
           },
           "country": {
-            "maxLength": 100,
-            "minLength": 0,
             "type": "string",
             "nullable": true
           },
           "postalCode": {
-            "maxLength": 20,
-            "minLength": 0,
             "type": "string",
-            "nullable": true
-          },
-          "user": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/User"
-            },
             "nullable": true
           }
         },
         "additionalProperties": false
       },
       "Booking": {
+        "required": [
+          "bookingChannel",
+          "currency",
+          "customer",
+          "employee",
+          "igloo",
+          "paymentMethod",
+          "status"
+        ],
         "type": "object",
         "properties": {
           "id": {
@@ -2377,8 +2367,6 @@
             "nullable": true
           },
           "cancellationReason": {
-            "maxLength": 50,
-            "minLength": 0,
             "type": "string",
             "nullable": true
           },
@@ -2405,14 +2393,15 @@
             "format": "int32",
             "nullable": true
           },
-          "bookingChannel": {
-            "$ref": "#/components/schemas/BookingChannel"
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
           },
-          "employee": {
-            "$ref": "#/components/schemas/Employee"
-          },
-          "currency": {
-            "$ref": "#/components/schemas/Currency"
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
           },
           "customer": {
             "$ref": "#/components/schemas/Customer"
@@ -2425,6 +2414,15 @@
           },
           "paymentMethod": {
             "$ref": "#/components/schemas/PaymentMethod"
+          },
+          "currency": {
+            "$ref": "#/components/schemas/Currency"
+          },
+          "bookingChannel": {
+            "$ref": "#/components/schemas/BookingChannel"
+          },
+          "employee": {
+            "$ref": "#/components/schemas/Employee"
           }
         },
         "additionalProperties": false
@@ -2437,16 +2435,102 @@
             "format": "int32"
           },
           "nazwa": {
-            "maxLength": 10,
-            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "BookingDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "idCustomer": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "idIgloo": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "checkIn": {
+            "type": "string",
+            "format": "date",
+            "nullable": true
+          },
+          "checkOut": {
+            "type": "string",
+            "format": "date",
+            "nullable": true
+          },
+          "paymentMethodId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "amount": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "statusId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "createdById": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "earlyCheckInRequest": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "lateCheckOutRequest": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "bookingDate": {
+            "type": "string",
+            "format": "date",
+            "nullable": true
+          },
+          "customerName": {
             "type": "string",
             "nullable": true
           },
-          "booking": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Booking"
-            },
+          "customerSurname": {
+            "type": "string",
+            "nullable": true
+          },
+          "customerEmail": {
+            "type": "string",
+            "nullable": true
+          },
+          "customerPhone": {
+            "type": "string",
+            "nullable": true
+          },
+          "iglooName": {
+            "type": "string",
+            "nullable": true
+          },
+          "employeeName": {
+            "type": "string",
+            "nullable": true
+          },
+          "employeeSurname": {
+            "type": "string",
+            "nullable": true
+          },
+          "paymentMethodName": {
+            "type": "string",
             "nullable": true
           }
         },
@@ -2460,16 +2544,7 @@
             "format": "int32"
           },
           "statusName": {
-            "maxLength": 100,
-            "minLength": 0,
             "type": "string",
-            "nullable": true
-          },
-          "booking": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Booking"
-            },
             "nullable": true
           }
         },
@@ -2483,45 +2558,25 @@
             "format": "int32"
           },
           "currency1": {
-            "maxLength": 10,
-            "minLength": 0,
             "type": "string",
-            "nullable": true
-          },
-          "booking": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Booking"
-            },
             "nullable": true
           }
         },
         "additionalProperties": false
       },
       "Customer": {
+        "required": [
+          "user"
+        ],
         "type": "object",
         "properties": {
           "id": {
             "type": "integer",
             "format": "int32"
           },
-          "nationality": {
-            "maxLength": 100,
-            "minLength": 0,
-            "type": "string",
-            "nullable": true
-          },
           "idUser": {
             "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "customerNotification": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/CustomerNotification"
-            },
-            "nullable": true
+            "format": "int32"
           },
           "user": {
             "$ref": "#/components/schemas/User"
@@ -2529,50 +2584,66 @@
         },
         "additionalProperties": false
       },
-      "CustomerNotification": {
+      "CustomerDTO": {
         "type": "object",
         "properties": {
           "id": {
             "type": "integer",
             "format": "int32"
           },
-          "idCustomer": {
+          "idUser": {
             "type": "integer",
             "format": "int32",
             "nullable": true
           },
-          "message": {
+          "name": {
             "type": "string",
             "nullable": true
           },
-          "createdAt": {
+          "surname": {
             "type": "string",
-            "format": "date-time",
             "nullable": true
           },
-          "notificationTypeId": {
-            "type": "integer",
-            "format": "int32",
+          "email": {
+            "type": "string",
             "nullable": true
           },
-          "notificationPriorityId": {
-            "type": "integer",
-            "format": "int32",
+          "phone": {
+            "type": "string",
             "nullable": true
           },
-          "idCustomerNavigation": {
-            "$ref": "#/components/schemas/Customer"
+          "street": {
+            "type": "string",
+            "nullable": true
           },
-          "notificationPriority": {
-            "$ref": "#/components/schemas/NotificationPriority"
+          "streetNumber": {
+            "type": "string",
+            "nullable": true
           },
-          "notificationType": {
-            "$ref": "#/components/schemas/NotificationType"
+          "houseNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "city": {
+            "type": "string",
+            "nullable": true
+          },
+          "postalCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "country": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
       },
       "Discount": {
+        "required": [
+          "discount1",
+          "igloo"
+        ],
         "type": "object",
         "properties": {
           "id": {
@@ -2585,15 +2656,12 @@
             "nullable": true
           },
           "name": {
-            "maxLength": 100,
-            "minLength": 0,
             "type": "string",
             "nullable": true
           },
           "discount1": {
             "type": "number",
-            "format": "double",
-            "nullable": true
+            "format": "double"
           },
           "description": {
             "type": "string",
@@ -2605,7 +2673,73 @@
         },
         "additionalProperties": false
       },
+      "DiscountDTO": {
+        "required": [
+          "iglooName"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "idIgloo": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "discount": {
+            "type": "number",
+            "format": "double"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "iglooName": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "Employee": {
+        "required": [
+          "role",
+          "user"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "idUser": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "roleId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "photoUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "user": {
+            "$ref": "#/components/schemas/User"
+          },
+          "role": {
+            "$ref": "#/components/schemas/EmployeeRole"
+          }
+        },
+        "additionalProperties": false
+      },
+      "EmployeeDTO": {
         "type": "object",
         "properties": {
           "id": {
@@ -2622,38 +2756,52 @@
             "format": "int32",
             "nullable": true
           },
-          "booking": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Booking"
-            },
+          "name": {
+            "type": "string",
             "nullable": true
           },
-          "forumComment": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/ForumComment"
-            },
+          "surname": {
+            "type": "string",
             "nullable": true
           },
-          "forumPost": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/ForumPost"
-            },
+          "email": {
+            "type": "string",
             "nullable": true
           },
-          "user": {
-            "$ref": "#/components/schemas/User"
+          "phoneNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "street": {
+            "type": "string",
+            "nullable": true
+          },
+          "streetNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "houseNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "city": {
+            "type": "string",
+            "nullable": true
+          },
+          "postalCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "country": {
+            "type": "string",
+            "nullable": true
           },
           "role": {
-            "$ref": "#/components/schemas/EmployeeRole"
+            "type": "string",
+            "nullable": true
           },
-          "task": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Task"
-            },
+          "photoUrl": {
+            "type": "string",
             "nullable": true
           }
         },
@@ -2667,16 +2815,21 @@
             "format": "int32"
           },
           "roleName": {
-            "maxLength": 100,
-            "minLength": 0,
             "type": "string",
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "EmployeeRoleDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
           },
-          "employee": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Employee"
-            },
+          "roleName": {
+            "type": "string",
             "nullable": true
           }
         },
@@ -2690,16 +2843,7 @@
             "format": "int32"
           },
           "name": {
-            "maxLength": 100,
-            "minLength": 0,
             "type": "string",
-            "nullable": true
-          },
-          "forumPost": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/ForumPost"
-            },
             "nullable": true
           }
         },
@@ -2740,7 +2884,57 @@
         },
         "additionalProperties": false
       },
+      "ForumCommentDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "idPost": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "idEmployee": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "comment": {
+            "type": "string",
+            "nullable": true
+          },
+          "commentDate": {
+            "type": "string",
+            "format": "date",
+            "nullable": true
+          },
+          "employeeName": {
+            "type": "string",
+            "nullable": true
+          },
+          "employeeSurname": {
+            "type": "string",
+            "nullable": true
+          },
+          "employeePhotoUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "postTitle": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "ForumPost": {
+        "required": [
+          "category",
+          "employee"
+        ],
         "type": "object",
         "properties": {
           "id": {
@@ -2753,8 +2947,6 @@
             "nullable": true
           },
           "title": {
-            "maxLength": 255,
-            "minLength": 0,
             "type": "string",
             "nullable": true
           },
@@ -2781,6 +2973,9 @@
             "type": "string",
             "nullable": true
           },
+          "employee": {
+            "$ref": "#/components/schemas/Employee"
+          },
           "category": {
             "$ref": "#/components/schemas/ForumCategory"
           },
@@ -2790,56 +2985,77 @@
               "$ref": "#/components/schemas/ForumComment"
             },
             "nullable": true
-          },
-          "employee": {
-            "$ref": "#/components/schemas/Employee"
-          },
-          "status": {
-            "$ref": "#/components/schemas/ForumStatus"
           }
         },
         "additionalProperties": false
       },
-      "ForumStatus": {
+      "ForumPostDTO": {
+        "required": [
+          "category",
+          "employeeName",
+          "employeePhotoUrl",
+          "employeeSurname",
+          "postContent",
+          "tags",
+          "title"
+        ],
         "type": "object",
         "properties": {
           "id": {
             "type": "integer",
             "format": "int32"
           },
-          "name": {
-            "maxLength": 100,
-            "minLength": 0,
+          "idEmployee": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "categoryId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "title": {
             "type": "string",
             "nullable": true
           },
-          "forumPost": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/ForumPost"
-            },
+          "postContent": {
+            "type": "string",
             "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "Gender": {
-        "type": "object",
-        "properties": {
-          "id": {
+          },
+          "postDate": {
+            "type": "string",
+            "format": "date",
+            "nullable": true
+          },
+          "category": {
+            "type": "string",
+            "nullable": true
+          },
+          "tags": {
+            "type": "string",
+            "nullable": true
+          },
+          "employeeName": {
+            "type": "string",
+            "nullable": true
+          },
+          "employeeSurname": {
+            "type": "string",
+            "nullable": true
+          },
+          "employeePhotoUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "numberOfComment": {
             "type": "integer",
             "format": "int32"
           },
-          "name": {
-            "maxLength": 50,
-            "minLength": 0,
-            "type": "string",
-            "nullable": true
-          },
-          "user": {
+          "forumComment": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/User"
+              "$ref": "#/components/schemas/ForumCommentDTO"
             },
             "nullable": true
           }
@@ -2854,8 +3070,6 @@
             "format": "int32"
           },
           "name": {
-            "maxLength": 100,
-            "minLength": 0,
             "type": "string",
             "nullable": true
           },
@@ -2879,7 +3093,10 @@
         },
         "additionalProperties": false
       },
-      "Language": {
+      "IglooDTO": {
+        "required": [
+          "discountName"
+        ],
         "type": "object",
         "properties": {
           "id": {
@@ -2887,62 +3104,25 @@
             "format": "int32"
           },
           "name": {
-            "maxLength": 50,
-            "minLength": 0,
             "type": "string",
             "nullable": true
           },
-          "user": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/User"
-            },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "NotificationPriority": {
-        "type": "object",
-        "properties": {
-          "id": {
+          "capacity": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
-          "name": {
-            "maxLength": 10,
-            "minLength": 0,
+          "pricePerNight": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "discount": {
+            "type": "number",
+            "format": "double"
+          },
+          "discountName": {
             "type": "string",
-            "nullable": true
-          },
-          "customerNotification": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/CustomerNotification"
-            },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "NotificationType": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "type": {
-            "maxLength": 50,
-            "minLength": 0,
-            "type": "string",
-            "nullable": true
-          },
-          "customerNotification": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/CustomerNotification"
-            },
             "nullable": true
           }
         },
@@ -2956,203 +3136,44 @@
             "format": "int32"
           },
           "name": {
-            "maxLength": 100,
-            "minLength": 0,
             "type": "string",
-            "nullable": true
-          },
-          "booking": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Booking"
-            },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "Task": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "idEmployee": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "title": {
-            "maxLength": 255,
-            "minLength": 0,
-            "type": "string",
-            "nullable": true
-          },
-          "description": {
-            "type": "string",
-            "nullable": true
-          },
-          "date": {
-            "type": "string",
-            "format": "date",
-            "nullable": true
-          },
-          "idStatus": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "employee": {
-            "$ref": "#/components/schemas/Employee"
-          },
-          "taskStatus": {
-            "$ref": "#/components/schemas/TaskStatus"
-          }
-        },
-        "additionalProperties": false
-      },
-      "TaskStatus": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "statusName": {
-            "maxLength": 100,
-            "minLength": 0,
-            "type": "string",
-            "nullable": true
-          },
-          "task": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Task"
-            },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "Timezone": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "name": {
-            "maxLength": 50,
-            "minLength": 0,
-            "type": "string",
-            "nullable": true
-          },
-          "offset": {
-            "maxLength": 10,
-            "minLength": 0,
-            "type": "string",
-            "nullable": true
-          },
-          "user": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/User"
-            },
             "nullable": true
           }
         },
         "additionalProperties": false
       },
       "User": {
+        "required": [
+          "address"
+        ],
         "type": "object",
         "properties": {
           "id": {
             "type": "integer",
             "format": "int32"
           },
+          "idAddress": {
+            "type": "integer",
+            "format": "int32"
+          },
           "name": {
-            "maxLength": 100,
-            "minLength": 0,
             "type": "string",
             "nullable": true
           },
           "surname": {
-            "maxLength": 100,
-            "minLength": 0,
             "type": "string",
             "nullable": true
           },
           "email": {
-            "maxLength": 100,
-            "minLength": 0,
             "type": "string",
             "nullable": true
           },
           "phoneNumber": {
-            "maxLength": 20,
-            "minLength": 0,
             "type": "string",
             "nullable": true
-          },
-          "idAddress": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "genderId": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "securityQuestion": {
-            "type": "string",
-            "nullable": true
-          },
-          "securityAnswer": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "languageId": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "timezoneId": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "customer": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Customer"
-            },
-            "nullable": true
-          },
-          "employee": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Employee"
-            },
-            "nullable": true
-          },
-          "gender": {
-            "$ref": "#/components/schemas/Gender"
           },
           "address": {
             "$ref": "#/components/schemas/Address"
-          },
-          "language": {
-            "$ref": "#/components/schemas/Language"
-          },
-          "timezone": {
-            "$ref": "#/components/schemas/Timezone"
           }
         },
         "additionalProperties": false

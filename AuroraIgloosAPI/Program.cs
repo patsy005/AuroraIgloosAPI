@@ -13,15 +13,16 @@ namespace AuroraIgloosAPI
             // Pobierz connection string z appsettings.json
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
+            //builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
+
+
+
             // Zarejestruj CompanyContext w DI
             builder.Services.AddDbContext<CompanyContext>(options =>
                 options.UseSqlServer(connectionString));
 
             // Dodaj kontrolery i inne serwisy
-            builder.Services.AddControllers().AddJsonOptions(options =>
-            {
-                //options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
-            });
+            builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 

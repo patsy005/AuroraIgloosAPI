@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AuroraIgloosAPI.Models;
 using AuroraIgloosAPI.Models.Contexts;
+using AuroraIgloosAPI.DTOs;
 
 namespace AuroraIgloosAPI.Controllers
 {
@@ -23,9 +24,22 @@ namespace AuroraIgloosAPI.Controllers
 
         // GET: api/Discounts
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Discount>>> GetDiscount()
+        public async Task<ActionResult<IEnumerable<DiscountDTO>>> GetDiscount()
         {
-            return await _context.Discount.ToListAsync();
+            var discounts = await _context.Discount
+                .Include(d => d.Igloo)
+                .Select( d => new DiscountDTO
+                {
+                    Id = d.Id,
+                    IdIgloo = d.IdIgloo,
+                    Name = d.Name ?? "",
+                    Discount = d.Discount1,
+                    Description = d.Description ?? "",
+                    IglooName = d.Igloo.Name ?? ""
+                })
+                .ToListAsync();
+
+            return Ok(discounts);
         }
 
         // GET: api/Discounts/5

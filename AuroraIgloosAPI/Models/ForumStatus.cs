@@ -8,14 +8,14 @@ namespace AuroraIgloosAPI.Models;
 
 public partial class ForumStatus
 {
-    [Key]
-    [Column("id")]
+    //[Key]
+    //[Column("id")]
     public int Id { get; set; }
 
-    [Column("name")]
-    [StringLength(100)]
+    //[Column("name")]
+    //[StringLength(100)]
     public string? Name { get; set; }
 
-    [InverseProperty("Status")]
-    public virtual ICollection<ForumPost> ForumPost { get; set; } = new List<ForumPost>();
+    //[InverseProperty("Status")]
+    //public virtual ICollection<ForumPost> ForumPost { get; set; } = new List<ForumPost>();
 }

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AuroraIgloosAPI.Models;
 using AuroraIgloosAPI.Models.Contexts;
+using AuroraIgloosAPI.DTOs;
 
 namespace AuroraIgloosAPI.Controllers
 {
@@ -23,9 +24,44 @@ namespace AuroraIgloosAPI.Controllers
 
         // GET: api/ForumPosts
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ForumPost>>> GetForumPost()
+        public async Task<ActionResult<IEnumerable<ForumPostDTO>>> GetForumPost()
         {
-            return await _context.ForumPost.ToListAsync();
+            var posts = await _context.ForumPost
+                .Include(p => p.Employee)
+                .ThenInclude(e => e.User)
+                .ThenInclude(u => u.Address)
+                .Include(p => p.Category)
+                .Include(p => p.ForumComment)
+                .Select(p => new ForumPostDTO
+                {
+                    Id = p.Id,
+                    IdEmployee = p.IdEmployee,
+                    CategoryId = p.CategoryId,
+                    Title = p.Title ?? "",
+                    PostContent = p.PostContent ?? "",
+                    PostDate = p.PostDate,
+                    Category = p.Category.Name ?? "",
+                    Tags = p.Tags ?? "",
+                    EmployeeName = p.Employee.User.Name ?? "",
+                    EmployeeSurname = p.Employee.User.Surname ?? "",
+                    EmployeePhotoUrl = p.Employee.PhotoUrl ?? "",
+                    ForumComment = p.ForumComment.Select(c => new ForumCommentDTO
+                    {
+                        Id = c.Id,
+                        IdPost = c.IdPost,
+                        IdEmployee = c.IdEmployee,
+                        Comment = c.Comment ?? "",
+                        CommentDate = c.CommentDate,
+                        EmployeeName = c.Employee.User.Name ?? "",
+                        EmployeeSurname = c.Employee.User.Surname ?? "",
+                        EmployeePhotoUrl = c.Employee.PhotoUrl ?? "",
+                        PostTitle = p.Title ?? "",
+                    }).ToList(), // Convert ForumComment to list here
+                    NumberOfComment = p.ForumComment.Count
+                })
+                .ToListAsync();
+
+            return Ok(posts);
         }
 
         // GET: api/ForumPosts/5

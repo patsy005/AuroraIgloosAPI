@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "G5db5avNII0=",
+  "dgSpecHash": "OZWQvyM2JlI=",
   "success": true,
   "projectFilePath": "G:\\source\\repos\\AuroraIgloosAPI\\AuroraIgloosAPI\\AuroraIgloosAPI.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Patrycja\\.nuget\\packages\\automapper\\14.0.0\\automapper.14.0.0.nupkg.sha512",
     "C:\\Users\\Patrycja\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
     "C:\\Users\\Patrycja\\.nuget\\packages\\azure.identity\\1.11.4\\azure.identity.1.11.4.nupkg.sha512",
     "C:\\Users\\Patrycja\\.nuget\\packages\\castle.core\\5.1.1\\castle.core.5.1.1.nupkg.sha512",

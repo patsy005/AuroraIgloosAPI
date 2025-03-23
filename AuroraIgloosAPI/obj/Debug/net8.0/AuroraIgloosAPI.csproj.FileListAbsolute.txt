@@ -288,3 +288,5 @@ G:\source\repos\AuroraIgloosAPI\AuroraIgloosAPI\bin\Debug\net8.0\runtimes\win\li
 G:\source\repos\AuroraIgloosAPI\AuroraIgloosAPI\bin\Debug\net8.0\runtimes\win\lib\net7.0\System.Drawing.Common.dll
 G:\source\repos\AuroraIgloosAPI\AuroraIgloosAPI\bin\Debug\net8.0\runtimes\win\lib\net7.0\System.Security.Cryptography.ProtectedData.dll
 G:\source\repos\AuroraIgloosAPI\AuroraIgloosAPI\bin\Debug\net8.0\runtimes\win\lib\net7.0\System.Windows.Extensions.dll
+G:\source\repos\AuroraIgloosAPI\AuroraIgloosAPI\obj\Debug\net8.0\AuroraIgloosAPI.sourcelink.json
+G:\source\repos\AuroraIgloosAPI\AuroraIgloosAPI\bin\Debug\net8.0\AutoMapper.dll
