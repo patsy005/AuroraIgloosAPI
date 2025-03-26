@@ -1308,6 +1308,32 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "AuroraIgloosAPI.Controllers.DashboardController",
+    "Method": "GetDashboardStats",
+    "RelativePath": "stats",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "days",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "AuroraIgloosAPI.DTOs.DashboardStatsDTO",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "AuroraIgloosAPI.Controllers.WeatherForecastController",
     "Method": "Get",
     "RelativePath": "WeatherForecast",

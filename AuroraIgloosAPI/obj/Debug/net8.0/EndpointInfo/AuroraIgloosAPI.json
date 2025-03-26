@@ -560,6 +560,46 @@
         }
       }
     },
+    "/stats": {
+      "get": {
+        "tags": [
+          "Dashboard"
+        ],
+        "parameters": [
+          {
+            "name": "days",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 30
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/DashboardStatsDTO"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DashboardStatsDTO"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DashboardStatsDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/Discounts": {
       "get": {
         "tags": [
@@ -2554,6 +2594,36 @@
           "country": {
             "minLength": 1,
             "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DashboardStatsDTO": {
+        "type": "object",
+        "properties": {
+          "bookings": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "checkIns": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "occupancy": {
+            "type": "number",
+            "format": "double"
+          },
+          "bookingChangePercent": {
+            "type": "number",
+            "format": "double"
+          },
+          "checkInChangePercent": {
+            "type": "number",
+            "format": "double"
+          },
+          "occupancyChangePercent": {
+            "type": "number",
+            "format": "double"
           }
         },
         "additionalProperties": false
