@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AuroraIgloosAPI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d28169a99420d8b4ee6b96b2dc52527212dd8470")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+dd6e1e797e6df6930cfc4d390addcb2b51b1617f")]
 [assembly: System.Reflection.AssemblyProductAttribute("AuroraIgloosAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AuroraIgloosAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

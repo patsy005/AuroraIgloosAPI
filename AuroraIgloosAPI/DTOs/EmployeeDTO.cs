@@ -7,7 +7,6 @@ namespace AuroraIgloosAPI.DTOs
     {
         public int Id { get; set; }
 
-        //[Required(ErrorMessage = "IdUser is required")]
         public int? IdUser { get; set; }
 
         [Required(ErrorMessage = "RoleId is required")]
@@ -28,8 +27,5 @@ namespace AuroraIgloosAPI.DTOs
         public string? Role { get; set; }
 
         public string ? PhotoUrl { get; set; }
-        //public User? User { get; set; }
-
-        //public EmployeeRole? EmployeeRole { get; set; }
     }
 }

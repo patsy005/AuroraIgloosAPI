@@ -27,7 +27,6 @@ namespace AuroraIgloosAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<IglooDTO>>> GetIgloo()
         {
-            //return await _context.Igloo.ToListAsync();
             var igloos = await _context.Igloo
                 .Include(i => i.Discount)
                 .Select(i => new IglooDTO
@@ -119,10 +118,6 @@ namespace AuroraIgloosAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<Igloo>> PostIgloo(IglooDTO iglooDto)
         {
-            //_context.Igloo.Add(igloo);
-            //await _context.SaveChangesAsync();
-
-            //return CreatedAtAction("GetIgloo", new { id = igloo.Id }, igloo);
 
             if(!ModelState.IsValid)
             {
@@ -164,7 +159,6 @@ namespace AuroraIgloosAPI.Controllers
 
             if(igloo == null) return NotFound($"Igloo with id {id} not found");
 
-            //_context.Discount.RemoveRange(igloo.Discount);
 
             _context.Igloo.Remove(igloo);
 

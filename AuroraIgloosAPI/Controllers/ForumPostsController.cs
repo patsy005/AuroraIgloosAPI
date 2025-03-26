@@ -148,14 +148,12 @@ namespace AuroraIgloosAPI.Controllers
                 return BadRequest("Employee not found");
             }
 
-            //var comments = await _context.ForumComment.Where(c => c.IdPost == id).ToListAsync();
             
             var post = await _context.ForumPost
                 .Include(p => p.Employee)
                 .ThenInclude(e => e.User)
                 .ThenInclude(u => u.Address)
                 .Include(p => p.Category)
-                //.Include(p => p.ForumComment)
                 .FirstOrDefaultAsync(p => p.Id == id);
 
             if(post == null)
@@ -235,7 +233,7 @@ namespace AuroraIgloosAPI.Controllers
                 Tags = forumPostDto.Tags,
                 Employee = employee,
                 Category = category,
-                ForumComment = forumComments // Assign the list of comments
+                ForumComment = forumComments
             };
 
             try

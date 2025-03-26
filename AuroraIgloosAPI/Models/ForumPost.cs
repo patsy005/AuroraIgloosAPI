@@ -14,7 +14,6 @@ public partial class ForumPost
     public string? PostContent { get; set; }
     public DateOnly? PostDate { get; set; }
     public int? CategoryId { get; set; }
-    //public int? StatusId { get; set; }
     public string? Tags { get; set; }
 
     public required Employee Employee { get; set; }

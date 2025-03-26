@@ -18,27 +18,16 @@ namespace AuroraIgloosAPI.Controllers
     public class BookingsController : ControllerBase
     {
         private readonly CompanyContext _context;
-        //private readonly IMapper _mapper;
 
         public BookingsController(CompanyContext context)
         {
             _context = context;
-            //_mapper = mapper;
         }
 
         // GET: api/Bookings
         [HttpGet]
         public async Task<ActionResult<IEnumerable<BookingDTO>>> GetBooking()
         {
-            //return await _context.Booking.ToListAsync();
-            //return await _context.Booking
-            //    .Include(b => b.Customer)
-            //        .ThenInclude(c => c.User)
-            //    .Include(b => b.Employee)
-            //        .ThenInclude(e => e.User)
-            //    .Include(b => b.Igloo)
-            //    .Include(b => b.PaymentMethod)
-            //    .ToListAsync();
 
             var booking = await _context.Booking
                 .Include(b => b.Customer)
@@ -73,10 +62,6 @@ namespace AuroraIgloosAPI.Controllers
                 .ToListAsync();
 
             return Ok(booking);
-
-
-
-
         }
 
         // GET: api/Bookings/5
@@ -236,9 +221,6 @@ namespace AuroraIgloosAPI.Controllers
                 Console.WriteLine(ex.Message);
                 return StatusCode(500, "Internal Server Error: " + ex.Message);
             }
-
-            //_context.Booking.Add(booking);
-            //await _context.SaveChangesAsync();
 
             return CreatedAtAction(nameof(GetBooking), new { id = booking.Id }, booking);
         }

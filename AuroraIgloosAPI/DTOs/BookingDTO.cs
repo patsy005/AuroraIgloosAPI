@@ -23,7 +23,6 @@ namespace AuroraIgloosAPI.DTOs
 
         [Required(ErrorMessage = "Amount is required")]
         public decimal Amount { get; set; }
-        //public int? StatusId { get; set; }
 
         [Required(ErrorMessage = "CreatedById is required")]
         public int CreatedById { get; set; }
@@ -32,11 +31,6 @@ namespace AuroraIgloosAPI.DTOs
         public bool? EarlyCheckInRequest { get; set; }
         public bool? LateCheckOutRequest { get; set; }
         public DateOnly? BookingDate { get; set; }
-
-        //public Customer? Customer { get; set; }
-        //public Igloo? Igloo { get; set; }
-        //public Employee? Employee { get; set; }
-        //public PaymentMethod? PaymentMethod { get; set; }
         public string? CustomerName { get; set; }
         public string? CustomerSurname { get; set; }
         public string? CustomerEmail { get; set; }

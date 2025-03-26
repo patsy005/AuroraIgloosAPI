@@ -27,9 +27,6 @@ namespace AuroraIgloosAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<CustomerDTO>>> GetCustomer()
         {
-            //return await _context.Customer.ToListAsync();
-
-
 
             var customers =  await _context.Customer
                 .Include(c => c.User)

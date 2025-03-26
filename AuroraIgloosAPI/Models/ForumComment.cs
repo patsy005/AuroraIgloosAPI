@@ -10,8 +10,7 @@ public partial class ForumComment
 {
 
     public int Id { get; set; }
-    //[ForeignKey("IdPost")]
-    //[Column("idPost")]
+
     public int? IdPost { get; set; }
     public int? IdEmployee { get; set; }
     public string? Comment { get; set; }
@@ -19,7 +18,5 @@ public partial class ForumComment
 
     public Employee? Employee { get; set; }
 
-    //[ForeignKey("IdPost")]
-    //[Column("idPost")]
     public ForumPost? ForumPost { get; set; }
 }

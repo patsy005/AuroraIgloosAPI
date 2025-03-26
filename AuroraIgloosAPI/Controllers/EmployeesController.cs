@@ -160,7 +160,6 @@ namespace AuroraIgloosAPI.Controllers
                 RoleId = employeeDto.RoleId ?? 0,
                 PhotoUrl = employeeDto.PhotoUrl ?? "",
                 User = user,
-                //Role = _context.EmployeeRole.Where(r => r.Id == employeeDto.RoleId)
                 EmployeeRole = role
             };
 
