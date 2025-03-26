@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using AuroraIgloosAPI.Models;
 using AuroraIgloosAPI.Models.Contexts;
 using AuroraIgloosAPI.DTOs;
+using NuGet.Packaging;
 
 namespace AuroraIgloosAPI.Controllers
 {
@@ -65,14 +66,33 @@ namespace AuroraIgloosAPI.Controllers
         // PUT: api/Igloos/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutIgloo(int id, Igloo igloo)
+        public async Task<IActionResult> PutIgloo(int id, IglooDTO iglooDto)
         {
-            if (id != igloo.Id)
+            if (id != iglooDto.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(igloo).State = EntityState.Modified;
+            if(!ModelState.IsValid) return BadRequest(ModelState);
+
+
+            var igloo = await _context.Igloo
+                .Include(i => i.Discount)
+                .FirstOrDefaultAsync(i => i.Id == id);
+
+            if(igloo == null) return NotFound($"Igloo with id {id} not found");
+
+            igloo.Name = iglooDto.Name;
+            igloo.Capacity = iglooDto.Capacity;
+            igloo.PricePerNight = iglooDto.PricePerNight;
+
+            igloo.Discount.Clear();
+
+            var discounts = await _context.Discount
+                .Where(d => iglooDto.IdDiscount == d.IdIgloo)
+                .ToListAsync();
+
+            igloo.Discount.AddRange(discounts);
 
             try
             {
@@ -80,9 +100,9 @@ namespace AuroraIgloosAPI.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!IglooExists(id))
+                if (!_context.Igloo.Any(i => i.Id == id))
                 {
-                    return NotFound();
+                    return NotFound($"Igloo with id {id} not found");
                 }
                 else
                 {
@@ -90,16 +110,46 @@ namespace AuroraIgloosAPI.Controllers
                 }
             }
 
+
             return NoContent();
         }
 
         // POST: api/Igloos
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Igloo>> PostIgloo(Igloo igloo)
+        public async Task<ActionResult<Igloo>> PostIgloo(IglooDTO iglooDto)
         {
-            _context.Igloo.Add(igloo);
-            await _context.SaveChangesAsync();
+            //_context.Igloo.Add(igloo);
+            //await _context.SaveChangesAsync();
+
+            //return CreatedAtAction("GetIgloo", new { id = igloo.Id }, igloo);
+
+            if(!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var discounts = await _context.Discount
+                .Where(d => iglooDto.IdDiscount == d.IdIgloo)
+                .ToListAsync();
+
+            var igloo = new Igloo
+            {
+                Name = iglooDto.Name,
+                Capacity = iglooDto.Capacity,
+                PricePerNight = iglooDto.PricePerNight,
+                Discount = discounts
+            };
+
+            try
+            {
+                _context.Igloo.Add(igloo);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
 
             return CreatedAtAction("GetIgloo", new { id = igloo.Id }, igloo);
         }
@@ -108,14 +158,18 @@ namespace AuroraIgloosAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteIgloo(int id)
         {
-            var igloo = await _context.Igloo.FindAsync(id);
-            if (igloo == null)
-            {
-                return NotFound();
-            }
+            var igloo = await _context.Igloo 
+                .Include(i => i.Discount)
+                .FirstOrDefaultAsync(i => i.Id == id);
+
+            if(igloo == null) return NotFound($"Igloo with id {id} not found");
+
+            //_context.Discount.RemoveRange(igloo.Discount);
 
             _context.Igloo.Remove(igloo);
+
             await _context.SaveChangesAsync();
+
 
             return NoContent();
         }

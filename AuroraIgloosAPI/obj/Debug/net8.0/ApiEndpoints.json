@@ -137,8 +137,8 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "booking",
-        "Type": "AuroraIgloosAPI.Models.Booking",
+        "Name": "bookingDto",
+        "Type": "AuroraIgloosAPI.DTOs.BookingDTO",
         "IsRequired": true
       }
     ],
@@ -194,8 +194,8 @@
         "IsRequired": true
       },
       {
-        "Name": "booking",
-        "Type": "AuroraIgloosAPI.Models.Booking",
+        "Name": "bookingDto",
+        "Type": "AuroraIgloosAPI.DTOs.BookingDTO",
         "IsRequired": true
       }
     ],
@@ -246,8 +246,8 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "customer",
-        "Type": "AuroraIgloosAPI.Models.Customer",
+        "Name": "customerDto",
+        "Type": "AuroraIgloosAPI.DTOs.CustomerDTO",
         "IsRequired": true
       }
     ],
@@ -303,8 +303,8 @@
         "IsRequired": true
       },
       {
-        "Name": "customer",
-        "Type": "AuroraIgloosAPI.Models.Customer",
+        "Name": "customerDto",
+        "Type": "AuroraIgloosAPI.DTOs.CustomerDTO",
         "IsRequired": true
       }
     ],
@@ -355,8 +355,8 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "discount",
-        "Type": "AuroraIgloosAPI.Models.Discount",
+        "Name": "discountDto",
+        "Type": "AuroraIgloosAPI.DTOs.DiscountDTO",
         "IsRequired": true
       }
     ],
@@ -412,8 +412,8 @@
         "IsRequired": true
       },
       {
-        "Name": "discount",
-        "Type": "AuroraIgloosAPI.Models.Discount",
+        "Name": "discountDto",
+        "Type": "AuroraIgloosAPI.DTOs.DiscountDTO",
         "IsRequired": true
       }
     ],
@@ -573,8 +573,8 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "employee",
-        "Type": "AuroraIgloosAPI.Models.Employee",
+        "Name": "employeeDto",
+        "Type": "AuroraIgloosAPI.DTOs.EmployeeDTO",
         "IsRequired": true
       }
     ],
@@ -630,8 +630,8 @@
         "IsRequired": true
       },
       {
-        "Name": "employee",
-        "Type": "AuroraIgloosAPI.Models.Employee",
+        "Name": "employeeDto",
+        "Type": "AuroraIgloosAPI.DTOs.EmployeeDTO",
         "IsRequired": true
       }
     ],
@@ -772,7 +772,7 @@
     "Parameters": [],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[AuroraIgloosAPI.Models.ForumComment, AuroraIgloosAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[AuroraIgloosAPI.DTOs.ForumCommentDTO, AuroraIgloosAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -791,8 +791,8 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "forumComment",
-        "Type": "AuroraIgloosAPI.Models.ForumComment",
+        "Name": "forumCommentDto",
+        "Type": "AuroraIgloosAPI.DTOs.ForumCommentDTO",
         "IsRequired": true
       }
     ],
@@ -824,7 +824,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "AuroraIgloosAPI.Models.ForumComment",
+        "Type": "AuroraIgloosAPI.DTOs.ForumCommentDTO",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -848,8 +848,8 @@
         "IsRequired": true
       },
       {
-        "Name": "forumComment",
-        "Type": "AuroraIgloosAPI.Models.ForumComment",
+        "Name": "forumCommentDto",
+        "Type": "AuroraIgloosAPI.DTOs.ForumCommentDTO",
         "IsRequired": true
       }
     ],
@@ -900,8 +900,8 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "forumPost",
-        "Type": "AuroraIgloosAPI.Models.ForumPost",
+        "Name": "forumPostDto",
+        "Type": "AuroraIgloosAPI.DTOs.ForumPostDTO",
         "IsRequired": true
       }
     ],
@@ -933,7 +933,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "AuroraIgloosAPI.Models.ForumPost",
+        "Type": "AuroraIgloosAPI.DTOs.ForumPostDTO",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -957,8 +957,8 @@
         "IsRequired": true
       },
       {
-        "Name": "forumPost",
-        "Type": "AuroraIgloosAPI.Models.ForumPost",
+        "Name": "forumPostDto",
+        "Type": "AuroraIgloosAPI.DTOs.ForumPostDTO",
         "IsRequired": true
       }
     ],
@@ -1009,8 +1009,8 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "igloo",
-        "Type": "AuroraIgloosAPI.Models.Igloo",
+        "Name": "iglooDto",
+        "Type": "AuroraIgloosAPI.DTOs.IglooDTO",
         "IsRequired": true
       }
     ],
@@ -1066,8 +1066,8 @@
         "IsRequired": true
       },
       {
-        "Name": "igloo",
-        "Type": "AuroraIgloosAPI.Models.Igloo",
+        "Name": "iglooDto",
+        "Type": "AuroraIgloosAPI.DTOs.IglooDTO",
         "IsRequired": true
       }
     ],

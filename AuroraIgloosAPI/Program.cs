@@ -1,4 +1,6 @@
+using AuroraIgloosAPI.BussinessLogic;
 using AuroraIgloosAPI.Models.Contexts;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 
@@ -15,6 +17,10 @@ namespace AuroraIgloosAPI
 
             //builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 
+            builder.Services.Configure<JsonOptions>(options =>
+            {
+                options.JsonSerializerOptions.Converters.Add(new DateOnlyJsonConverter());
+            });
 
 
             // Zarejestruj CompanyContext w DI

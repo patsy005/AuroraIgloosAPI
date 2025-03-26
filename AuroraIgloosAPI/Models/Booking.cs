@@ -11,31 +11,31 @@ public partial class Booking
 {
     //[Key]
     public int Id { get; set; }
-    public int? IdCustomer { get; set; }
-    public int? IdIgloo { get; set; }
-    public DateOnly? CheckIn { get; set; }
-    public DateOnly? CheckOut { get; set; }
-    public int? PaymentMethodId { get; set; }
-    public decimal? Amount { get; set; }
-    public int? IdStatus { get; set; }
-    public DateOnly? BookingDate { get; set; }
+    public int IdCustomer { get; set; }
+    public int IdIgloo { get; set; }
+    public DateOnly CheckIn { get; set; }
+    public DateOnly CheckOut { get; set; }
+    public int PaymentMethodId { get; set; }
+    public decimal Amount { get; set; }
+    //public int? IdStatus { get; set; }
+    public DateOnly BookingDate { get; set; }
     public DateOnly? LastModifiedDate { get; set; }
     public string? Notes { get; set; }
     public string? CancellationReason { get; set; }
-    public int? CreatedById { get; set; }
+    public int CreatedById { get; set; }
     public bool? EarlyCheckInRequest { get; set; }
     public bool? LateCheckOutRequest { get; set; }
-    public int? CurrencyId { get; set; }
-    public int? BookingChannelId { get; set; }
-    public DateTime? CreatedAt { get; set; }
-    public DateTime? UpdatedAt { get; set; }
+    //public int? CurrencyId { get; set; }
+    //public int? BookingChannelId { get; set; }
+    //public DateTime? CreatedAt { get; set; }
+    //public DateTime? UpdatedAt { get; set; }
 
     public required Customer Customer { get; set; }
     public required Igloo Igloo { get; set; }
-    public required BookingStatus Status { get; set; }
+    //public required BookingStatus Status { get; set; }
     public required PaymentMethod PaymentMethod { get; set; }
-    public required Currency Currency { get; set; }
-    public required BookingChannel BookingChannel { get; set; }
+    //public required Currency Currency { get; set; }
+    //public required BookingChannel BookingChannel { get; set; }
     public required Employee Employee { get; set; }
 
 

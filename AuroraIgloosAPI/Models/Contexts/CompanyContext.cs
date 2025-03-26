@@ -255,7 +255,7 @@ public partial class CompanyContext : DbContext
             .HasOne(e => e.Address)
             .WithOne()
             .HasForeignKey<User>(u => u.IdAddress)
-            .OnDelete(DeleteBehavior.Restrict);
+            .OnDelete(DeleteBehavior.Cascade);
 
         modelBuilder.Entity<Customer>()
             .HasOne(e => e.User)
@@ -270,7 +270,7 @@ public partial class CompanyContext : DbContext
             .OnDelete(DeleteBehavior.Cascade);
 
         modelBuilder.Entity<Employee>()
-            .HasOne(e => e.Role)
+            .HasOne(e => e.EmployeeRole)
             .WithMany()
             .HasForeignKey(e => e.RoleId);
 
@@ -289,25 +289,25 @@ public partial class CompanyContext : DbContext
             .WithMany()
             .HasForeignKey(e => e.IdIgloo);
 
-        modelBuilder.Entity<Booking>()
-            .HasOne(e => e.Status)
-            .WithMany()
-            .HasForeignKey(e => e.IdStatus);
+        //modelBuilder.Entity<Booking>()
+        //    .HasOne(e => e.Status)
+        //    .WithMany()
+        //    .HasForeignKey(e => e.IdStatus);
 
         modelBuilder.Entity<Booking>()
             .HasOne(e => e.PaymentMethod)
             .WithMany()
             .HasForeignKey(e => e.PaymentMethodId);
 
-        modelBuilder.Entity<Booking>()
-            .HasOne(e => e.Currency)
-            .WithMany()
-            .HasForeignKey(e => e.CurrencyId);
+        //modelBuilder.Entity<Booking>()
+        //    .HasOne(e => e.Currency)
+        //    .WithMany()
+        //    .HasForeignKey(e => e.CurrencyId);
 
-        modelBuilder.Entity<Booking>()
-            .HasOne(e => e.BookingChannel)
-            .WithMany()
-            .HasForeignKey(e => e.BookingChannelId);
+        //modelBuilder.Entity<Booking>()
+        //    .HasOne(e => e.BookingChannel)
+        //    .WithMany()
+        //    .HasForeignKey(e => e.BookingChannelId);
 
         modelBuilder.Entity<ForumPost>()
             .HasOne(p => p.Employee)

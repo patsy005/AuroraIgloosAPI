@@ -1,18 +1,34 @@
 ﻿using AuroraIgloosAPI.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace AuroraIgloosAPI.DTOs
 {
     public class BookingDTO
     {
         public int Id { get; set; }
-        public int? IdCustomer { get; set; }
-        public int? IdIgloo { get; set; }
-        public DateOnly? CheckIn { get; set; }
-        public DateOnly? CheckOut { get; set; }
-        public int? PaymentMethodId { get; set; }
-        public decimal? Amount { get; set; }
-        public int? StatusId { get; set; }
-        public int? CreatedById { get; set; }
+        [Required(ErrorMessage = "IdCustomer is required")]
+        public int IdCustomer { get; set; }
+
+        [Required(ErrorMessage = "IdIgloo is required")]
+        public int IdIgloo { get; set; }
+
+        [Required(ErrorMessage = "CheckIn is required")]
+        public DateOnly CheckIn { get; set; }
+
+        [Required(ErrorMessage = "CheckOut is required")]
+        public DateOnly CheckOut { get; set; }
+
+        [Required(ErrorMessage = "PaymentMethodId is required")]
+        public int PaymentMethodId { get; set; }
+
+        [Required(ErrorMessage = "Amount is required")]
+        public decimal Amount { get; set; }
+        //public int? StatusId { get; set; }
+
+        [Required(ErrorMessage = "CreatedById is required")]
+        public int CreatedById { get; set; }
+
+
         public bool? EarlyCheckInRequest { get; set; }
         public bool? LateCheckOutRequest { get; set; }
         public DateOnly? BookingDate { get; set; }

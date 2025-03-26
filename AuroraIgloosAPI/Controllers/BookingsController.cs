@@ -9,6 +9,7 @@ using AuroraIgloosAPI.Models;
 using AuroraIgloosAPI.Models.Contexts;
 using AutoMapper;
 using AuroraIgloosAPI.DTOs;
+using AuroraIgloosAPI.BussinessLogic;
 
 namespace AuroraIgloosAPI.Controllers
 {
@@ -66,6 +67,7 @@ namespace AuroraIgloosAPI.Controllers
                     EmployeeSurname = b.Employee.User.Surname,
                     IglooName = b.Igloo.Name,
                     PaymentMethodName = b.PaymentMethod.Name,
+                    PaymentMethodId = b.PaymentMethodId
 
                 })
                 .ToListAsync();
@@ -99,23 +101,63 @@ namespace AuroraIgloosAPI.Controllers
         // PUT: api/Bookings/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutBooking(int id, Booking booking)
+        public async Task<IActionResult> PutBooking(int id, BookingDTO bookingDto)
         {
-            if (id != booking.Id)
+            if (id != bookingDto.Id)
             {
-                return BadRequest();
+                return BadRequest("Id does not match");
             }
 
-            var existingBooking = await _context.Booking
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var customer = await _context.Customer.FindAsync(bookingDto.IdCustomer);
+
+            if (customer == null)
+            {
+                return BadRequest("Customer not found");
+            }
+
+            var igloo = await _context.Igloo.FindAsync(bookingDto.IdIgloo);
+            if (igloo == null) return BadRequest("Igloo not found");
+
+            var employee = await _context.Employee.FindAsync(bookingDto.CreatedById);
+            if (employee == null) return BadRequest("Employee not found");
+
+            var paymentMethod = await _context.PaymentMethod.FindAsync(bookingDto.PaymentMethodId);
+            if (paymentMethod == null) return BadRequest("Payment method not found");
+
+            var bookingsLogic = new BookingsLogic(_context);
+            var totalAmount = bookingsLogic.CalculateBookingTotalAmount(bookingDto.IdIgloo, bookingDto.CheckIn, bookingDto.CheckOut);
+
+            var booking = await _context.Booking
                 .Include(b => b.Customer)
                     .ThenInclude(c => c.User)
+                .Include(b => b.Employee)
+                    .ThenInclude(e => e.User)
                 .Include(b => b.Igloo)
                 .Include(b => b.PaymentMethod)
                 .FirstOrDefaultAsync(b => b.Id == id);
 
-            if (existingBooking == null) return NotFound();
+            if (booking == null) return NotFound($"Booking with id {id} not found");
 
-            _context.Entry(existingBooking).CurrentValues.SetValues(booking);
+            booking.IdIgloo = bookingDto.IdIgloo;
+            booking.IdCustomer = bookingDto.IdCustomer;
+            booking.CreatedById = bookingDto.CreatedById;
+            booking.BookingDate = bookingDto.BookingDate ?? booking.BookingDate;
+            booking.CheckIn = bookingDto.CheckIn;
+            booking.CheckOut = bookingDto.CheckOut;
+            booking.Amount = bookingDto.Amount;
+            booking.EarlyCheckInRequest = bookingDto.EarlyCheckInRequest;
+            booking.LateCheckOutRequest = bookingDto.LateCheckOutRequest;
+            booking.PaymentMethodId = bookingDto.PaymentMethodId;
+            booking.Customer = customer;
+            booking.Igloo = igloo;
+            booking.Employee = employee;
+            booking.PaymentMethod = paymentMethod;
+            booking.Amount = totalAmount ?? booking.Amount;
 
             try
             {
@@ -123,7 +165,7 @@ namespace AuroraIgloosAPI.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!BookingExists(id))
+                if (!_context.Booking.Any(e => e.Id == id))
                 {
                     return NotFound();
                 }
@@ -139,31 +181,86 @@ namespace AuroraIgloosAPI.Controllers
         // POST: api/Bookings
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Booking>> PostBooking(Booking booking)
+        public async Task<ActionResult<Booking>> PostBooking(BookingDTO bookingDto)
         {
-            if(booking.Customer != null && booking.Customer.Id > 0)
+
+            if(!ModelState.IsValid)
             {
-                _context.Entry(booking.Customer).State = EntityState.Unchanged;
+                return BadRequest(ModelState);
             }
 
-            _context.Booking.Add(booking);
+            var customer = await _context.Customer.FindAsync(bookingDto.IdCustomer);
 
-            await _context.SaveChangesAsync();
+            if(customer == null)
+            {
+                return BadRequest("Customer not found");
+            }
 
-            return CreatedAtAction("GetBooking", new { id = booking.Id }, booking);
+            var igloo = await _context.Igloo.FindAsync(bookingDto.IdIgloo);
+            if(igloo == null) return BadRequest("Igloo not found");
+
+            var employee = await _context.Employee.FindAsync(bookingDto.CreatedById);
+            if (employee == null) return BadRequest("Employee not found");
+
+            var paymentMethod = await _context.PaymentMethod.FindAsync(bookingDto.PaymentMethodId);
+            if (paymentMethod == null) return BadRequest("Payment method not found");
+
+            var bookingsLogic = new BookingsLogic(_context);
+            var totalAmount = bookingsLogic.CalculateBookingTotalAmount(bookingDto.IdIgloo, bookingDto.CheckIn, bookingDto.CheckOut);
+
+            var booking = new Booking
+            {
+                IdIgloo = bookingDto.IdIgloo,
+                IdCustomer = bookingDto.IdCustomer,
+                CreatedById = bookingDto.CreatedById,
+                CheckIn = bookingDto.CheckIn,
+                CheckOut = bookingDto.CheckOut,
+                PaymentMethodId = bookingDto.PaymentMethodId,
+                Amount = totalAmount ?? 0.0m,
+                EarlyCheckInRequest = bookingDto.EarlyCheckInRequest,
+                LateCheckOutRequest = bookingDto.LateCheckOutRequest,
+                BookingDate = bookingDto.BookingDate ?? DateOnly.FromDateTime(DateTime.Now),
+                Customer = customer ,
+                Igloo = igloo,
+                PaymentMethod = paymentMethod,
+                Employee = employee
+            };
+
+            try
+            {
+                _context.Booking.Add(booking);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return StatusCode(500, "Internal Server Error: " + ex.Message);
+            }
+
+            //_context.Booking.Add(booking);
+            //await _context.SaveChangesAsync();
+
+            return CreatedAtAction(nameof(GetBooking), new { id = booking.Id }, booking);
         }
 
         // DELETE: api/Bookings/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteBooking(int id)
         {
-            var booking = await _context.Booking.FindAsync(id);
-            if (booking == null)
-            {
-                return NotFound();
-            }
+
+            var booking = await _context.Booking
+                .Include(b => b.Customer)
+                    .ThenInclude(c => c.User)
+                .Include(b => b.Employee)
+                    .ThenInclude(e => e.User)
+                .Include(b => b.Igloo)
+                .Include(b => b.PaymentMethod)
+                .FirstOrDefaultAsync(b => b.Id == id);
+
+            if(booking == null) return NotFound($"Booking with id {id} not found");
 
             _context.Booking.Remove(booking);
+
             await _context.SaveChangesAsync();
 
             return NoContent();

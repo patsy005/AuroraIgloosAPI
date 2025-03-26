@@ -28,7 +28,7 @@ namespace AuroraIgloosAPI.Controllers
         {
             var employees = await _context.Employee
                 .Include(e => e.User)
-                .Include(e => e.Role)
+                .Include(e => e.EmployeeRole)
                 .Select(e => new EmployeeDTO
                 {
                     Id = e.Id,
@@ -43,8 +43,9 @@ namespace AuroraIgloosAPI.Controllers
                     City = e.User.Address.City ?? "",
                     Country = e.User.Address.Country ?? "",
                     PostalCode = e.User.Address.PostalCode ?? "",
-                    Role = e.Role.RoleName ?? "",
-                    PhotoUrl = e.PhotoUrl ?? ""
+                    Role = e.EmployeeRole.RoleName ?? "",
+                    PhotoUrl = e.PhotoUrl ?? "",
+                    IdUser = e.IdUser
                 })
                 .ToListAsync();
 
@@ -68,14 +69,33 @@ namespace AuroraIgloosAPI.Controllers
         // PUT: api/Employees/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutEmployee(int id, Employee employee)
+        public async Task<IActionResult> PutEmployee(int id, EmployeeDTO employeeDto)
         {
-            if (id != employee.Id)
-            {
-                return BadRequest();
-            }
+            if(id != employeeDto.Id) return BadRequest("Id mismatch");
 
-            _context.Entry(employee).State = EntityState.Modified;
+            var employee = await _context.Employee
+                .Include(e => e.User)
+                    .ThenInclude(u => u.Address)
+                .Include(e => e.EmployeeRole)
+                .FirstOrDefaultAsync(e => e.Id == id);
+
+            if(employee == null) return NotFound($"Employee with id {id} not found");
+
+            employee.User.Name = employeeDto.Name ?? employee.User.Name;
+            employee.User.Surname = employeeDto.Surname ?? employee.User.Surname;
+            employee.User.Email = employeeDto.Email ?? employee.User.Email;
+            employee.User.PhoneNumber = employeeDto.PhoneNumber ?? employee.User.PhoneNumber;
+
+            employee.User.Address.Street = employeeDto.Street ?? employee.User.Address.Street;
+            employee.User.Address.StreetNumber = employeeDto.StreetNumber ?? employee.User.Address.StreetNumber;
+            employee.User.Address.HouseNumber = employeeDto.HouseNumber ?? employee.User.Address.HouseNumber;
+            employee.User.Address.City = employeeDto.City ?? employee.User.Address.City;
+            employee.User.Address.PostalCode = employeeDto.PostalCode ?? employee.User.Address.PostalCode;
+            employee.User.Address.Country = employeeDto.Country ?? employee.User.Address.Country;
+
+            employee.RoleId = employeeDto.RoleId ?? employee.RoleId;
+
+            employee.PhotoUrl = employeeDto.PhotoUrl ?? employee.PhotoUrl;
 
             try
             {
@@ -85,7 +105,7 @@ namespace AuroraIgloosAPI.Controllers
             {
                 if (!EmployeeExists(id))
                 {
-                    return NotFound();
+                    return NotFound($"Employee with id {id} not found");
                 }
                 else
                 {
@@ -93,16 +113,68 @@ namespace AuroraIgloosAPI.Controllers
                 }
             }
 
-            return NoContent();
+                return NoContent();
         }
 
         // POST: api/Employees
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Employee>> PostEmployee(Employee employee)
+        public async Task<ActionResult<Employee>> PostEmployee(EmployeeDTO employeeDto)
         {
-            _context.Employee.Add(employee);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var address = new Address
+            {
+                Street = employeeDto.Street ?? "",
+                StreetNumber = employeeDto.StreetNumber ?? "",
+                HouseNumber = employeeDto.HouseNumber ?? "",
+                City = employeeDto.City ?? "",
+                PostalCode = employeeDto.PostalCode ?? "",
+                Country = employeeDto.Country ?? "",
+            };
+
+            _context.Address.Add(address);
             await _context.SaveChangesAsync();
+
+            var user = new User
+            {
+                Name = employeeDto.Name ?? "",
+                Surname = employeeDto.Surname ?? "",
+                Email = employeeDto.Email ?? "",
+                PhoneNumber = employeeDto.PhoneNumber ?? "",
+                Address = address
+                           };
+
+            _context.User.Add(user);
+            await _context.SaveChangesAsync();
+
+            var role = _context.EmployeeRole.FirstOrDefault(r => r.Id == employeeDto.RoleId);
+            if (role == null) return BadRequest("Role not found");
+
+            var employee = new Employee
+            {
+                IdUser = user.Id,
+                RoleId = employeeDto.RoleId ?? 0,
+                PhotoUrl = employeeDto.PhotoUrl ?? "",
+                User = user,
+                //Role = _context.EmployeeRole.Where(r => r.Id == employeeDto.RoleId)
+                EmployeeRole = role
+            };
+
+
+
+            try
+            {
+                _context.Employee.Add(employee);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
 
             return CreatedAtAction("GetEmployee", new { id = employee.Id }, employee);
         }
@@ -111,13 +183,20 @@ namespace AuroraIgloosAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteEmployee(int id)
         {
-            var employee = await _context.Employee.FindAsync(id);
+            var employee = await _context.Employee
+                .Include(e => e.User)
+                    .ThenInclude(u => u.Address)
+                .FirstOrDefaultAsync(e => e.Id == id);
+
             if (employee == null)
             {
-                return NotFound();
+                return NotFound($"Employee with id {id} not found");
             }
 
             _context.Employee.Remove(employee);
+            _context.User.Remove(employee.User);
+            _context.Address.Remove(employee.User.Address);
+
             await _context.SaveChangesAsync();
 
             return NoContent();

@@ -1,4 +1,5 @@
 ﻿using AuroraIgloosAPI.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace AuroraIgloosAPI.DTOs
 {
@@ -8,15 +9,29 @@ namespace AuroraIgloosAPI.DTOs
         public int? IdUser { get; set; }
 
         //public User? User { get; set; }
-        public string? Name { get; set; }
-        public string? Surname { get; set; }
-        public string? Email { get; set; }
-        public string? Phone { get; set; }
-        public string? Street { get; set; }
+        [Required(ErrorMessage = "Name is required")]
+        public required string Name { get; set; }
+
+
+        [Required(ErrorMessage = "Surname is required")]
+        public required string Surname { get; set; }
+
+        [Required(ErrorMessage = "Email is required")]
+        public required string Email { get; set; }
+
+        [Required(ErrorMessage = "Phone is required")]
+        public required string Phone { get; set; }
+
+        [Required(ErrorMessage = "Street is required")]
+        public required string Street { get; set; }
         public string? StreetNumber { get; set; }
         public string? HouseNumber { get; set; }
-        public string? City { get; set; }
+
+        [Required(ErrorMessage = "City is required")]
+        public required string City { get; set; }
         public string? PostalCode { get; set; }
-        public string? Country { get; set; }
+
+        [Required(ErrorMessage = "Country is required")]
+        public required string Country { get; set; }
     }
 }

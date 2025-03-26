@@ -1,12 +1,19 @@
 ﻿using AuroraIgloosAPI.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace AuroraIgloosAPI.DTOs
 {
     public class EmployeeDTO
     {
         public int Id { get; set; }
+
+        //[Required(ErrorMessage = "IdUser is required")]
         public int? IdUser { get; set; }
+
+        [Required(ErrorMessage = "RoleId is required")]
         public int? RoleId { get; set; }
+
+        [Required(ErrorMessage = "Name is required")]
 
         public string? Name { get; set; }
         public string? Surname { get; set; }
