@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using AuroraIgloosAPI.Models;
 using AuroraIgloosAPI.Models.Contexts;
 using AuroraIgloosAPI.DTOs;
+using Microsoft.AspNetCore.Identity;
 
 namespace AuroraIgloosAPI.Controllers
 {
@@ -16,10 +17,12 @@ namespace AuroraIgloosAPI.Controllers
     public class CustomersController : ControllerBase
     {
         private readonly CompanyContext _context;
+        private readonly IPasswordHasher<User> _passwordHasher;
 
-        public CustomersController(CompanyContext context)
+        public CustomersController(CompanyContext context, IPasswordHasher<User> passwordHasher)
         {
             _context = context;
+            _passwordHasher = passwordHasher;
         }
 
         // GET: api/Customers
@@ -29,22 +32,24 @@ namespace AuroraIgloosAPI.Controllers
         {
 
             var customers =  await _context.Customer
-                .Include(c => c.User)
+                .Include(c => c.Person)
                     .ThenInclude(u => u.Address)
+                .Include(c => c.User)
                 .Select(c => new CustomerDTO
                 {
                     Id = c.Id,
-                    IdUser = c.User.Id,
-                    Name = c.User.Name ?? "",
-                    Surname = c.User.Surname ?? "",
-                    Email = c.User.Email ?? "",
-                    Phone = c.User.PhoneNumber ?? "",
-                    Street = c.User.Address.Street ?? "",
-                    StreetNumber = c.User.Address.StreetNumber ?? "",
-                    HouseNumber = c.User.Address.HouseNumber ?? "",
-                    City = c.User.Address.City ?? "",
-                    Country = c.User.Address.Country ?? "",
-                    PostalCode = c.User.Address.PostalCode ?? "",
+                    IdPerson = c.Person.Id,
+                    Name = c.Person.Name ?? "",
+                    Surname = c.Person.Surname ?? "",
+                    Email = c.Person.Email ?? "",
+                    Phone = c.Person.PhoneNumber ?? "",
+                    Street = c.Person.Address.Street ?? "",
+                    StreetNumber = c.Person.Address.StreetNumber ?? "",
+                    HouseNumber = c.Person.Address.HouseNumber ?? "",
+                    City = c.Person.Address.City ?? "",
+                    Country = c.Person.Address.Country ?? "",
+                    PostalCode = c.Person.Address.PostalCode ?? "",
+                    Login = c.User != null ? c.User.Login : "Customer does not have an account"
                 })
                 .ToListAsync();
 
@@ -74,23 +79,37 @@ namespace AuroraIgloosAPI.Controllers
             if(id != customerDto.Id) return BadRequest("Id mismatch");
 
             var customer = await _context.Customer
-                .Include(c => c.User)
+                .Include(c => c.Person)
                     .ThenInclude(u => u.Address)
+                .Include(c => c.User)
                 .FirstOrDefaultAsync(c => c.Id == id);
 
             if(customer == null) return NotFound($"Customer with id {id} not found");
 
-            customer.User.Name = customerDto.Name;
-            customer.User.Surname = customerDto.Surname;
-            customer.User.Email = customerDto.Email;
-            customer.User.PhoneNumber = customerDto.Phone;
+            customer.Person.Name = customerDto.Name;
+            customer.Person.Surname = customerDto.Surname;
+            customer.Person.Email = customerDto.Email;
+            customer.Person.PhoneNumber = customerDto.Phone;
 
-            customer.User.Address.Street = customerDto.Street;
-            customer.User.Address.StreetNumber = customerDto.StreetNumber;
-            customer.User.Address.HouseNumber = customerDto.HouseNumber;
-            customer.User.Address.City = customerDto.City;
-            customer.User.Address.Country = customerDto.Country;
+            customer.Person.Address.Street = customerDto.Street;
+            customer.Person.Address.StreetNumber = customerDto.StreetNumber;
+            customer.Person.Address.HouseNumber = customerDto.HouseNumber;
+            customer.Person.Address.City = customerDto.City;
+            customer.Person.Address.Country = customerDto.Country;
 
+            if (customer.User != null)
+            {
+                if (!string.IsNullOrWhiteSpace((customerDto.Login)))
+                {
+                    customer.User.Login = customerDto.Login;
+                }
+
+                if (!string.IsNullOrWhiteSpace((customerDto.Password)))
+                {
+                    customer.User.PasswordHash = _passwordHasher.HashPassword(customer.User,customerDto.Password);
+                }
+                
+            }
             try
             {
                 await _context.SaveChangesAsync();
@@ -130,7 +149,7 @@ namespace AuroraIgloosAPI.Controllers
             _context.Address.Add(address);
             await _context.SaveChangesAsync();
 
-            var user = new User
+            var person = new Person
             {
                 Name = customerDto.Name,
                 Surname = customerDto.Surname,
@@ -140,14 +159,33 @@ namespace AuroraIgloosAPI.Controllers
                 Address = address,
             };
 
-            _context.User.Add(user);
+            _context.Person.Add(person);
             await _context.SaveChangesAsync();
 
             var customer = new Customer
             {
-                IdUser = user.Id,
-                User = user,
+                IdPerson = person.Id,
+                Person = person,
             };
+
+            if (customerDto.CreateUser)
+            {
+                if (string.IsNullOrWhiteSpace(customerDto.Login) || string.IsNullOrWhiteSpace(customerDto.Password))
+                {
+                    return BadRequest("Login and Password are required when CreateUser is true.");
+                }
+
+                var user = new User
+                {
+                    Login = customerDto.Login,
+                    // UserTypeId = 2
+                };
+                
+                user.PasswordHash = _passwordHasher.HashPassword(user, customerDto.Password);
+                
+                _context.User.Add(user);
+                await _context.SaveChangesAsync();
+            }
 
             try
             {
@@ -167,15 +205,15 @@ namespace AuroraIgloosAPI.Controllers
         public async Task<IActionResult> DeleteCustomer(int id)
         {
             var customer = await _context.Customer
-                .Include(c => c.User)
+                .Include(c => c.Person)
                     .ThenInclude(u => u.Address)
                 .FirstOrDefaultAsync(c => c.Id == id);
 
             if (customer == null) return NotFound($"Customer with id {id} not found");
 
             _context.Customer.Remove(customer);
-            _context.User.Remove(customer.User);
-            _context.Address.Remove(customer.User.Address);
+            _context.Person.Remove(customer.Person);
+            _context.Address.Remove(customer.Person.Address);
 
             await _context.SaveChangesAsync();
 

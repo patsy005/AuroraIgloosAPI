@@ -9,11 +9,15 @@ namespace AuroraIgloosAPI.Models;
 public partial class Employee
 {
     public int Id { get; set; }
-    public int IdUser { get; set; }
+    public int IdPerson { get; set; }
     public int RoleId { get; set; }
+    
+    public int IdUser { get; set; }
 
     public string? PhotoUrl { get; set; }
 
-    public required User User { get; set; }
+    public required Person Person { get; set; }
     public required EmployeeRole EmployeeRole { get; set; }
+    
+    public User User { get; set; }
 }

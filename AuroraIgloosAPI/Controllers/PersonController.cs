@@ -12,27 +12,27 @@ namespace AuroraIgloosAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UsersController : ControllerBase
+    public class PersonController : ControllerBase
     {
         private readonly CompanyContext _context;
 
-        public UsersController(CompanyContext context)
+        public PersonController(CompanyContext context)
         {
             _context = context;
         }
 
         // GET: api/Users
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetUser()
+        public async Task<ActionResult<IEnumerable<Person>>> GetUser()
         {
-            return await _context.User.ToListAsync();
+            return await _context.Person.ToListAsync();
         }
 
         // GET: api/Users/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetUser(int id)
+        public async Task<ActionResult<Person>> GetUser(int id)
         {
-            var user = await _context.User.FindAsync(id);
+            var user = await _context.Person.FindAsync(id);
 
             if (user == null)
             {
@@ -45,14 +45,14 @@ namespace AuroraIgloosAPI.Controllers
         // PUT: api/Users/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUser(int id, User user)
+        public async Task<IActionResult> PutUser(int id, Person person)
         {
-            if (id != user.Id)
+            if (id != person.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(user).State = EntityState.Modified;
+            _context.Entry(person).State = EntityState.Modified;
 
             try
             {
@@ -76,25 +76,25 @@ namespace AuroraIgloosAPI.Controllers
         // POST: api/Users
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<User>> PostUser(User user)
+        public async Task<ActionResult<Person>> PostUser(Person person)
         {
-            _context.User.Add(user);
+            _context.Person.Add(person);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetUser", new { id = user.Id }, user);
+            return CreatedAtAction("GetUser", new { id = person.Id }, person);
         }
 
         // DELETE: api/Users/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser(int id)
         {
-            var user = await _context.User.FindAsync(id);
+            var user = await _context.Person.FindAsync(id);
             if (user == null)
             {
                 return NotFound();
             }
 
-            _context.User.Remove(user);
+            _context.Person.Remove(user);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -102,7 +102,7 @@ namespace AuroraIgloosAPI.Controllers
 
         private bool UserExists(int id)
         {
-            return _context.User.Any(e => e.Id == id);
+            return _context.Person.Any(e => e.Id == id);
         }
     }
 }

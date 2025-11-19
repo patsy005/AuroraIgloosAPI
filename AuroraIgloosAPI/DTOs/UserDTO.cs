@@ -1,17 +1,40 @@
-﻿using AuroraIgloosAPI.Models;
+using AuroraIgloosAPI.Models;
+using System.ComponentModel.DataAnnotations;
 
-namespace AuroraIgloosAPI.DTOs
+
+namespace AuroraIgloosAPI.DTOs;
+
+public class UserDTO
 {
-    public class UserDTO
-    {
-        public int Id { get; set; }
-        public string Email { get; set; }
-        public string? FirstName { get; set; }
-        public string? LastName { get; set; }
-        public string? PhoneNumber { get; set; }
-        public int? IdAddress { get; set; }
+    public int Id { get; set; }
+    
+    [Required(ErrorMessage = "Login is required")]
+    public required string Login { get; set; }
+    public required string PasswordHash { get; set; }
+    
+    public int UserRoleId { get; set; }
+    public UserRole? Role { get; set; }
+    
+    public int UserTypeId { get; set; }
+    public UserType? UserType { get; set; }
+    
+    public Employee? Employee { get; set; }
+    public Customer? Customer { get; set; }
+}
 
-        public Address? Address { get; set; }
+public class UserCreateDTO
+{
+    public required string Login { get; set; }
+    public required string PasswordHash { get; set; }
+    public int UserRoleId { get; set; }
+    public int UserTypeId { get; set; }
+}
 
-    }
+public class UserUpdateDTO
+{
+    public int Id { get; set; }
+    public required string Login { get; set; }
+    public required string PasswordHash { get; set; }
+    public int UserRoleId { get; set; }
+    public int UserTypeId { get; set; }
 }

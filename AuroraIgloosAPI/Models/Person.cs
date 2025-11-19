@@ -7,14 +7,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AuroraIgloosAPI.Models;
 
-public partial class Customer
+public partial class Person
 {
     public int Id { get; set; }
-    public int IdPerson { get; set; }
-    
-    public int? IdUser { get; set; }
+    public int IdAddress { get; set; }
+    public string Name { get; set; }
+    public string Surname { get; set; }
+    public string Email { get; set; }
+    public string PhoneNumber
+    {
+        get; set;
+    }
 
 
-    public required Person Person { get; set; }
-    public User? User { get; set; }
+    public required Address Address { get; set; }
 }

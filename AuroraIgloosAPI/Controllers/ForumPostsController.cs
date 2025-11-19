@@ -28,7 +28,7 @@ namespace AuroraIgloosAPI.Controllers
         {
             var posts = await _context.ForumPost
                 .Include(p => p.Employee)
-                .ThenInclude(e => e.User)
+                .ThenInclude(e => e.Person)
                 .ThenInclude(u => u.Address)
                 .Include(p => p.Category)
                 .Include(p => p.ForumComment)
@@ -42,8 +42,8 @@ namespace AuroraIgloosAPI.Controllers
                     PostDate = p.PostDate,
                     Category = p.Category.Name ?? "",
                     Tags = p.Tags ?? "",
-                    EmployeeName = p.Employee.User.Name ?? "",
-                    EmployeeSurname = p.Employee.User.Surname ?? "",
+                    EmployeeName = p.Employee.Person.Name ?? "",
+                    EmployeeSurname = p.Employee.Person.Surname ?? "",
                     EmployeePhotoUrl = p.Employee.PhotoUrl ?? "",
                     ForumComment = p.ForumComment.Select(c => new ForumCommentDTO
                     {
@@ -52,8 +52,8 @@ namespace AuroraIgloosAPI.Controllers
                         IdEmployee = c.IdEmployee,
                         Comment = c.Comment ?? "",
                         CommentDate = c.CommentDate,
-                        EmployeeName = c.Employee.User.Name ?? "",
-                        EmployeeSurname = c.Employee.User.Surname ?? "",
+                        EmployeeName = c.Employee.Person.Name ?? "",
+                        EmployeeSurname = c.Employee.Person.Surname ?? "",
                         EmployeePhotoUrl = c.Employee.PhotoUrl ?? "",
                         PostTitle = p.Title ?? "",
                     }).ToList(), // Convert ForumComment to list here
@@ -70,7 +70,7 @@ namespace AuroraIgloosAPI.Controllers
         {
             var post = await _context.ForumPost
                 .Include(p => p.Employee)
-                    .ThenInclude(e => e.User)
+                    .ThenInclude(e => e.Person)
                     .ThenInclude(u => u.Address)
                 .Include(p => p.Category)
                 .Include(p => p.ForumComment)
@@ -85,8 +85,8 @@ namespace AuroraIgloosAPI.Controllers
                     PostDate = p.PostDate,
                     Category = p.Category.Name ?? "",
                     Tags = p.Tags ?? "",
-                    EmployeeName = p.Employee.User.Name ?? "",
-                    EmployeeSurname = p.Employee.User.Surname ?? "",
+                    EmployeeName = p.Employee.Person.Name ?? "",
+                    EmployeeSurname = p.Employee.Person.Surname ?? "",
                     EmployeePhotoUrl = p.Employee.PhotoUrl ?? "",
                     ForumComment = p.ForumComment.Select(c => new ForumCommentDTO
                     {
@@ -95,8 +95,8 @@ namespace AuroraIgloosAPI.Controllers
                         IdEmployee = c.IdEmployee,
                         Comment = c.Comment ?? "",
                         CommentDate = c.CommentDate,
-                        EmployeeName = c.Employee.User.Name ?? "",
-                        EmployeeSurname = c.Employee.User.Surname ?? "",
+                        EmployeeName = c.Employee.Person.Name ?? "",
+                        EmployeeSurname = c.Employee.Person.Surname ?? "",
                         EmployeePhotoUrl = c.Employee.PhotoUrl ?? "",
                         PostTitle = p.Title ?? "",
                     }).ToList(),
@@ -151,7 +151,7 @@ namespace AuroraIgloosAPI.Controllers
             
             var post = await _context.ForumPost
                 .Include(p => p.Employee)
-                .ThenInclude(e => e.User)
+                .ThenInclude(e => e.Person)
                 .ThenInclude(u => u.Address)
                 .Include(p => p.Category)
                 .FirstOrDefaultAsync(p => p.Id == id);
@@ -256,8 +256,8 @@ namespace AuroraIgloosAPI.Controllers
                 PostDate = forumPost.PostDate,
                 Category = category.Name ?? "",
                 Tags = forumPost.Tags ?? "",
-                EmployeeName = employee.User?.Name ?? "",
-                EmployeeSurname = employee.User?.Surname ?? "",
+                EmployeeName = employee.Person?.Name ?? "",
+                EmployeeSurname = employee.Person?.Surname ?? "",
                 EmployeePhotoUrl = employee.PhotoUrl ?? "",
                 ForumComment = forumComments.Select(c => new ForumCommentDTO
                 {
@@ -266,8 +266,8 @@ namespace AuroraIgloosAPI.Controllers
                     IdEmployee = c.IdEmployee,
                     Comment = c.Comment ?? "",
                     CommentDate = c.CommentDate,
-                    EmployeeName = employee.User?.Name ?? "",
-                    EmployeeSurname = employee.User?.Surname ?? "",
+                    EmployeeName = employee.Person?.Name ?? "",
+                    EmployeeSurname = employee.Person?.Surname ?? "",
                     EmployeePhotoUrl = employee.PhotoUrl ?? "",
                     PostTitle = forumPost.Title ?? "",
                 }).ToList(),
@@ -284,7 +284,7 @@ namespace AuroraIgloosAPI.Controllers
         {
             var forumPost = await _context.ForumPost
                 .Include(p => p.Employee)
-                .ThenInclude(e => e.User)
+                .ThenInclude(e => e.Person)
                 .ThenInclude(u => u.Address)
                 .Include(p => p.Category)
                 .FirstOrDefaultAsync(Employee => Employee.Id == id);

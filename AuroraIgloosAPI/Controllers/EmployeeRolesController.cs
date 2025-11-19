@@ -30,7 +30,8 @@ namespace AuroraIgloosAPI.Controllers
                 .Select(e => new EmployeeRoleDTO
                 {
                     Id = e.Id,
-                    RoleName = e.RoleName
+                    RoleName = e.RoleName,
+                    RoleDescription = e.RoleDescription,
                 })
                 .ToListAsync();
 
@@ -54,14 +55,48 @@ namespace AuroraIgloosAPI.Controllers
         // PUT: api/EmployeeRoles/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutEmployeeRole(int id, EmployeeRole employeeRole)
+        public async Task<IActionResult> PutEmployeeRole(int id, EmployeeRoleDTO employeeRoleDTO)
         {
-            if (id != employeeRole.Id)
+            // UPDATE EmployeeRole 
+            // SET Name = @p0, Description = @p1, ...
+            // WHERE Id = @id
+
+            // if (id != employeeRole.Id)
+            // {
+            //     return BadRequest();
+            // }
+            //
+            // _context.Entry(employeeRole).State = EntityState.Modified;
+            //
+            // try
+            // {
+            //     await _context.SaveChangesAsync();
+            // }
+            // catch (DbUpdateConcurrencyException)
+            // {
+            //     if (!EmployeeRoleExists(id))
+            //     {
+            //         return NotFound();
+            //     }
+            //     else
+            //     {
+            //         throw;
+            //     }
+            // }
+            //
+            // return NoContent();
+
+            if (id != employeeRoleDTO.Id)
             {
                 return BadRequest();
             }
-
-            _context.Entry(employeeRole).State = EntityState.Modified;
+            
+            if(!ModelState.IsValid) return BadRequest(ModelState);
+            
+            var employeeRole = await _context.EmployeeRole.FirstOrDefaultAsync(e => e.Id == id);
+            
+            employeeRole.RoleName = employeeRoleDTO.RoleName;
+            employeeRole.RoleDescription = employeeRoleDTO.RoleDescription;
 
             try
             {
@@ -71,14 +106,14 @@ namespace AuroraIgloosAPI.Controllers
             {
                 if (!EmployeeRoleExists(id))
                 {
-                    return NotFound();
+                    return NotFound($"Employee Role with id {id} not found");
                 }
                 else
                 {
                     throw;
                 }
             }
-
+            
             return NoContent();
         }
 

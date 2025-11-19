@@ -3,6 +3,8 @@ using AuroraIgloosAPI.Models.Contexts;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
+using AuroraIgloosAPI.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace AuroraIgloosAPI
 {
@@ -31,17 +33,22 @@ namespace AuroraIgloosAPI
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            
+            // password hasher
+            builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
+
 
 
             var app = builder.Build();
 
-            // Konfiguracja œrodowiska
+            // Konfiguracja ï¿½rodowiska
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
 
+            app.UseStaticFiles();
             app.UseHttpsRedirection();
             app.UseAuthorization();
             app.MapControllers();

@@ -31,12 +31,12 @@ namespace AuroraIgloosAPI.Controllers
 
             var booking = await _context.Booking
                 .Include(b => b.Customer)
-                    .ThenInclude(c => c.User)
+                    .ThenInclude(c => c.Person)
                     .ThenInclude(u => u.Address)
                 .Include(b => b.Igloo)
                 .Include(b => b.PaymentMethod)
                 .Include(b => b.Employee)
-                    .ThenInclude(e => e.User)
+                    .ThenInclude(e => e.Person)
                     .ThenInclude(u => u.Address)
                 .Select(b => new BookingDTO
                 {
@@ -48,12 +48,12 @@ namespace AuroraIgloosAPI.Controllers
                     CheckIn = b.CheckIn,
                     CheckOut = b.CheckOut,
                     Amount = b.Amount,
-                    CustomerName = b.Customer.User.Name,
-                    CustomerSurname = b.Customer.User.Surname,
-                    CustomerEmail = b.Customer.User.Email,
-                    CustomerPhone = b.Customer.User.PhoneNumber,
-                    EmployeeName = b.Employee.User.Name,
-                    EmployeeSurname = b.Employee.User.Surname,
+                    CustomerName = b.Customer.Person.Name,
+                    CustomerSurname = b.Customer.Person.Surname,
+                    CustomerEmail = b.Customer.Person.Email,
+                    CustomerPhone = b.Customer.Person.PhoneNumber,
+                    EmployeeName = b.Employee.Person.Name,
+                    EmployeeSurname = b.Employee.Person.Surname,
                     IglooName = b.Igloo.Name,
                     PaymentMethodName = b.PaymentMethod.Name,
                     PaymentMethodId = b.PaymentMethodId
@@ -70,7 +70,7 @@ namespace AuroraIgloosAPI.Controllers
         {
             var booking = await _context.Booking
                 .Include(b => b.Customer)
-                    .ThenInclude(c => c.User)
+                    .ThenInclude(c => c.Person)
                 .Include(b => b.Igloo)
                 .Include(b => b.PaymentMethod)
                 .FirstOrDefaultAsync(b => b.Id == id);
@@ -119,9 +119,9 @@ namespace AuroraIgloosAPI.Controllers
 
             var booking = await _context.Booking
                 .Include(b => b.Customer)
-                    .ThenInclude(c => c.User)
+                    .ThenInclude(c => c.Person)
                 .Include(b => b.Employee)
-                    .ThenInclude(e => e.User)
+                    .ThenInclude(e => e.Person)
                 .Include(b => b.Igloo)
                 .Include(b => b.PaymentMethod)
                 .FirstOrDefaultAsync(b => b.Id == id);
@@ -232,9 +232,9 @@ namespace AuroraIgloosAPI.Controllers
 
             var booking = await _context.Booking
                 .Include(b => b.Customer)
-                    .ThenInclude(c => c.User)
+                    .ThenInclude(c => c.Person)
                 .Include(b => b.Employee)
-                    .ThenInclude(e => e.User)
+                    .ThenInclude(e => e.Person)
                 .Include(b => b.Igloo)
                 .Include(b => b.PaymentMethod)
                 .FirstOrDefaultAsync(b => b.Id == id);

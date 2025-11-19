@@ -28,7 +28,7 @@ namespace AuroraIgloosAPI.Controllers
         {
             var comments = await _context.ForumComment
                 .Include(c => c.Employee)
-                    .ThenInclude(e => e.User)
+                    .ThenInclude(e => e.Person)
                     .ThenInclude(u => u.Address)
                 .Include(c => c.ForumPost)
                 .Select(c => new ForumCommentDTO
@@ -38,8 +38,8 @@ namespace AuroraIgloosAPI.Controllers
                     IdEmployee = c.IdEmployee,
                     Comment = c.Comment,
                     CommentDate = c.CommentDate,
-                    EmployeeName = c.Employee.User.Name,
-                    EmployeeSurname = c.Employee.User.Surname,
+                    EmployeeName = c.Employee.Person.Name,
+                    EmployeeSurname = c.Employee.Person.Surname,
                     EmployeePhotoUrl = c.Employee.PhotoUrl,
                     PostTitle = c.ForumPost.Title
                 })
@@ -54,7 +54,7 @@ namespace AuroraIgloosAPI.Controllers
         {
             var comment = await _context.ForumComment
                 .Include(c => c.Employee)
-                    .ThenInclude(e => e.User)
+                    .ThenInclude(e => e.Person)
                     .ThenInclude(u => u.Address)
                 .Include(c => c.ForumPost)
                 .Where(c => c.Id == id)
@@ -65,8 +65,8 @@ namespace AuroraIgloosAPI.Controllers
                     IdEmployee = c.IdEmployee,
                     Comment = c.Comment,
                     CommentDate = c.CommentDate,
-                    EmployeeName = c.Employee.User.Name,
-                    EmployeeSurname = c.Employee.User.Surname,
+                    EmployeeName = c.Employee.Person.Name,
+                    EmployeeSurname = c.Employee.Person.Surname,
                     EmployeePhotoUrl = c.Employee.PhotoUrl,
                     PostTitle = c.ForumPost.Title
                 })
@@ -90,7 +90,7 @@ namespace AuroraIgloosAPI.Controllers
             if(!ModelState.IsValid) return BadRequest(ModelState);
 
             var employee = await _context.Employee
-                .Include(e => e.User)
+                .Include(e => e.Person)
                     .ThenInclude(u => u.Address)
                 .FirstOrDefaultAsync(e => e.Id == forumCommentDto.IdEmployee);
 
@@ -103,7 +103,7 @@ namespace AuroraIgloosAPI.Controllers
 
             var comment = await _context.ForumComment
                 .Include(c => c.Employee)
-                    .ThenInclude(e => e.User)
+                    .ThenInclude(e => e.Person)
                     .ThenInclude(u => u.Address)
                 .Include(c => c.ForumPost)
                 .FirstOrDefaultAsync(c => c.Id == id);
@@ -145,7 +145,7 @@ namespace AuroraIgloosAPI.Controllers
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
             var employee = await _context.Employee
-                .Include(e => e.User)
+                .Include(e => e.Person)
                     .ThenInclude(u => u.Address)
                 .FirstOrDefaultAsync(e => e.Id == forumCommentDto.IdEmployee);
 
@@ -177,8 +177,8 @@ namespace AuroraIgloosAPI.Controllers
                 IdEmployee = comment.IdEmployee,
                 Comment = comment.Comment,
                 CommentDate = comment.CommentDate,
-                EmployeeName = comment.Employee.User.Name,
-                EmployeeSurname = comment.Employee.User.Surname,
+                EmployeeName = comment.Employee.Person.Name,
+                EmployeeSurname = comment.Employee.Person.Surname,
                 EmployeePhotoUrl = comment.Employee.PhotoUrl,
                 PostTitle = comment.ForumPost.Title
             };
@@ -192,7 +192,7 @@ namespace AuroraIgloosAPI.Controllers
         {
             var comment = await _context.ForumComment
                 .Include(c => c.Employee)
-                    .ThenInclude(e => e.User)
+                    .ThenInclude(e => e.Person)
                     .ThenInclude(u => u.Address)
                 .Include(c => c.ForumPost)
                 .FirstOrDefaultAsync(c => c.Id == id);
