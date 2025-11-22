@@ -4,6 +4,7 @@ using AuroraIgloosAPI.Models.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AuroraIgloosAPI.Migrations
 {
     [DbContext(typeof(CompanyContext))]
-    partial class CompanyContextModelSnapshot : ModelSnapshot
+    [Migration("20251122211014_Trip")]
+    partial class Trip
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1007,9 +1010,9 @@ namespace AuroraIgloosAPI.Migrations
             modelBuilder.Entity("AuroraIgloosAPI.Models.Trip", b =>
                 {
                     b.HasOne("AuroraIgloosAPI.Models.Employee", "Guide")
-                        .WithMany("GuidedTrips")
+                        .WithMany()
                         .HasForeignKey("GuideId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("AuroraIgloosAPI.Models.TripLevelOfDifficulty", "LevelOfDifficulty")
@@ -1065,11 +1068,6 @@ namespace AuroraIgloosAPI.Migrations
             modelBuilder.Entity("AuroraIgloosAPI.Models.Discount", b =>
                 {
                     b.Navigation("Igloos");
-                });
-
-            modelBuilder.Entity("AuroraIgloosAPI.Models.Employee", b =>
-                {
-                    b.Navigation("GuidedTrips");
                 });
 
             modelBuilder.Entity("AuroraIgloosAPI.Models.ForumPost", b =>

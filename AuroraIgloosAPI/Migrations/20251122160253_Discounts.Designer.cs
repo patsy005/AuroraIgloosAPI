@@ -4,6 +4,7 @@ using AuroraIgloosAPI.Models.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AuroraIgloosAPI.Migrations
 {
     [DbContext(typeof(CompanyContext))]
-    partial class CompanyContextModelSnapshot : ModelSnapshot
+    [Migration("20251122160253_Discounts")]
+    partial class Discounts
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -427,16 +430,10 @@ namespace AuroraIgloosAPI.Migrations
                     b.Property<int?>("Capacity")
                         .HasColumnType("int");
 
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int?>("IdDiscount")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhotoUrl")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal?>("PricePerNight")
@@ -650,112 +647,6 @@ namespace AuroraIgloosAPI.Migrations
                         .IsUnique();
 
                     b.ToTable("Timezone");
-                });
-
-            modelBuilder.Entity("AuroraIgloosAPI.Models.Trip", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateOnly>("CreatedAt")
-                        .HasColumnType("date");
-
-                    b.Property<int>("Duration")
-                        .HasColumnType("int");
-
-                    b.Property<int>("GuideId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("LevelOfDifficultyId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("LongDescription")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("SeasonId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ShortDescription")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateOnly>("UpdatedAt")
-                        .HasColumnType("date");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("GuideId");
-
-                    b.HasIndex("LevelOfDifficultyId");
-
-                    b.HasIndex("SeasonId");
-
-                    b.ToTable("Trip");
-                });
-
-            modelBuilder.Entity("AuroraIgloosAPI.Models.TripLevelOfDifficulty", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateOnly>("CreatedAt")
-                        .HasColumnType("date");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Level")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateOnly>("UpdatedAt")
-                        .HasColumnType("date");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("TripLevelOfDifficulty");
-                });
-
-            modelBuilder.Entity("AuroraIgloosAPI.Models.TripSeason", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateOnly>("CreatedAt")
-                        .HasColumnType("date");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateOnly>("UpdatedAt")
-                        .HasColumnType("date");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("TripSeason");
                 });
 
             modelBuilder.Entity("AuroraIgloosAPI.Models.User", b =>
@@ -1004,33 +895,6 @@ namespace AuroraIgloosAPI.Migrations
                     b.Navigation("TaskStatus");
                 });
 
-            modelBuilder.Entity("AuroraIgloosAPI.Models.Trip", b =>
-                {
-                    b.HasOne("AuroraIgloosAPI.Models.Employee", "Guide")
-                        .WithMany("GuidedTrips")
-                        .HasForeignKey("GuideId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("AuroraIgloosAPI.Models.TripLevelOfDifficulty", "LevelOfDifficulty")
-                        .WithMany("Trips")
-                        .HasForeignKey("LevelOfDifficultyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("AuroraIgloosAPI.Models.TripSeason", "Season")
-                        .WithMany("Trips")
-                        .HasForeignKey("SeasonId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Guide");
-
-                    b.Navigation("LevelOfDifficulty");
-
-                    b.Navigation("Season");
-                });
-
             modelBuilder.Entity("AuroraIgloosAPI.Models.User", b =>
                 {
                     b.HasOne("AuroraIgloosAPI.Models.Customer", "Customer")
@@ -1067,24 +931,9 @@ namespace AuroraIgloosAPI.Migrations
                     b.Navigation("Igloos");
                 });
 
-            modelBuilder.Entity("AuroraIgloosAPI.Models.Employee", b =>
-                {
-                    b.Navigation("GuidedTrips");
-                });
-
             modelBuilder.Entity("AuroraIgloosAPI.Models.ForumPost", b =>
                 {
                     b.Navigation("ForumComment");
-                });
-
-            modelBuilder.Entity("AuroraIgloosAPI.Models.TripLevelOfDifficulty", b =>
-                {
-                    b.Navigation("Trips");
-                });
-
-            modelBuilder.Entity("AuroraIgloosAPI.Models.TripSeason", b =>
-                {
-                    b.Navigation("Trips");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,0 +1,28 @@
+using System;
+using AuroraIgloosAPI.Models;
+
+namespace AuroraIgloosAPI.DTOs
+{
+    public class TripDTO
+    {
+        public int Id { get; set; }
+
+        public string Name { get; set; } = null!;
+        public int Duration { get; set; }
+        public decimal Price { get; set; }
+        public string? ShortDescription { get; set; }
+        public string? LongDescription { get; set; }
+
+        public int LevelOfDifficultyId { get; set; }
+        public string LevelOfDifficultyName { get; set; } = "";
+
+        public int SeasonId { get; set; }
+        public string SeasonName { get; set; } = "";
+
+        public int GuideId { get; set; }
+        public Employee? Guide { get; set; }
+        
+        public DateOnly CreatedAt { get; set; }
+        public DateOnly UpdatedAt { get; set; }
+    }
+}

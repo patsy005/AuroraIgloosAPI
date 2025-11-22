@@ -35,12 +35,11 @@ namespace AuroraIgloosAPI.Controllers
                     Name = i.Name ?? "",
                     Capacity = i.Capacity ?? 0,
                     PricePerNight = i.PricePerNight ?? 0,
-                    Discount = i.Discount.Where(d => d.IdIgloo == i.Id)
-                        .Select(d => d.Discount1)
-                        .FirstOrDefault(),
-                    DiscountName = i.Discount.Where(d => d.IdIgloo == i.Id)
-                        .Select(d => d.Name)
-                        .FirstOrDefault() ?? ""
+                    Discount = i.Discount ?? null,
+                    IdDiscount = i.IdDiscount ?? 0,
+                    PhotoUrl = i.PhotoUrl ?? "",
+                    Description = i.Description ?? "",
+                    
                 })
 
                 .ToListAsync();
@@ -65,7 +64,7 @@ namespace AuroraIgloosAPI.Controllers
         // PUT: api/Igloos/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutIgloo(int id, IglooDTO iglooDto)
+        public async Task<IActionResult> PutIgloo(int id, [FromForm] IglooFormDTO iglooDto)
         {
             if (id != iglooDto.Id)
             {
@@ -84,14 +83,47 @@ namespace AuroraIgloosAPI.Controllers
             igloo.Name = iglooDto.Name;
             igloo.Capacity = iglooDto.Capacity;
             igloo.PricePerNight = iglooDto.PricePerNight;
+            igloo.Discount = iglooDto.Discount;
+            // igloo.IdDiscount = iglooDto.IdDiscount;
+            igloo.Description = iglooDto.Description;
 
-            igloo.Discount.Clear();
+            if (iglooDto.PhotoFile != null && iglooDto.PhotoFile.Length > 0)
+            {
+                var uploadsPath = Path.Combine(
+                    Directory.GetCurrentDirectory(),
+                    "wwwroot",
+                    "contents",
+                    "images",
+                    "igloos"
+                );
+                Directory.CreateDirectory(uploadsPath);
+                
+                var originalFileName = Path.GetFileName(iglooDto.PhotoFile.FileName);
+                var uniqueFileName = $"{Guid.NewGuid()}-{originalFileName}";
+                
+                var filePath = Path.Combine(uploadsPath, uniqueFileName);
 
-            var discounts = await _context.Discount
-                .Where(d => iglooDto.IdDiscount == d.IdIgloo)
-                .ToListAsync();
+                await using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await iglooDto.PhotoFile.CopyToAsync(stream);
+                }
 
-            igloo.Discount.AddRange(discounts);
+                if (!string.IsNullOrWhiteSpace(igloo.PhotoUrl))
+                {
+                    var oldFilePath = Path.Combine(
+                        Directory.GetCurrentDirectory(),
+                        "wwwroot",
+                        igloo.PhotoUrl.TrimStart('/', '\\'));
+                    if (System.IO.File.Exists(oldFilePath))
+                    {
+                        System.IO.File.Delete(oldFilePath);
+                    }
+                }
+                
+                var relativePath = Path.Combine("contents", "images", "igloos", uniqueFileName).Replace('\\', '/');
+                
+                igloo.PhotoUrl = relativePath;
+            }
 
             try
             {
@@ -116,7 +148,7 @@ namespace AuroraIgloosAPI.Controllers
         // POST: api/Igloos
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Igloo>> PostIgloo(IglooDTO iglooDto)
+        public async Task<ActionResult<Igloo>> PostIgloo([FromForm] IglooFormDTO iglooDto)
         {
 
             if(!ModelState.IsValid)
@@ -124,16 +156,40 @@ namespace AuroraIgloosAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            var discounts = await _context.Discount
-                .Where(d => iglooDto.IdDiscount == d.IdIgloo)
-                .ToListAsync();
+            string? photoPath = null;
 
+            if (iglooDto.PhotoFile != null && iglooDto.PhotoFile.Length > 0)
+            {
+                var uploadsPath = Path.Combine(
+                    Directory.GetCurrentDirectory(),
+                    "wwwroot",
+                    "contents",
+                    "images",
+                    "igloos"
+                );
+                Directory.CreateDirectory(uploadsPath);
+                
+                var originalFileName = Path.GetFileName(iglooDto.PhotoFile.FileName);
+                var uniqueFileName = $"{Guid.NewGuid()}-{originalFileName}";
+                
+                var filePath = Path.Combine(uploadsPath, uniqueFileName);
+
+                await using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await iglooDto.PhotoFile.CopyToAsync(stream);
+                }
+                
+                photoPath = Path.Combine("contents", "images", "igloos", uniqueFileName).Replace('\\', '/');
+            }
             var igloo = new Igloo
             {
                 Name = iglooDto.Name,
                 Capacity = iglooDto.Capacity,
                 PricePerNight = iglooDto.PricePerNight,
-                Discount = discounts
+                Discount = iglooDto.Discount,
+                // IdDiscount = iglooDto.IdDiscount,
+                PhotoUrl = photoPath,
+                Description = iglooDto.Description,
             };
 
             try

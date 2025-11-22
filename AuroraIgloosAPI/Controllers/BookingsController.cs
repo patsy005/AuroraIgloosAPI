@@ -115,7 +115,7 @@ namespace AuroraIgloosAPI.Controllers
             if (paymentMethod == null) return BadRequest("Payment method not found");
 
             var bookingsLogic = new BookingsLogic(_context);
-            var totalAmount = bookingsLogic.CalculateBookingTotalAmount(bookingDto.IdIgloo, bookingDto.CheckIn, bookingDto.CheckOut);
+            var totalAmount = bookingsLogic.CalculateBookingTotalAmount(bookingDto.IdIgloo, bookingDto.CheckIn, bookingDto.CheckOut, bookingDto.BookingDate);
 
             var booking = await _context.Booking
                 .Include(b => b.Customer)
@@ -191,7 +191,7 @@ namespace AuroraIgloosAPI.Controllers
             if (paymentMethod == null) return BadRequest("Payment method not found");
 
             var bookingsLogic = new BookingsLogic(_context);
-            var totalAmount = bookingsLogic.CalculateBookingTotalAmount(bookingDto.IdIgloo, bookingDto.CheckIn, bookingDto.CheckOut);
+            var totalAmount = bookingsLogic.CalculateBookingTotalAmount(bookingDto.IdIgloo, bookingDto.CheckIn, bookingDto.CheckOut, DateOnly.FromDateTime(DateTime.Now));
 
             var booking = new Booking
             {

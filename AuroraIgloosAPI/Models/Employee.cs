@@ -20,4 +20,6 @@ public partial class Employee
     public required EmployeeRole EmployeeRole { get; set; }
     
     public User User { get; set; }
+    
+    public ICollection<Trip> GuidedTrips { get; set; } = new List<Trip>();
 }

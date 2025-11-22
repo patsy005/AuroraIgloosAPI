@@ -18,6 +18,14 @@ public partial class Igloo
 
     public decimal? PricePerNight { get; set; }
 
-    [ForeignKey("IdIgloo")]
-    public virtual ICollection<Discount> Discount { get; set; } = new List<Discount>();
+    // [ForeignKey("IdIgloo")]
+    // public virtual ICollection<Discount> Discount { get; set; } = new List<Discount>();
+    
+    public int? IdDiscount { get; set; }
+    
+    public Discount? Discount { get; set; }
+    
+    public string? PhotoUrl { get; set; }
+    
+    public string? Description { get; set; }
 }

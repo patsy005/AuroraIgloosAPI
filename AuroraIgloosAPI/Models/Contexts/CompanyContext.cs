@@ -71,6 +71,13 @@ public partial class CompanyContext : DbContext
     public virtual DbSet<UserRole> UserRole { get; set; }
     
     public virtual DbSet<UserType> UserType { get; set; }
+    
+    public virtual DbSet<Trip> Trip { get; set; } = null!;
+    
+    public virtual DbSet<TripSeason> TripSeason { get; set; } = null!;
+    
+    public virtual DbSet<TripLevelOfDifficulty> TripLevelOfDifficulty { get; set; } = null!;
+
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
@@ -202,8 +209,14 @@ public partial class CompanyContext : DbContext
         modelBuilder.Entity<Igloo>()
             .HasOne(i => i.Discount)
             .WithMany(d => d.Igloos)
-            .HasForeignKey(i => i.DiscountId)
+            .HasForeignKey(i => i.IdDiscount)
             .OnDelete(DeleteBehavior.SetNull);
+        
+        modelBuilder.Entity<Trip>()
+            .HasOne(t => t.Guide)
+            .WithMany(e => e.GuidedTrips)
+            .HasForeignKey(t => t.GuideId)
+            .OnDelete(DeleteBehavior.Restrict);
 
         base.OnModelCreating(modelBuilder);
     }
