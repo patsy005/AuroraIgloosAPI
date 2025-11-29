@@ -142,11 +142,11 @@ public partial class CompanyContext : DbContext
             .HasForeignKey<Employee>(e => e.IdUser)
             .OnDelete(DeleteBehavior.Cascade);
 
-        modelBuilder.Entity<Booking>()
-            .HasOne(e => e.Employee)
-            .WithMany()
-            .HasForeignKey(e => e.CreatedById)
-            .OnDelete(DeleteBehavior.Restrict); 
+        // modelBuilder.Entity<Booking>()
+        //     .HasOne(e => e.Employee)
+        //     .WithMany()
+        //     .HasForeignKey(e => e.CreatedById)
+        //     .OnDelete(DeleteBehavior.Restrict); 
 
         modelBuilder.Entity<Booking>()
             .HasOne(e => e.Customer)
@@ -169,7 +169,13 @@ public partial class CompanyContext : DbContext
             .HasOne(e => e.PaymentMethod)
             .WithMany()
             .HasForeignKey(e => e.PaymentMethodId)
-            .OnDelete(DeleteBehavior.Restrict); 
+            .OnDelete(DeleteBehavior.Restrict);
+        
+        modelBuilder.Entity<Booking>()
+            .HasOne(b => b.Trip)
+            .WithMany()
+            .HasForeignKey(b => b.TripId)
+            .OnDelete(DeleteBehavior.Restrict);
 
         //modelBuilder.Entity<Booking>()
         //    .HasOne(e => e.Currency)

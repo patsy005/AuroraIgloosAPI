@@ -8,25 +8,21 @@ namespace AuroraIgloosAPI.DTOs
         public int Id { get; set; }
         [Required(ErrorMessage = "IdCustomer is required")]
         public int IdCustomer { get; set; }
+        
+        public int? IdIgloo { get; set; }
 
-        [Required(ErrorMessage = "IdIgloo is required")]
-        public int IdIgloo { get; set; }
+        public DateOnly? CheckIn { get; set; }
 
-        [Required(ErrorMessage = "CheckIn is required")]
-        public DateOnly CheckIn { get; set; }
-
-        [Required(ErrorMessage = "CheckOut is required")]
-        public DateOnly CheckOut { get; set; }
+        public DateOnly? CheckOut{ get; set; }
+        
+        public DateOnly? TripDate { get; set; }
 
         [Required(ErrorMessage = "PaymentMethodId is required")]
         public int PaymentMethodId { get; set; }
 
         [Required(ErrorMessage = "Amount is required")]
         public decimal Amount { get; set; }
-
-        [Required(ErrorMessage = "CreatedById is required")]
-        public int CreatedById { get; set; }
-
+        
 
         public bool? EarlyCheckInRequest { get; set; }
         public bool? LateCheckOutRequest { get; set; }
@@ -37,12 +33,16 @@ namespace AuroraIgloosAPI.DTOs
         public string? CustomerPhone { get; set; }
 
         public string? IglooName { get; set; }
-
-        public string? EmployeeName { get; set; }
-        public string? EmployeeSurname { get; set; }
+        // public Igloo? Igloo { get; set; }
+        
 
         public string? PaymentMethodName { get; set; }
+        
+        public int? TripId { get; set; }
+        // public Trip? Trip { get; set; }
 
-
+        public string? TripName { get; set; }
+        
+        public int Guests { get; set; }
     }
 }

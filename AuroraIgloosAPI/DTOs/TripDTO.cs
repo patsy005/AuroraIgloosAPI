@@ -9,7 +9,7 @@ namespace AuroraIgloosAPI.DTOs
 
         public string Name { get; set; } = null!;
         public int Duration { get; set; }
-        public decimal Price { get; set; }
+        public decimal PricePerPerson { get; set; }
         public string? ShortDescription { get; set; }
         public string? LongDescription { get; set; }
 

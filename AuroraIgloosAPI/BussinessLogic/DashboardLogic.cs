@@ -14,6 +14,7 @@ namespace AuroraIgloosAPI.BussinessLogic
 
         public DashboardStatsDTO GetDashboardStats(DateOnly from, DateOnly to)
         {
+            
             var previousFrom = from.AddDays(-(to.DayNumber - from.DayNumber));
             var previousTo = from;
 
@@ -32,7 +33,9 @@ namespace AuroraIgloosAPI.BussinessLogic
             {
                 var start = b.CheckIn < from ? from : b.CheckIn;
                 var end = b.CheckOut > to ? to : b.CheckOut;
-                var days = end.DayNumber - start.DayNumber;
+                
+                if(!start.HasValue || !end.HasValue) return 0;
+                var days = (end.Value.ToDateTime(TimeOnly.MinValue) - start.Value.ToDateTime(TimeOnly.MinValue)).Days;
                 return days > 0 ? days : 0;
             });
 
@@ -49,7 +52,9 @@ namespace AuroraIgloosAPI.BussinessLogic
             {
                 var start = b.CheckIn < previousFrom ? previousFrom : b.CheckIn;
                 var end = b.CheckOut > previousTo ? previousTo : b.CheckOut;
-                return (end.DayNumber - start.DayNumber);
+                if(!start.HasValue || !end.HasValue) return 0;
+                var days = (end.Value.ToDateTime(TimeOnly.MinValue) - start.Value.ToDateTime(TimeOnly.MinValue)).Days;
+                return days > 0 ? days : 0;
             });
 
             var previousMaxOccupancy = totalDays * totalIgloos;

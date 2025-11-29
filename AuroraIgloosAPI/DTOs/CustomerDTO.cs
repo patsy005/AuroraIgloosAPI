@@ -38,5 +38,8 @@ namespace AuroraIgloosAPI.DTOs
         
         public string? Login { get; set; }
         public string? Password { get; set; }
+        
+        public int? UserTypeId { get; set; }
+        public int? UserRoleId { get; set; }
     }
 }

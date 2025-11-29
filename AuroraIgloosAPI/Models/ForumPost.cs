@@ -9,11 +9,12 @@ namespace AuroraIgloosAPI.Models;
 public partial class ForumPost
 {
     public int Id { get; set; }
-    public int? IdEmployee { get; set; }
-    public string? Title { get; set; }
-    public string? PostContent { get; set; }
+    public required int IdEmployee { get; set; }
+    public required string Title { get; set; }
+    public required string PostContent { get; set; }
     public DateOnly? PostDate { get; set; }
-    public int? CategoryId { get; set; }
+    public DateOnly? UpdateDate { get; set; }
+    public required int CategoryId { get; set; }
     public string? Tags { get; set; }
 
     public required Employee Employee { get; set; }

@@ -42,9 +42,7 @@ namespace AuroraIgloosAPI.Controllers
                     PostDate = p.PostDate,
                     Category = p.Category.Name ?? "",
                     Tags = p.Tags ?? "",
-                    EmployeeName = p.Employee.Person.Name ?? "",
-                    EmployeeSurname = p.Employee.Person.Surname ?? "",
-                    EmployeePhotoUrl = p.Employee.PhotoUrl ?? "",
+                    Employee = p.Employee,
                     ForumComment = p.ForumComment.Select(c => new ForumCommentDTO
                     {
                         Id = c.Id,
@@ -85,9 +83,7 @@ namespace AuroraIgloosAPI.Controllers
                     PostDate = p.PostDate,
                     Category = p.Category.Name ?? "",
                     Tags = p.Tags ?? "",
-                    EmployeeName = p.Employee.Person.Name ?? "",
-                    EmployeeSurname = p.Employee.Person.Surname ?? "",
-                    EmployeePhotoUrl = p.Employee.PhotoUrl ?? "",
+                    Employee = p.Employee,
                     ForumComment = p.ForumComment.Select(c => new ForumCommentDTO
                     {
                         Id = c.Id,
@@ -117,7 +113,7 @@ namespace AuroraIgloosAPI.Controllers
         // PUT: api/ForumPosts/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutForumPost(int id, ForumPostDTO forumPostDto)
+        public async Task<IActionResult> PutForumPost(int id, ForumPostFormDTO forumPostDto)
         {
             if(id != forumPostDto.Id)
             {
@@ -136,7 +132,7 @@ namespace AuroraIgloosAPI.Controllers
                 return NotFound();
             }
 
-           var category = await _context.ForumCategory.FindAsync(forumPostDto.CategoryId);
+            var category = await _context.ForumCategory.FindAsync(forumPostDto.CategoryId);
             if (category == null)
             {
                 return BadRequest("Category not found");
@@ -162,10 +158,11 @@ namespace AuroraIgloosAPI.Controllers
             }
 
 
+            var now = DateOnly.FromDateTime(DateTime.Now);
 
             forumPost.Title = forumPostDto.Title;
             forumPost.PostContent = forumPostDto.PostContent;
-            forumPost.PostDate = forumPostDto.PostDate;
+            forumPost.UpdateDate = now;
             forumPost.CategoryId = forumPostDto.CategoryId;
             forumPost.Tags = forumPostDto.Tags;
             forumPost.IdEmployee = forumPostDto.IdEmployee;
@@ -193,7 +190,7 @@ namespace AuroraIgloosAPI.Controllers
         // POST: api/ForumPosts
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<ForumPost>> PostForumPost(ForumPostDTO forumPostDto)
+        public async Task<ActionResult<ForumPost>> PostForumPost(ForumPostFormDTO forumPostDto)
         {
             if (!ModelState.IsValid)
             {
@@ -256,9 +253,7 @@ namespace AuroraIgloosAPI.Controllers
                 PostDate = forumPost.PostDate,
                 Category = category.Name ?? "",
                 Tags = forumPost.Tags ?? "",
-                EmployeeName = employee.Person?.Name ?? "",
-                EmployeeSurname = employee.Person?.Surname ?? "",
-                EmployeePhotoUrl = employee.PhotoUrl ?? "",
+                Employee = forumPost.Employee,
                 ForumComment = forumComments.Select(c => new ForumCommentDTO
                 {
                     Id = c.Id,

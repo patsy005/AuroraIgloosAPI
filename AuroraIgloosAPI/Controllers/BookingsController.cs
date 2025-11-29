@@ -33,17 +33,20 @@ namespace AuroraIgloosAPI.Controllers
                 .Include(b => b.Customer)
                     .ThenInclude(c => c.Person)
                     .ThenInclude(u => u.Address)
+                .Include(b => b.Customer)
+                    .ThenInclude(c => c.User)
                 .Include(b => b.Igloo)
                 .Include(b => b.PaymentMethod)
-                .Include(b => b.Employee)
-                    .ThenInclude(e => e.Person)
-                    .ThenInclude(u => u.Address)
+                .Include(b => b.Trip)
+                    .ThenInclude(t => t.Season)
+                .Include(b => b.Trip)
+                    .ThenInclude(t => t.LevelOfDifficulty)
                 .Select(b => new BookingDTO
                 {
                     Id = b.Id,
                     IdIgloo = b.IdIgloo,
                     IdCustomer = b.IdCustomer,
-                    CreatedById = b.CreatedById,
+                    // CreatedById = b.CreatedById,
                     BookingDate = b.BookingDate,
                     CheckIn = b.CheckIn,
                     CheckOut = b.CheckOut,
@@ -52,11 +55,13 @@ namespace AuroraIgloosAPI.Controllers
                     CustomerSurname = b.Customer.Person.Surname,
                     CustomerEmail = b.Customer.Person.Email,
                     CustomerPhone = b.Customer.Person.PhoneNumber,
-                    EmployeeName = b.Employee.Person.Name,
-                    EmployeeSurname = b.Employee.Person.Surname,
-                    IglooName = b.Igloo.Name,
+                    IglooName = b.Igloo.Name ?? "",
                     PaymentMethodName = b.PaymentMethod.Name,
-                    PaymentMethodId = b.PaymentMethodId
+                    PaymentMethodId = b.PaymentMethodId,
+                    TripId = b.TripId,
+                    TripName = b.Trip.Name,
+                    TripDate = b.TripDate,
+                    Guests = b.Guests,
 
                 })
                 .ToListAsync();
@@ -71,8 +76,15 @@ namespace AuroraIgloosAPI.Controllers
             var booking = await _context.Booking
                 .Include(b => b.Customer)
                     .ThenInclude(c => c.Person)
+                    .ThenInclude(u => u.Address)
+                .Include(b => b.Customer)
+                    .ThenInclude(c => c.User)
                 .Include(b => b.Igloo)
                 .Include(b => b.PaymentMethod)
+                .Include(b => b.Trip)
+                    .ThenInclude(t => t.Season)
+                .Include(b => b.Trip)
+                    .ThenInclude(t => t.LevelOfDifficulty)
                 .FirstOrDefaultAsync(b => b.Id == id);
 
             if (booking == null)
@@ -86,7 +98,7 @@ namespace AuroraIgloosAPI.Controllers
         // PUT: api/Bookings/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutBooking(int id, BookingDTO bookingDto)
+        public async Task<IActionResult> PutBooking(int id, BookingFormDTO bookingDto)
         {
             if (id != bookingDto.Id)
             {
@@ -97,40 +109,28 @@ namespace AuroraIgloosAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
-
-            var customer = await _context.Customer.FindAsync(bookingDto.IdCustomer);
-
-            if (customer == null)
-            {
-                return BadRequest("Customer not found");
-            }
-
-            var igloo = await _context.Igloo.FindAsync(bookingDto.IdIgloo);
-            if (igloo == null) return BadRequest("Igloo not found");
-
-            var employee = await _context.Employee.FindAsync(bookingDto.CreatedById);
-            if (employee == null) return BadRequest("Employee not found");
-
-            var paymentMethod = await _context.PaymentMethod.FindAsync(bookingDto.PaymentMethodId);
-            if (paymentMethod == null) return BadRequest("Payment method not found");
-
-            var bookingsLogic = new BookingsLogic(_context);
-            var totalAmount = bookingsLogic.CalculateBookingTotalAmount(bookingDto.IdIgloo, bookingDto.CheckIn, bookingDto.CheckOut, bookingDto.BookingDate);
+            
+            var validation = await BookingCheck(bookingDto);
+            if (validation != null)
+                return validation;
+            
+            var totalAmount = await CalcBookingPrice(bookingDto);
 
             var booking = await _context.Booking
                 .Include(b => b.Customer)
                     .ThenInclude(c => c.Person)
-                .Include(b => b.Employee)
-                    .ThenInclude(e => e.Person)
                 .Include(b => b.Igloo)
                 .Include(b => b.PaymentMethod)
+                .Include(b => b.Trip)
+                .Include(b => b.Trip)
                 .FirstOrDefaultAsync(b => b.Id == id);
 
             if (booking == null) return NotFound($"Booking with id {id} not found");
+            
+            var now = DateOnly.FromDateTime(DateTime.Now);
 
             booking.IdIgloo = bookingDto.IdIgloo;
             booking.IdCustomer = bookingDto.IdCustomer;
-            booking.CreatedById = bookingDto.CreatedById;
             booking.BookingDate = bookingDto.BookingDate ?? booking.BookingDate;
             booking.CheckIn = bookingDto.CheckIn;
             booking.CheckOut = bookingDto.CheckOut;
@@ -138,11 +138,9 @@ namespace AuroraIgloosAPI.Controllers
             booking.EarlyCheckInRequest = bookingDto.EarlyCheckInRequest;
             booking.LateCheckOutRequest = bookingDto.LateCheckOutRequest;
             booking.PaymentMethodId = bookingDto.PaymentMethodId;
-            booking.Customer = customer;
-            booking.Igloo = igloo;
-            booking.Employee = employee;
-            booking.PaymentMethod = paymentMethod;
             booking.Amount = totalAmount ?? booking.Amount;
+            booking.TripId = bookingDto.TripId;
+            booking.UpdateDate = now;
 
             try
             {
@@ -166,49 +164,35 @@ namespace AuroraIgloosAPI.Controllers
         // POST: api/Bookings
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Booking>> PostBooking(BookingDTO bookingDto)
+        public async Task<ActionResult<Booking>> PostBooking(BookingFormDTO bookingDto)
         {
 
             if(!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
+            
+            var validation = await BookingCheck(bookingDto);
+            if (validation != null)
+                return validation;
 
-            var customer = await _context.Customer.FindAsync(bookingDto.IdCustomer);
 
-            if(customer == null)
-            {
-                return BadRequest("Customer not found");
-            }
-
-            var igloo = await _context.Igloo.FindAsync(bookingDto.IdIgloo);
-            if(igloo == null) return BadRequest("Igloo not found");
-
-            var employee = await _context.Employee.FindAsync(bookingDto.CreatedById);
-            if (employee == null) return BadRequest("Employee not found");
-
-            var paymentMethod = await _context.PaymentMethod.FindAsync(bookingDto.PaymentMethodId);
-            if (paymentMethod == null) return BadRequest("Payment method not found");
-
-            var bookingsLogic = new BookingsLogic(_context);
-            var totalAmount = bookingsLogic.CalculateBookingTotalAmount(bookingDto.IdIgloo, bookingDto.CheckIn, bookingDto.CheckOut, DateOnly.FromDateTime(DateTime.Now));
+            var totalAmount = await CalcBookingPrice(bookingDto);
 
             var booking = new Booking
             {
-                IdIgloo = bookingDto.IdIgloo,
+                IdIgloo = bookingDto.IdIgloo ?? null,
                 IdCustomer = bookingDto.IdCustomer,
-                CreatedById = bookingDto.CreatedById,
-                CheckIn = bookingDto.CheckIn,
-                CheckOut = bookingDto.CheckOut,
+                // CreatedById = bookingDto.CreatedById,
+                CheckIn = bookingDto.CheckIn ?? null,
+                CheckOut = bookingDto.CheckOut ?? null,
                 PaymentMethodId = bookingDto.PaymentMethodId,
                 Amount = totalAmount ?? 0.0m,
-                EarlyCheckInRequest = bookingDto.EarlyCheckInRequest,
-                LateCheckOutRequest = bookingDto.LateCheckOutRequest,
-                BookingDate = bookingDto.BookingDate ?? DateOnly.FromDateTime(DateTime.Now),
-                Customer = customer ,
-                Igloo = igloo,
-                PaymentMethod = paymentMethod,
-                Employee = employee
+                EarlyCheckInRequest = bookingDto.EarlyCheckInRequest ?? null,
+                LateCheckOutRequest = bookingDto.LateCheckOutRequest ?? null,
+                BookingDate = DateOnly.FromDateTime(DateTime.Now),
+                TripId = bookingDto.TripId ?? null,
+
             };
 
             try
@@ -233,10 +217,9 @@ namespace AuroraIgloosAPI.Controllers
             var booking = await _context.Booking
                 .Include(b => b.Customer)
                     .ThenInclude(c => c.Person)
-                .Include(b => b.Employee)
-                    .ThenInclude(e => e.Person)
                 .Include(b => b.Igloo)
                 .Include(b => b.PaymentMethod)
+                .Include(b => b.Trip)
                 .FirstOrDefaultAsync(b => b.Id == id);
 
             if(booking == null) return NotFound($"Booking with id {id} not found");
@@ -251,6 +234,93 @@ namespace AuroraIgloosAPI.Controllers
         private bool BookingExists(int id)
         {
             return _context.Booking.Any(e => e.Id == id);
+        }
+
+        private async Task<ActionResult?> IglooBookCheck(BookingFormDTO bookingDto)
+        {
+            
+            if (!bookingDto.IdIgloo.HasValue) return null;
+            
+            var iglooExists = await _context.Igloo.AnyAsync(b => b.Id == bookingDto.IdIgloo.Value);
+            if(!iglooExists) return BadRequest("Igloo not found");
+            
+            if(!bookingDto.CheckIn.HasValue) return BadRequest("Check in date is required");
+            if(!bookingDto.CheckOut.HasValue) return BadRequest("Checkout date is required");
+
+            if (iglooExists)
+            {
+                var igloo = await _context.Igloo.FindAsync(bookingDto.IdIgloo);
+                if(igloo == null) return BadRequest("Igloo not found");
+                if(igloo.Capacity < bookingDto.Guests) return BadRequest("Igloo's capacity is less than guests");
+            }
+            
+            return null;
+        }
+
+        private async Task<ActionResult?> TripBookCheck(BookingFormDTO bookingDto)
+        {
+            if (!bookingDto.TripId.HasValue) return null;
+            
+            var tripExists = await _context.Trip.AnyAsync(t => t.Id == bookingDto.TripId.Value);
+            if(!tripExists) return BadRequest("Trip not found");
+            
+            if(!bookingDto.TripDate.HasValue) return BadRequest("Trip date is required");
+            
+            return null;
+        }
+
+        private async Task<ActionResult?> BookingCheck(BookingFormDTO bookingDto)
+        {
+            if (bookingDto.IdIgloo == null && bookingDto.TripId == null)
+            {
+                return BadRequest("Booking must contain at leat an Igloo or a Trip");
+            }
+
+            if (bookingDto.Guests <= 0)
+            {
+                return BadRequest("Booking must contain at least one guest");
+            }
+
+            var customer = await _context.Customer.FindAsync(bookingDto.IdCustomer);
+
+            if (customer == null)
+            {
+                return BadRequest("Customer not found");
+            }
+            
+            var paymentMethod = await _context.PaymentMethod.FindAsync(bookingDto.PaymentMethodId);
+            if (paymentMethod == null) return BadRequest("Payment method not found");
+
+            var iglooValidation = await IglooBookCheck(bookingDto);
+            if (iglooValidation != null) return iglooValidation;
+            
+            var tripValidation = await TripBookCheck(bookingDto);
+            if (tripValidation != null) return tripValidation;
+
+            return null;
+        }
+
+        private async Task<decimal?> CalcBookingPrice(BookingFormDTO bookingDto)
+        {
+            decimal? iglooPrice = 0;
+            decimal? tripPrice = 0;
+            
+            var bookingsLogic = new BookingsLogic(_context);
+
+            if (bookingDto.IdIgloo.HasValue)
+            {
+                iglooPrice = bookingsLogic.CalculateBookingTotalAmount(bookingDto.IdIgloo, bookingDto.CheckIn, bookingDto.CheckOut, bookingDto.BookingDate);
+            }
+
+            if (bookingDto.TripId.HasValue)
+            {
+                var trip = await _context.Trip.FirstOrDefaultAsync(t => t.Id == bookingDto.TripId.Value);
+                tripPrice = trip?.PricePerPerson * bookingDto.Guests;
+            }
+            
+            decimal? totalPrice = iglooPrice + tripPrice;
+            
+            return totalPrice;
         }
     }
 }

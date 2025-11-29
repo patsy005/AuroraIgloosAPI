@@ -13,7 +13,7 @@ namespace AuroraIgloosAPI.DTOs
         public int Duration { get; set; }
 
         [Required(ErrorMessage = "Price is required")]
-        public decimal Price { get; set; }
+        public decimal PricePerPerson { get; set; }
 
         public string? ShortDescription { get; set; }
         public string? LongDescription { get; set; }

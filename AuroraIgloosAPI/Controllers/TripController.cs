@@ -35,7 +35,7 @@ namespace AuroraIgloosAPI.Controllers
                     Id = t.Id,
                     Name = t.Name,
                     Duration = t.Duration,
-                    Price = t.Price,
+                    PricePerPerson = t.PricePerPerson,
                     ShortDescription = t.ShortDescription,
                     LongDescription = t.LongDescription,
                     GuideId = t.GuideId,
@@ -75,7 +75,7 @@ namespace AuroraIgloosAPI.Controllers
             {
                 Name = tripDTO.Name,
                 Duration = tripDTO.Duration,
-                Price = tripDTO.Price,
+                PricePerPerson = tripDTO.PricePerPerson,
                 ShortDescription = tripDTO.ShortDescription,
                 LongDescription = tripDTO.LongDescription,
                 GuideId = tripDTO.GuideId,
@@ -112,7 +112,7 @@ namespace AuroraIgloosAPI.Controllers
 
             trip.Name = tripDTO.Name;
             trip.Duration = tripDTO.Duration;
-            trip.Price = tripDTO.Price;
+            trip.PricePerPerson = tripDTO.PricePerPerson;
             trip.ShortDescription = tripDTO.ShortDescription;
             trip.LongDescription = tripDTO.LongDescription;
             trip.GuideId = tripDTO.Guide.Id;

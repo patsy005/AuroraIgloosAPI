@@ -8,7 +8,7 @@ public class Trip
     
     public int Duration { get; set; } // in days
     
-    public decimal Price { get; set; }
+    public decimal PricePerPerson { get; set; }
     
     public required string ShortDescription { get; set; }
     

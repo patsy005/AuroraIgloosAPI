@@ -4,6 +4,7 @@ using AuroraIgloosAPI.Models.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AuroraIgloosAPI.Migrations
 {
     [DbContext(typeof(CompanyContext))]
-    partial class CompanyContextModelSnapshot : ModelSnapshot
+    [Migration("20251123162259_Bookings")]
+    partial class Bookings
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -67,17 +70,14 @@ namespace AuroraIgloosAPI.Migrations
                     b.Property<DateOnly>("BookingDate")
                         .HasColumnType("date");
 
-                    b.Property<DateOnly?>("CheckIn")
+                    b.Property<DateOnly>("CheckIn")
                         .HasColumnType("date");
 
-                    b.Property<DateOnly?>("CheckOut")
+                    b.Property<DateOnly>("CheckOut")
                         .HasColumnType("date");
 
                     b.Property<bool?>("EarlyCheckInRequest")
                         .HasColumnType("bit");
-
-                    b.Property<int>("Guests")
-                        .HasColumnType("int");
 
                     b.Property<int>("IdCustomer")
                         .HasColumnType("int");
@@ -93,9 +93,6 @@ namespace AuroraIgloosAPI.Migrations
 
                     b.Property<int>("PaymentMethodId")
                         .HasColumnType("int");
-
-                    b.Property<DateOnly?>("TripDate")
-                        .HasColumnType("date");
 
                     b.Property<int?>("TripId")
                         .HasColumnType("int");
@@ -359,14 +356,13 @@ namespace AuroraIgloosAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CategoryId")
+                    b.Property<int?>("CategoryId")
                         .HasColumnType("int");
 
-                    b.Property<int>("IdEmployee")
+                    b.Property<int?>("IdEmployee")
                         .HasColumnType("int");
 
                     b.Property<string>("PostContent")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateOnly?>("PostDate")
@@ -376,11 +372,7 @@ namespace AuroraIgloosAPI.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateOnly?>("UpdateDate")
-                        .HasColumnType("date");
 
                     b.HasKey("Id");
 
@@ -687,7 +679,7 @@ namespace AuroraIgloosAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("PricePerPerson")
+                    b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("SeasonId")
@@ -959,15 +951,11 @@ namespace AuroraIgloosAPI.Migrations
                 {
                     b.HasOne("AuroraIgloosAPI.Models.ForumCategory", "Category")
                         .WithMany()
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CategoryId");
 
                     b.HasOne("AuroraIgloosAPI.Models.Employee", "Employee")
                         .WithMany()
-                        .HasForeignKey("IdEmployee")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("IdEmployee");
 
                     b.Navigation("Category");
 

@@ -179,6 +179,9 @@ namespace AuroraIgloosAPI.Controllers
                 {
                     Login = customerDto.Login,
                     // UserTypeId = 2
+                    UserRoleId = customerDto.UserRoleId ?? 3,
+                    UserTypeId = customerDto.UserTypeId ?? 2,
+                    
                 };
                 
                 user.PasswordHash = _passwordHasher.HashPassword(user, customerDto.Password);
