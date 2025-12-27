@@ -62,6 +62,8 @@ namespace AuroraIgloosAPI.Controllers
                     TripName = b.Trip.Name,
                     TripDate = b.TripDate,
                     Guests = b.Guests,
+                    EarlyCheckInRequest = b.EarlyCheckInRequest,
+                    LateCheckOutRequest = b.LateCheckOutRequest,
 
                 })
                 .ToListAsync();
@@ -141,6 +143,8 @@ namespace AuroraIgloosAPI.Controllers
             booking.Amount = totalAmount ?? booking.Amount;
             booking.TripId = bookingDto.TripId;
             booking.UpdateDate = now;
+            booking.Guests = bookingDto.Guests;
+            booking.TripDate = bookingDto.TripDate;
 
             try
             {
@@ -192,6 +196,8 @@ namespace AuroraIgloosAPI.Controllers
                 LateCheckOutRequest = bookingDto.LateCheckOutRequest ?? null,
                 BookingDate = DateOnly.FromDateTime(DateTime.Now),
                 TripId = bookingDto.TripId ?? null,
+                Guests = bookingDto.Guests,
+                TripDate = bookingDto.TripDate,
 
             };
 

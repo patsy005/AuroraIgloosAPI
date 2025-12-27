@@ -121,8 +121,9 @@ public partial class CompanyContext : DbContext
         
         modelBuilder.Entity<Customer>()
             .HasOne(c => c.User)
-            .WithOne()
+            .WithOne(u => u.Customer)
             .HasForeignKey<Customer>(c => c.IdUser)
+            .IsRequired(false)
             .OnDelete(DeleteBehavior.Cascade);
 
         modelBuilder.Entity<Employee>()
@@ -138,7 +139,7 @@ public partial class CompanyContext : DbContext
         
         modelBuilder.Entity<Employee>()
             .HasOne(e => e.User)
-            .WithOne()
+            .WithOne(u => u.Employee)
             .HasForeignKey<Employee>(e => e.IdUser)
             .OnDelete(DeleteBehavior.Cascade);
 

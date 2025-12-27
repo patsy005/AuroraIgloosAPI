@@ -20,9 +20,13 @@ namespace AuroraIgloosAPI.DTOs
         public string SeasonName { get; set; } = "";
 
         public int GuideId { get; set; }
+        
+        public string GuideName { get; set; } = "";
         public Employee? Guide { get; set; }
         
         public DateOnly CreatedAt { get; set; }
         public DateOnly UpdatedAt { get; set; }
+        
+        public string? PhotoUrl { get; set; }
     }
 }

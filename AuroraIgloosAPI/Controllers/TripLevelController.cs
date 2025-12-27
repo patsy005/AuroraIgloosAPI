@@ -70,6 +70,39 @@ namespace AuroraIgloosAPI.Controllers
             return CreatedAtAction(nameof(GetTripLevel), new { id = tripLevel.Id }, tripLevel);
         }
         
+        // PUT: api/TripLevel/1
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutTripLevel(int id, TripLevelOfDifficultyDTO tripLevelDTO)
+        {
+            if (id != tripLevelDTO.Id)
+                return BadRequest("Invalid Id");
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var tripLevel = await _context.TripLevelOfDifficulty.FindAsync(id);
+            if (tripLevel == null)
+                return NotFound($"TripLevel with id {id} not found");
+
+            tripLevel.Name = tripLevelDTO.Name;
+            tripLevel.Description = tripLevelDTO.Description ?? "";
+            tripLevel.UpdatedAt = DateOnly.FromDateTime(DateTime.Now);
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!TripLevelExists(id))
+                    return NotFound($"TripLevel with id {id} not found");
+                throw;
+            }
+
+            return NoContent();
+        }
+
+        
         // DELETE: api/TripLevel/1
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTripLevel(int id)

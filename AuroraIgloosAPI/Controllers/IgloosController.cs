@@ -36,7 +36,7 @@ namespace AuroraIgloosAPI.Controllers
                     Capacity = i.Capacity ?? 0,
                     PricePerNight = i.PricePerNight ?? 0,
                     Discount = i.Discount ?? null,
-                    IdDiscount = i.IdDiscount ?? 0,
+                    IdDiscount = i.IdDiscount,
                     PhotoUrl = i.PhotoUrl ?? "",
                     Description = i.Description ?? "",
                     
@@ -84,7 +84,7 @@ namespace AuroraIgloosAPI.Controllers
             igloo.Capacity = iglooDto.Capacity;
             igloo.PricePerNight = iglooDto.PricePerNight;
             igloo.Discount = iglooDto.Discount;
-            // igloo.IdDiscount = iglooDto.IdDiscount;
+            igloo.IdDiscount = iglooDto.IdDiscount;
             igloo.Description = iglooDto.Description;
 
             if (iglooDto.PhotoFile != null && iglooDto.PhotoFile.Length > 0)
@@ -187,7 +187,7 @@ namespace AuroraIgloosAPI.Controllers
                 Capacity = iglooDto.Capacity,
                 PricePerNight = iglooDto.PricePerNight,
                 Discount = iglooDto.Discount,
-                // IdDiscount = iglooDto.IdDiscount,
+                IdDiscount = iglooDto.IdDiscount,
                 PhotoUrl = photoPath,
                 Description = iglooDto.Description,
             };
@@ -209,19 +209,30 @@ namespace AuroraIgloosAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteIgloo(int id)
         {
-            var igloo = await _context.Igloo 
-                .Include(i => i.Discount)
-                .FirstOrDefaultAsync(i => i.Id == id);
+            try
+            {
+                var igloo = await _context.Igloo
+                    .Include(i => i.Discount)
+                    .FirstOrDefaultAsync(i => i.Id == id);
 
-            if(igloo == null) return NotFound($"Igloo with id {id} not found");
-
-
-            _context.Igloo.Remove(igloo);
-
-            await _context.SaveChangesAsync();
+                if (igloo == null) return NotFound($"Igloo with id {id} not found");
 
 
-            return NoContent();
+                _context.Igloo.Remove(igloo);
+
+                await _context.SaveChangesAsync();
+
+
+                return NoContent();
+            }
+            catch (DbUpdateException ex) 
+                when (ex.InnerException?.Message.Contains("FK_Booking_Igloo_IdIgloo") == true)
+            {
+                return Conflict(new
+                {
+                    message = "Igloo cannot be deleted - it has existing bookings."
+                });
+            }
         }
 
         private bool IglooExists(int id)

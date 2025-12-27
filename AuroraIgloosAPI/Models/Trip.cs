@@ -25,4 +25,6 @@ public class Trip
     
     public DateOnly CreatedAt { get; set; }
     public DateOnly UpdatedAt { get; set; }
+    
+    public string? PhotoUrl { get; set; }
 }

@@ -7,7 +7,7 @@ namespace AuroraIgloosAPI.DTOs
     {
         public int Id { get; set; }
 
-        public int IdDiscount { get; set; }
+        public int? IdDiscount { get; set; }
 
         [Required(ErrorMessage = "Name is required")]
         public required string Name { get; set; }

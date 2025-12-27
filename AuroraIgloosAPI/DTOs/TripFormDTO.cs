@@ -27,5 +27,7 @@ namespace AuroraIgloosAPI.DTOs
         
         [Required(ErrorMessage = "GuideId is required")]
         public int GuideId { get; set; }
+        
+        public IFormFile? PhotoFile { get; set; }
     }
 }

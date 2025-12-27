@@ -46,6 +46,8 @@ namespace AuroraIgloosAPI.Controllers
                     SeasonName = t.Season.Name ?? "",
                     CreatedAt = t.CreatedAt,
                     UpdatedAt = t.UpdatedAt,
+                    GuideName = t.Guide.Person.Name ?? "",
+                    PhotoUrl = t.PhotoUrl ?? "",
                 })
                 .ToListAsync();
 
@@ -65,9 +67,35 @@ namespace AuroraIgloosAPI.Controllers
 
         // POST: api/Trips
         [HttpPost]
-        public async Task<ActionResult<Trip>> PostTrip(TripFormDTO tripDTO)
+        public async Task<ActionResult<Trip>> PostTrip([FromForm] TripFormDTO tripDTO)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
+
+            string? photoPath = null;
+
+            if (tripDTO.PhotoFile != null && tripDTO.PhotoFile.Length > 0)
+            {
+                var uploadsPath = Path.Combine(
+                    Directory.GetCurrentDirectory(),
+                    "wwwroot",
+                    "contents",
+                    "images",
+                    "trips"
+                );
+                Directory.CreateDirectory(uploadsPath);
+                
+                var originalFilename = Path.GetFileName(tripDTO.PhotoFile.FileName);
+                var uniqueFileName = $"{Guid.NewGuid()}-{originalFilename}";
+                
+                var filePath = Path.Combine(uploadsPath, uniqueFileName);
+
+                await using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await tripDTO.PhotoFile.CopyToAsync(stream);
+                }
+                
+                photoPath = Path.Combine("contents", "images", "trips", uniqueFileName).Replace('\\', '/');
+            }
 
             var now = DateOnly.FromDateTime(DateTime.UtcNow);
 
@@ -83,6 +111,7 @@ namespace AuroraIgloosAPI.Controllers
                 SeasonId = tripDTO.SeasonId,
                 CreatedAt = now,
                 UpdatedAt = now,
+                PhotoUrl = photoPath
             };
 
             try
@@ -100,7 +129,7 @@ namespace AuroraIgloosAPI.Controllers
 
         // PUT: api/Trips/1
         [HttpPut("{id}")]
-        public async Task<ActionResult<Trip>> PutTrip(int id, TripDTO tripDTO)
+        public async Task<ActionResult<Trip>> PutTrip(int id, [FromForm] TripFormDTO tripDTO)
         {
             if (id != tripDTO.Id) return BadRequest("Invalid Id");
 
@@ -115,10 +144,48 @@ namespace AuroraIgloosAPI.Controllers
             trip.PricePerPerson = tripDTO.PricePerPerson;
             trip.ShortDescription = tripDTO.ShortDescription;
             trip.LongDescription = tripDTO.LongDescription;
-            trip.GuideId = tripDTO.Guide.Id;
+            trip.GuideId = tripDTO.GuideId;
             trip.LevelOfDifficultyId = tripDTO.LevelOfDifficultyId;
             trip.SeasonId = tripDTO.SeasonId;
             trip.UpdatedAt = DateOnly.FromDateTime(DateTime.UtcNow);
+            
+            if (tripDTO.PhotoFile != null && tripDTO.PhotoFile.Length > 0)
+            {
+                var uploadsPath = Path.Combine(
+                    Directory.GetCurrentDirectory(),
+                    "wwwroot",
+                    "contents",
+                    "images",
+                    "trips"
+                );
+                Directory.CreateDirectory(uploadsPath);
+                
+                var originalFileName = Path.GetFileName(tripDTO.PhotoFile.FileName);
+                var uniqueFileName = $"{Guid.NewGuid()}-{originalFileName}";
+                
+                var filePath = Path.Combine(uploadsPath, uniqueFileName);
+
+                await using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await tripDTO.PhotoFile.CopyToAsync(stream);
+                }
+
+                if (!string.IsNullOrWhiteSpace(trip.PhotoUrl))
+                {
+                    var oldFilePath = Path.Combine(
+                        Directory.GetCurrentDirectory(),
+                        "wwwroot",
+                        trip.PhotoUrl.TrimStart('/', '\\'));
+                    if (System.IO.File.Exists(oldFilePath))
+                    {
+                        System.IO.File.Delete(oldFilePath);
+                    }
+                }
+                
+                var relativePath = Path.Combine("contents", "images", "trips", uniqueFileName).Replace('\\', '/');
+                
+                trip.PhotoUrl = relativePath;
+            }
 
             try
             {
