@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 
 namespace AuroraIgloosAPI.Models;
@@ -19,6 +20,7 @@ public partial class Employee
     public required Person Person { get; set; }
     public required EmployeeRole EmployeeRole { get; set; }
     
+    [JsonIgnore]
     public User User { get; set; }
     
     public ICollection<Trip> GuidedTrips { get; set; } = new List<Trip>();

@@ -8,9 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using AuroraIgloosAPI.Models;
 using AuroraIgloosAPI.Models.Contexts;
 using AuroraIgloosAPI.DTOs;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AuroraIgloosAPI.Controllers
 {
+    [Authorize(Roles = "Admin,Staff,ReadOnly")]
     [Route("api/[controller]")]
     [ApiController]
     public class ForumCommentsController : ControllerBase
@@ -23,6 +25,7 @@ namespace AuroraIgloosAPI.Controllers
         }
 
         // GET: api/ForumComments
+        [Authorize(Roles = "Admin,Staff,ReadOnly")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ForumCommentDTO>>> GetForumComment()
         {
@@ -49,6 +52,7 @@ namespace AuroraIgloosAPI.Controllers
         }
 
         // GET: api/ForumComments/5
+        [Authorize(Roles = "Admin,Staff,ReadOnly")]
         [HttpGet("{id}")]
         public async Task<ActionResult<ForumCommentDTO>> GetForumComment(int id)
         {
@@ -82,6 +86,7 @@ namespace AuroraIgloosAPI.Controllers
 
         // PUT: api/ForumComments/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize(Roles = "Admin,Staff")]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutForumComment(int id, ForumCommentDTO forumCommentDto)
         {
@@ -139,6 +144,7 @@ namespace AuroraIgloosAPI.Controllers
 
         // POST: api/ForumComments
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize(Roles = "Admin,Staff")]
         [HttpPost]
         public async Task<ActionResult<ForumComment>> PostForumComment(ForumCommentDTO forumCommentDto)
         {
@@ -187,6 +193,7 @@ namespace AuroraIgloosAPI.Controllers
         }
 
         // DELETE: api/ForumComments/5
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteForumComment(int id)
         {

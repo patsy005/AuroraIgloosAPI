@@ -8,9 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using AuroraIgloosAPI.Models;
 using AuroraIgloosAPI.Models.Contexts;
 using AuroraIgloosAPI.DTOs;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AuroraIgloosAPI.Controllers;
 
+[Authorize(Roles = "Admin")]
 [Route("api/[controller]")]
 [ApiController]
 
@@ -24,6 +26,7 @@ public class UserRoleController : ControllerBase
     }
     
     // GET: api/UserRole
+    [Authorize(Roles = "Admin")]
     [HttpGet]
     public async Task<ActionResult<IEnumerable<UserRoleDTO>>> GetUserRoles()
     {
@@ -33,6 +36,7 @@ public class UserRoleController : ControllerBase
     }
     
     // GET: api/UserRole/1
+    [Authorize(Roles = "Admin")]
     [HttpGet("{id}")]
     public async Task<ActionResult<UserRoleDTO>> GetUserRole(int id)
     {
@@ -44,6 +48,7 @@ public class UserRoleController : ControllerBase
     }
     
     // PUT: api/UserRole/1
+    [Authorize(Roles = "Admin")]
     [HttpPut("{id}")]
     public async Task<IActionResult> PutUserRole(int id, UserRoleDTO userRoleDTO)
     {
@@ -78,6 +83,7 @@ public class UserRoleController : ControllerBase
     }
     
     // POST: api/UserType
+    [Authorize(Roles = "Admin")]
     [HttpPost]
     public async Task<ActionResult<UserRoleDTO>> PostUserRole(UserRoleDTO userRoleDTO)
     {
@@ -103,6 +109,7 @@ public class UserRoleController : ControllerBase
     }
     
     // DELETE: api/UserRole/1
+    [Authorize(Roles = "Admin")]
     [HttpDelete("{id}")]
     public async Task<ActionResult<UserRoleDTO>> DeleteUserRole(int id)
     {

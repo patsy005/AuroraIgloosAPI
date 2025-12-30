@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AuroraIgloosAPI.Models;
 using AuroraIgloosAPI.Models.Contexts;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AuroraIgloosAPI.Controllers
 {
+    [Authorize(Roles = "Admin,Staff,ReadOnly")]
     [Route("api/[controller]")]
     [ApiController]
     public class ForumCategoriesController : ControllerBase
@@ -22,6 +24,7 @@ namespace AuroraIgloosAPI.Controllers
         }
 
         // GET: api/ForumCategories
+        [Authorize(Roles = "Admin,Staff,ReadOnly")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ForumCategory>>> GetForumCategory()
         {
@@ -29,6 +32,7 @@ namespace AuroraIgloosAPI.Controllers
         }
 
         // GET: api/ForumCategories/5
+        [Authorize(Roles = "Admin,Staff,ReadOnly")]
         [HttpGet("{id}")]
         public async Task<ActionResult<ForumCategory>> GetForumCategory(int id)
         {
@@ -44,6 +48,7 @@ namespace AuroraIgloosAPI.Controllers
 
         // PUT: api/ForumCategories/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize(Roles = "Admin,Staff")]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutForumCategory(int id, ForumCategory forumCategory)
         {
@@ -75,6 +80,7 @@ namespace AuroraIgloosAPI.Controllers
 
         // POST: api/ForumCategories
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize(Roles = "Admin,Staff")]
         [HttpPost]
         public async Task<ActionResult<ForumCategory>> PostForumCategory(ForumCategory forumCategory)
         {
@@ -85,6 +91,7 @@ namespace AuroraIgloosAPI.Controllers
         }
 
         // DELETE: api/ForumCategories/5
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteForumCategory(int id)
         {

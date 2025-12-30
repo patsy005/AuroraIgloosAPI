@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -8,10 +9,12 @@ using Microsoft.EntityFrameworkCore;
 using AuroraIgloosAPI.Models;
 using AuroraIgloosAPI.Models.Contexts;
 using AuroraIgloosAPI.DTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 
 namespace AuroraIgloosAPI.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class CustomersController : ControllerBase
@@ -27,6 +30,7 @@ namespace AuroraIgloosAPI.Controllers
 
         // GET: api/Customers
         //[HttpGet]
+        [Authorize(Roles = "Admin,Staff,ReadOnly")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<CustomerDTO>>> GetCustomer()
         {
@@ -58,6 +62,7 @@ namespace AuroraIgloosAPI.Controllers
         }
 
         // GET: api/Customers/5
+        [Authorize(Roles = "Admin,Staff,ReadOnly")]
         [HttpGet("{id}")]
         public async Task<ActionResult<Customer>> GetCustomer(int id)
         {
@@ -73,10 +78,14 @@ namespace AuroraIgloosAPI.Controllers
 
         // PUT: api/Customers/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCustomer(int id, CustomerDTO customerDto)
         {
             if(id != customerDto.Id) return BadRequest("Id mismatch");
+            
+            var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+            var role = User.FindFirstValue(ClaimTypes.Role);
 
             var customer = await _context.Customer
                 .Include(c => c.Person)
@@ -85,6 +94,11 @@ namespace AuroraIgloosAPI.Controllers
                 .FirstOrDefaultAsync(c => c.Id == id);
 
             if(customer == null) return NotFound($"Customer with id {id} not found");
+            
+            var isStaffOrAdmin = role == "Admin" ||  role == "Staff";
+            var isOwner = customer.IdUser == userId;
+            
+            if(!isStaffOrAdmin && !isOwner) return Forbid();
 
             customer.Person.Name = customerDto.Name;
             customer.Person.Surname = customerDto.Surname;
@@ -131,6 +145,7 @@ namespace AuroraIgloosAPI.Controllers
 
         // POST: api/Customers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize(Roles = "Admin,Staff")]
         [HttpPost]
         public async Task<ActionResult<Customer>> PostCustomer(CustomerDTO customerDto)
         {
@@ -204,6 +219,7 @@ namespace AuroraIgloosAPI.Controllers
         }
 
         // DELETE: api/Customers/5
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCustomer(int id)
         {
@@ -221,6 +237,22 @@ namespace AuroraIgloosAPI.Controllers
             await _context.SaveChangesAsync();
 
             return NoContent();
+        }
+        
+        // GET for logged in customer
+        [Authorize]
+        [HttpGet("me")]
+        public async Task<ActionResult<Customer>> GetMyCustomerProfile()
+        {
+            var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+
+            var customer = await _context.Customer
+                .Include(c => c.Person).ThenInclude(p => p.Address)
+                .FirstOrDefaultAsync(c => c.IdUser == userId);
+            
+            if (customer == null) return NotFound($"Customer with id {userId} not found");
+            
+            return customer;
         }
 
         private bool CustomerExists(int id)

@@ -62,7 +62,7 @@ namespace AuroraIgloosAPI
                     };
                 });
 
-            builder.Services.AddAuthentication();
+            // builder.Services.AddAuthentication();
 
             builder.Services.AddCors(options =>
             {
@@ -74,8 +74,8 @@ namespace AuroraIgloosAPI
                             "http://localhost:5174"
                         )
                         .AllowAnyHeader()
-                        .AllowAnyMethod()
-                        .AllowCredentials();
+                        .AllowAnyMethod();
+                    // .AllowCredentials();
                 });
             });
 
@@ -89,12 +89,20 @@ namespace AuroraIgloosAPI
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+            else
+            {
+                app.UseHttpsRedirection();
+            }
 
+            app.UseStaticFiles();
+            
+            app.UseRouting();
+            
+            app.UseCors("FrontendCors");
+            
             app.UseAuthentication();
             app.UseAuthorization();
-            app.UseStaticFiles();
-            app.UseHttpsRedirection();
-            app.UseCors("FrontendCors");
+            
             app.MapControllers();
             app.Run();
         }

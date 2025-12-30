@@ -11,6 +11,7 @@ using AuroraIgloosAPI.DTOs;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AuroraIgloosAPI.Controllers
 {
@@ -78,6 +79,7 @@ namespace AuroraIgloosAPI.Controllers
 
         // PUT: api/Employees/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize(Roles = "Admin,Staff")]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutEmployee(int id, [FromForm] EmployeeFormDTO employeeDto)
         {
@@ -175,6 +177,7 @@ namespace AuroraIgloosAPI.Controllers
 
         // POST: api/Employees
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize(Roles = "Admin,Staff")]
         [HttpPost]
         public async Task<ActionResult<Employee>> PostEmployee([FromForm] EmployeeFormDTO employeeDto)
         {
@@ -280,6 +283,7 @@ namespace AuroraIgloosAPI.Controllers
         }
 
         // DELETE: api/Employees/5
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteEmployee(int id)
         {

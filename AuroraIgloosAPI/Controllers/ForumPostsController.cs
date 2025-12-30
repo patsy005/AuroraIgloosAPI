@@ -8,9 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using AuroraIgloosAPI.Models;
 using AuroraIgloosAPI.Models.Contexts;
 using AuroraIgloosAPI.DTOs;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AuroraIgloosAPI.Controllers
 {
+    [Authorize(Roles = "Admin,Staff,ReadOnly")]
     [Route("api/[controller]")]
     [ApiController]
     public class ForumPostsController : ControllerBase
@@ -23,6 +25,7 @@ namespace AuroraIgloosAPI.Controllers
         }
 
         // GET: api/ForumPosts
+        [Authorize(Roles = "Admin,Staff,ReadOnly")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ForumPostDTO>>> GetForumPost()
         {
@@ -63,6 +66,7 @@ namespace AuroraIgloosAPI.Controllers
         }
 
         // GET: api/ForumPosts/5
+        [Authorize(Roles = "Admin,Staff,ReadOnly")]
         [HttpGet("{id}")]
         public async Task<ActionResult<ForumPostDTO>> GetForumPost(int id)
         {
@@ -112,6 +116,7 @@ namespace AuroraIgloosAPI.Controllers
 
         // PUT: api/ForumPosts/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize(Roles = "Admin,Staff")]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutForumPost(int id, ForumPostFormDTO forumPostDto)
         {
@@ -189,6 +194,7 @@ namespace AuroraIgloosAPI.Controllers
 
         // POST: api/ForumPosts
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize(Roles = "Admin,Staff")]
         [HttpPost]
         public async Task<ActionResult<ForumPost>> PostForumPost(ForumPostFormDTO forumPostDto)
         {
@@ -274,6 +280,7 @@ namespace AuroraIgloosAPI.Controllers
         }
 
         // DELETE: api/ForumPosts/5
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteForumPost(int id)
         {

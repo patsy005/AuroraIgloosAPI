@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -10,9 +11,11 @@ using AuroraIgloosAPI.Models.Contexts;
 using AutoMapper;
 using AuroraIgloosAPI.DTOs;
 using AuroraIgloosAPI.BussinessLogic;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AuroraIgloosAPI.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class BookingsController : ControllerBase
@@ -25,6 +28,7 @@ namespace AuroraIgloosAPI.Controllers
         }
 
         // GET: api/Bookings
+        [Authorize(Roles = "Admin,Staff,ReadOnly")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<BookingDTO>>> GetBooking()
         {
@@ -59,7 +63,7 @@ namespace AuroraIgloosAPI.Controllers
                     PaymentMethodName = b.PaymentMethod.Name,
                     PaymentMethodId = b.PaymentMethodId,
                     TripId = b.TripId,
-                    TripName = b.Trip.Name,
+                    TripName = b.Trip.Name ?? "",
                     TripDate = b.TripDate,
                     Guests = b.Guests,
                     EarlyCheckInRequest = b.EarlyCheckInRequest,
@@ -72,6 +76,7 @@ namespace AuroraIgloosAPI.Controllers
         }
 
         // GET: api/Bookings/5
+        [Authorize(Roles = "Admin,Staff,ReadOnly")]
         [HttpGet("{id}")]
         public async Task<ActionResult<Booking>> GetBooking(int id)
         {
@@ -99,6 +104,7 @@ namespace AuroraIgloosAPI.Controllers
 
         // PUT: api/Bookings/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize(Roles = "Admin,Staff")]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutBooking(int id, BookingFormDTO bookingDto)
         {
@@ -112,7 +118,7 @@ namespace AuroraIgloosAPI.Controllers
                 return BadRequest(ModelState);
             }
             
-            var validation = await BookingCheck(bookingDto);
+            var validation = await BookingCheck(bookingDto, ignoreBookingId: id);
             if (validation != null)
                 return validation;
             
@@ -167,6 +173,7 @@ namespace AuroraIgloosAPI.Controllers
 
         // POST: api/Bookings
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult<Booking>> PostBooking(BookingFormDTO bookingDto)
         {
@@ -175,8 +182,8 @@ namespace AuroraIgloosAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
-            
-            var validation = await BookingCheck(bookingDto);
+
+            var validation = await BookingCheck(bookingDto, null);
             if (validation != null)
                 return validation;
 
@@ -216,6 +223,7 @@ namespace AuroraIgloosAPI.Controllers
         }
 
         // DELETE: api/Bookings/5
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteBooking(int id)
         {
@@ -235,6 +243,55 @@ namespace AuroraIgloosAPI.Controllers
             await _context.SaveChangesAsync();
 
             return NoContent();
+        }
+
+        [Authorize]
+        [HttpGet("me")]
+        public async Task<ActionResult<IEnumerable<BookingDTO>>> GetMyBookings()
+        {
+            var userIdStr = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (!int.TryParse(userIdStr, out var userId)) return Unauthorized();
+            
+            var customer = await _context.Customer
+                .Include(c => c.Person).ThenInclude(p => p.Address)
+                .FirstOrDefaultAsync(c => c.IdUser == userId);
+            
+            if (customer == null) return NotFound();
+            
+            var bookings = await _context.Booking
+                .Where(b => b.IdCustomer == customer.Id)
+                .Include(b => b.Igloo)
+                .Include((b => b.PaymentMethod))
+                .Include(b => b.Trip).ThenInclude(t => t.Season)
+                .Include(b => b.Trip).ThenInclude(t => t.LevelOfDifficulty)
+                .Select(b => new BookingDTO
+                {
+                    Id = b.Id,
+                    IdIgloo = b.IdIgloo,
+                    IdCustomer = b.IdCustomer,
+                    BookingDate = b.BookingDate,
+                    CheckIn = b.CheckIn,
+                    CheckOut = b.CheckOut,
+                    Amount = b.Amount,
+                    
+                    CustomerName = customer.Person.Name,
+                    CustomerSurname = customer.Person.Surname,
+                    CustomerEmail = customer.Person.Email,
+                    CustomerPhone = customer.Person.PhoneNumber,
+                    
+                    IglooName = b.Igloo.Name ?? "",
+                    PaymentMethodName = b.PaymentMethod.Name ?? "",
+                    PaymentMethodId = b.PaymentMethodId,
+                    TripId = b.TripId,
+                    TripName = b.Trip.Name ?? "",
+                    Guests = b.Guests,
+                    TripDate = b.TripDate ?? null,
+                    EarlyCheckInRequest = b.EarlyCheckInRequest ?? false,
+                    LateCheckOutRequest = b.LateCheckOutRequest ?? false,
+                })
+                .ToListAsync();
+            
+            return bookings;
         }
 
         private bool BookingExists(int id)
@@ -275,7 +332,7 @@ namespace AuroraIgloosAPI.Controllers
             return null;
         }
 
-        private async Task<ActionResult?> BookingCheck(BookingFormDTO bookingDto)
+        private async Task<ActionResult?> BookingCheck(BookingFormDTO bookingDto, int? ignoreBookingId )
         {
             if (bookingDto.IdIgloo == null && bookingDto.TripId == null)
             {
@@ -302,9 +359,54 @@ namespace AuroraIgloosAPI.Controllers
             
             var tripValidation = await TripBookCheck(bookingDto);
             if (tripValidation != null) return tripValidation;
+            
+            var iglooAvailability = await IglooAvailabilityCheck(bookingDto, ignoreBookingId);
+            if (iglooAvailability != null) return iglooAvailability;
+
+            var guideAvailability = await GuideAvailability(bookingDto, ignoreBookingId);
+            if (guideAvailability != null) return guideAvailability;
 
             return null;
         }
+
+        private async Task<ActionResult?> IglooAvailabilityCheck(BookingFormDTO bookingDto, int? ignoreBookingId)
+        {
+            if(!bookingDto.IdIgloo.HasValue) return null;
+
+            var conflict = await _context.Booking
+                .Where(b => b.IdIgloo == bookingDto.IdIgloo)
+                .Where(b => ignoreBookingId == null || b.IdIgloo == ignoreBookingId)
+                .AnyAsync(b =>
+                    bookingDto.CheckIn < b.CheckOut &&
+                    bookingDto.CheckOut > b.CheckIn
+                    );
+            
+            return conflict ? Conflict("Igloo already booked in selecred period") : null;
+        }
+
+        private async Task<ActionResult?> GuideAvailability(BookingFormDTO bookingDto, int? ignoreBookingId)
+        {
+            // sprawdzamy trip, więc wymagamy TripId i TripDate
+            if (!bookingDto.TripId.HasValue) return null;
+            if (!bookingDto.TripDate.HasValue) return null;
+
+            var trip = await _context.Trip.FindAsync(bookingDto.TripId.Value);
+            if (trip?.GuideId == null) return null;
+
+            var conflict = await _context.Booking
+                .Where(b => b.TripDate == bookingDto.TripDate)
+                .Where(b => ignoreBookingId == null || b.Id != ignoreBookingId) 
+                .Join(
+                    _context.Trip,
+                    b => b.TripId!.Value,
+                    t => t.Id,
+                    (b, t) => new { b, t }
+                )
+                .AnyAsync(x => x.t.GuideId == trip.GuideId);
+
+            return conflict ? Conflict("Guide already booked in selected period") : null;
+        }
+
 
         private async Task<decimal?> CalcBookingPrice(BookingFormDTO bookingDto)
         {

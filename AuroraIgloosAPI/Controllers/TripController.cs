@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AuroraIgloosAPI.DTOs;
 using AuroraIgloosAPI.Models;
 using AuroraIgloosAPI.Models.Contexts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -66,6 +67,7 @@ namespace AuroraIgloosAPI.Controllers
         }
 
         // POST: api/Trips
+        [Authorize(Roles = "Admin,Staff")]
         [HttpPost]
         public async Task<ActionResult<Trip>> PostTrip([FromForm] TripFormDTO tripDTO)
         {
@@ -128,6 +130,7 @@ namespace AuroraIgloosAPI.Controllers
         }
 
         // PUT: api/Trips/1
+        [Authorize(Roles = "Admin,Staff")]
         [HttpPut("{id}")]
         public async Task<ActionResult<Trip>> PutTrip(int id, [FromForm] TripFormDTO tripDTO)
         {
@@ -206,6 +209,7 @@ namespace AuroraIgloosAPI.Controllers
         }
         
         // DELETE: api/Trips/1
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<ActionResult<Trip>> DeleteTrip(int id)
         {

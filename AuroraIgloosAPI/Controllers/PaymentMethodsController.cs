@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AuroraIgloosAPI.Models;
 using AuroraIgloosAPI.Models.Contexts;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AuroraIgloosAPI.Controllers
 {
@@ -44,6 +45,7 @@ namespace AuroraIgloosAPI.Controllers
 
         // PUT: api/PaymentMethods/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize(Roles = "Admin,Staff")]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutPaymentMethod(int id, PaymentMethod paymentMethod)
         {
@@ -75,6 +77,7 @@ namespace AuroraIgloosAPI.Controllers
 
         // POST: api/PaymentMethods
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize(Roles = "Admin,Staff")]
         [HttpPost]
         public async Task<ActionResult<PaymentMethod>> PostPaymentMethod(PaymentMethod paymentMethod)
         {
@@ -85,6 +88,7 @@ namespace AuroraIgloosAPI.Controllers
         }
 
         // DELETE: api/PaymentMethods/5
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePaymentMethod(int id)
         {

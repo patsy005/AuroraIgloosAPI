@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using AuroraIgloosAPI.Models;
 using AuroraIgloosAPI.Models.Contexts;
 using AuroraIgloosAPI.DTOs;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AuroraIgloosAPI.Controllers
 {
@@ -45,7 +46,7 @@ namespace AuroraIgloosAPI.Controllers
         }
 
         // GET: api/Discounts/5
-        [HttpGet("{id}")]
+         [HttpGet("{id}")]
         public async Task<ActionResult<Discount>> GetDiscount(int id)
         {
             var discount = await _context.Discount.FindAsync(id);
@@ -60,6 +61,7 @@ namespace AuroraIgloosAPI.Controllers
 
         // PUT: api/Discounts/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize(Roles = "Admin,Staff")]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutDiscount(int id, DiscountDTO discountDto)
         {
@@ -106,6 +108,7 @@ namespace AuroraIgloosAPI.Controllers
 
         // POST: api/Discounts
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize(Roles = "Admin,Staff")]
         [HttpPost]
         public async Task<ActionResult<Discount>> PostDiscount(DiscountDTO discountDto)
         {
@@ -140,6 +143,7 @@ namespace AuroraIgloosAPI.Controllers
         }
 
         // DELETE: api/Discounts/5
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteDiscount(int id)
         {

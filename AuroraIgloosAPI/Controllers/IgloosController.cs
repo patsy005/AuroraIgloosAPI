@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using AuroraIgloosAPI.Models;
 using AuroraIgloosAPI.Models.Contexts;
 using AuroraIgloosAPI.DTOs;
+using Microsoft.AspNetCore.Authorization;
 using NuGet.Packaging;
 
 namespace AuroraIgloosAPI.Controllers
@@ -63,6 +64,7 @@ namespace AuroraIgloosAPI.Controllers
 
         // PUT: api/Igloos/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize(Roles = "Admin,Staff")]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutIgloo(int id, [FromForm] IglooFormDTO iglooDto)
         {
@@ -147,6 +149,7 @@ namespace AuroraIgloosAPI.Controllers
 
         // POST: api/Igloos
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize(Roles = "Admin,Staff")]
         [HttpPost]
         public async Task<ActionResult<Igloo>> PostIgloo([FromForm] IglooFormDTO iglooDto)
         {
@@ -206,6 +209,7 @@ namespace AuroraIgloosAPI.Controllers
         }
 
         // DELETE: api/Igloos/5
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteIgloo(int id)
         {

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AuroraIgloosAPI.DTOs;
 using AuroraIgloosAPI.Models;
 using AuroraIgloosAPI.Models.Contexts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -42,6 +43,7 @@ namespace AuroraIgloosAPI.Controllers
         }
         
         // POST: api/TripSeason
+        [Authorize(Roles = "Admin,Staff")]
         [HttpPost]
         public async Task<ActionResult<TripSeasonDTO>> PostTripSeason(TripSeasonDTO tripSeasonDTO)
         {
@@ -71,6 +73,7 @@ namespace AuroraIgloosAPI.Controllers
         }
         
        // PUT: api/TripSeason/1
+       [Authorize(Roles = "Admin,Staff")]
        [HttpPut("{id}")]
        public async Task<IActionResult> PutTripSeason(int id, TripSeasonDTO tripSeasonDTO)
        {
@@ -98,6 +101,7 @@ namespace AuroraIgloosAPI.Controllers
        }
         
         // DELETE: api/TripSeason/1
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTripSeason(int id)
         {

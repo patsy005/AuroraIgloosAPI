@@ -8,10 +8,12 @@ using Microsoft.EntityFrameworkCore;
 using AuroraIgloosAPI.Models;
 using AuroraIgloosAPI.Models.Contexts;
 using AuroraIgloosAPI.DTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 
 namespace AuroraIgloosAPI.Controllers;
 
+[Authorize(Roles = "Admin")]
 [Route("api/[controller]")]
 [ApiController]
 
@@ -27,6 +29,7 @@ public class UserController : ControllerBase
     }
     
     // GET: api/Users
+    [Authorize(Roles = "Admin")]
     [HttpGet]
     public async Task<ActionResult<IEnumerable<UserDTO>>> GetUsers()
     {
@@ -56,6 +59,7 @@ public class UserController : ControllerBase
     }
     
     // GET: api/Users/1
+    [Authorize(Roles = "Admin")]
     [HttpGet("{id}")]
     public async Task<ActionResult<User>> GetUser(int id)
     {
@@ -72,6 +76,7 @@ public class UserController : ControllerBase
     }
     
     // POST: api/Users
+    [Authorize(Roles = "Admin")]
     [HttpPost]
     public async Task<ActionResult<UserDTO>> PostUser(UserCreateDTO userDTO)
     {
@@ -107,6 +112,7 @@ public class UserController : ControllerBase
     }
     
     // PUT: api/Users/1
+    [Authorize(Roles = "Admin")]
     [HttpPut("{id}")]
     public async Task<ActionResult<UserDTO>> PutUser(int id, UserUpdateDTO userDTO)
     {
@@ -140,6 +146,7 @@ public class UserController : ControllerBase
     }
     
     // DELETE: api/Users/1
+    [Authorize(Roles = "Admin")]
     [HttpDelete("{id}")]
     public async Task<ActionResult<UserDTO>> DeleteUser(int id)
     {

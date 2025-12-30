@@ -8,9 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using AuroraIgloosAPI.Models;
 using AuroraIgloosAPI.Models.Contexts;
 using AuroraIgloosAPI.DTOs;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AuroraIgloosAPI.Controllers
 {
+    [Authorize(Roles = "Admin,Staff,ReadOnly")]
     [Route("api/[controller]")]
     [ApiController]
     public class EmployeeRolesController : ControllerBase
@@ -23,6 +25,7 @@ namespace AuroraIgloosAPI.Controllers
         }
 
         // GET: api/EmployeeRoles
+        [Authorize(Roles = "Admin,Staff,ReadOnly")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<EmployeeRoleDTO>>> GetEmployeeRole()
         {
@@ -39,6 +42,7 @@ namespace AuroraIgloosAPI.Controllers
         }
 
         // GET: api/EmployeeRoles/5
+        [Authorize(Roles = "Admin,Staff,ReadOnly")]
         [HttpGet("{id}")]
         public async Task<ActionResult<EmployeeRole>> GetEmployeeRole(int id)
         {
@@ -54,37 +58,10 @@ namespace AuroraIgloosAPI.Controllers
 
         // PUT: api/EmployeeRoles/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize(Roles = "Admin,Staff")]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutEmployeeRole(int id, EmployeeRoleDTO employeeRoleDTO)
         {
-            // UPDATE EmployeeRole 
-            // SET Name = @p0, Description = @p1, ...
-            // WHERE Id = @id
-
-            // if (id != employeeRole.Id)
-            // {
-            //     return BadRequest();
-            // }
-            //
-            // _context.Entry(employeeRole).State = EntityState.Modified;
-            //
-            // try
-            // {
-            //     await _context.SaveChangesAsync();
-            // }
-            // catch (DbUpdateConcurrencyException)
-            // {
-            //     if (!EmployeeRoleExists(id))
-            //     {
-            //         return NotFound();
-            //     }
-            //     else
-            //     {
-            //         throw;
-            //     }
-            // }
-            //
-            // return NoContent();
 
             if (id != employeeRoleDTO.Id)
             {
@@ -119,6 +96,7 @@ namespace AuroraIgloosAPI.Controllers
 
         // POST: api/EmployeeRoles
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize(Roles = "Admin,Staff")]
         [HttpPost]
         public async Task<ActionResult<EmployeeRole>> PostEmployeeRole(EmployeeRole employeeRole)
         {
@@ -129,6 +107,7 @@ namespace AuroraIgloosAPI.Controllers
         }
 
         // DELETE: api/EmployeeRoles/5
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteEmployeeRole(int id)
         {

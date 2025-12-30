@@ -28,6 +28,7 @@ namespace AuroraIgloosAPI.Controllers
         }
 
         // POST: /api/auth/login
+        [AllowAnonymous]
         [HttpPost("login")]
         public async Task<ActionResult<AuthResponseDTO>> Login([FromBody] LoginRequestDTO req)
         {
@@ -109,12 +110,14 @@ namespace AuroraIgloosAPI.Controllers
             // to umożliwia [Authorize(Roles="Admin")]
             if (!string.IsNullOrWhiteSpace(user.Role?.Name))
                 claims.Add(new Claim(ClaimTypes.Role, user.Role.Name));
+            
+            var expires = DateTime.UtcNow.AddHours(2);
 
             var token = new JwtSecurityToken(
                 issuer: jwt["Issuer"],
                 audience: jwt["Audience"],
                 claims: claims,
-                expires: DateTime.UtcNow.AddMinutes(int.Parse(jwt["ExpiresMinutes"]!)),
+                expires: expires,
                 signingCredentials: creds
             );
 
