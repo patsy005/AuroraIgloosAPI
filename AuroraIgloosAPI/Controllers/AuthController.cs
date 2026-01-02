@@ -92,6 +92,7 @@ namespace AuroraIgloosAPI.Controllers
                 Surname = person.Surname ?? "",
                 Email = person.Email ?? "",
                 PhotoUrl = user.Employee?.PhotoUrl ?? "",
+                EmployeeId = user.Employee.Id,
             });
         }
 

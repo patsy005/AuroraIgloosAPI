@@ -14,4 +14,6 @@ public class MeResponseDTO
     public string Email { get; set; } = "";
 
     public string? PhotoUrl { get; set; } = "";
+    
+    public int EmployeeId { get; set; }
 }

@@ -175,7 +175,8 @@ namespace AuroraIgloosAPI.Controllers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [Authorize]
         [HttpPost]
-        public async Task<ActionResult<Booking>> PostBooking(BookingFormDTO bookingDto)
+        public async Task<ActionResult<BookingDTO>> PostBooking(BookingFormDTO bookingDto)
+
         {
 
             if(!ModelState.IsValid)
@@ -218,8 +219,39 @@ namespace AuroraIgloosAPI.Controllers
                 Console.WriteLine(ex.Message);
                 return StatusCode(500, "Internal Server Error: " + ex.Message);
             }
+            
+            var created = await _context.Booking
+                .Where(b => b.Id == booking.Id)
+                .Include(b => b.Customer).ThenInclude(c => c.Person)
+                .Include(b => b.Igloo)
+                .Include(b => b.PaymentMethod)
+                .Include(b => b.Trip)
+                .Select(b => new BookingDTO
+                {
+                    Id = b.Id,
+                    IdIgloo = b.IdIgloo,
+                    IdCustomer = b.IdCustomer,
+                    BookingDate = b.BookingDate,
+                    CheckIn = b.CheckIn,
+                    CheckOut = b.CheckOut,
+                    Amount = b.Amount,
+                    CustomerName = b.Customer.Person.Name,
+                    CustomerSurname = b.Customer.Person.Surname,
+                    CustomerEmail = b.Customer.Person.Email,
+                    CustomerPhone = b.Customer.Person.PhoneNumber,
+                    IglooName = b.Igloo != null ? b.Igloo.Name ?? "" : "",
+                    PaymentMethodName = b.PaymentMethod.Name,
+                    PaymentMethodId = b.PaymentMethodId,
+                    TripId = b.TripId,
+                    TripName = b.Trip != null ? b.Trip.Name ?? "" : "",
+                    Guests = b.Guests,
+                    TripDate = b.TripDate,
+                    EarlyCheckInRequest = b.EarlyCheckInRequest,
+                    LateCheckOutRequest = b.LateCheckOutRequest
+                })
+                .FirstAsync();
 
-            return CreatedAtAction(nameof(GetBooking), new { id = booking.Id }, booking);
+            return CreatedAtAction(nameof(GetBooking), new { id = created.Id }, created);
         }
 
         // DELETE: api/Bookings/5

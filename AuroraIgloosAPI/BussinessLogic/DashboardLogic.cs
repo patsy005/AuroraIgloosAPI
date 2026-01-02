@@ -1,4 +1,5 @@
-﻿using AuroraIgloosAPI.DTOs;
+﻿using System.Globalization;
+using AuroraIgloosAPI.DTOs;
 using AuroraIgloosAPI.Models.Contexts;
 
 namespace AuroraIgloosAPI.BussinessLogic
@@ -16,7 +17,8 @@ namespace AuroraIgloosAPI.BussinessLogic
         {
             
             var previousFrom = from.AddDays(-(to.DayNumber - from.DayNumber));
-            var previousTo = from;
+            var previousTo = from.AddDays(-1);
+
 
             var currentBookings = _context.Booking
                 .Where(b => b.BookingDate >= from && b.BookingDate <= to)
@@ -77,5 +79,58 @@ namespace AuroraIgloosAPI.BussinessLogic
                 OccupancyChangePercent = GetChangePercent(occupancyPercent, previousOccupancyPercent)
             };
         }
+
+        public List<DashboardSalesPointDTO> GetSalesSeries(DateOnly from, DateOnly to)
+        {
+            var prevFrom = from.AddYears(-1);
+            var prevTo   = to.AddYears(-1);
+
+            // Pobieramy tylko te bookingi, które są potrzebne
+            var all = _context.Booking
+                .Where(b =>
+                    (b.BookingDate >= from && b.BookingDate <= to) ||
+                    (b.BookingDate >= prevFrom && b.BookingDate <= prevTo)
+                )
+                .Select(b => new { b.BookingDate, b.Amount })
+                .ToList();
+
+            static string Key(DateOnly d) => $"{d.Year:D4}-{d.Month:D2}";
+
+            var current = all
+                .Where(x => x.BookingDate >= from && x.BookingDate <= to)
+                .GroupBy(x => Key(x.BookingDate))
+                .ToDictionary(g => g.Key, g => g.Sum(x => x.Amount)); // Amount jest decimal, nie nullable u Ciebie
+
+            var previous = all
+                .Where(x => x.BookingDate >= prevFrom && x.BookingDate <= prevTo)
+                .GroupBy(x => Key(x.BookingDate))
+                .ToDictionary(g => g.Key, g => g.Sum(x => x.Amount));
+
+            var startMonth = new DateOnly(from.Year, from.Month, 1);
+            var endMonth   = new DateOnly(to.Year, to.Month, 1);
+
+            var months = new List<DateOnly>();
+            for (var m = startMonth; m <= endMonth; m = m.AddMonths(1))
+                months.Add(m);
+
+            // static string MonthLabel(DateOnly d) => d.ToString("MMM"); 
+            static string MonthLabel(DateOnly d) => d.ToString("MMM", CultureInfo.InvariantCulture);
+
+            static string MonthKey(DateOnly d) => $"{d.Year:D4}-{d.Month:D2}";
+
+            return months.Select(m =>
+            {
+                var kCurrent = MonthKey(m);
+                var kPrev    = MonthKey(m.AddYears(-1)); // <<< klucz rok wcześniej
+
+                return new DashboardSalesPointDTO
+                {
+                    Month = MonthLabel(m),
+                    RevenueCurrentYear  = current.TryGetValue(kCurrent, out var c) ? c : 0m,
+                    RevenuePreviousYear = previous.TryGetValue(kPrev, out var p) ? p : 0m
+                };
+            }).ToList();
+        }
+
     }
 }
