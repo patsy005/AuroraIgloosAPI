@@ -6,6 +6,7 @@ namespace AuroraIgloosAPI.DTOs
     public class CustomerDTO
     {
         public int Id { get; set; }
+        public int ? IdUser  { get; set; }
         public int? IdPerson { get; set; }
 
         [Required(ErrorMessage = "Name is required")]

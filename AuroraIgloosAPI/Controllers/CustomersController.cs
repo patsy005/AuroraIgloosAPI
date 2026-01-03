@@ -53,7 +53,10 @@ namespace AuroraIgloosAPI.Controllers
                     City = c.Person.Address.City ?? "",
                     Country = c.Person.Address.Country ?? "",
                     PostalCode = c.Person.Address.PostalCode ?? "",
-                    Login = c.User != null ? c.User.Login : "Customer does not have an account"
+                    IdUser = c.IdUser,
+                    Login = c.User != null ? c.User.Login : null,
+                    UserRoleId = c.User != null ? c.User.UserRoleId : null,
+                    UserTypeId = c.User != null ? c.User.UserTypeId : null,
                 })
                 .ToListAsync();
 
@@ -203,6 +206,9 @@ namespace AuroraIgloosAPI.Controllers
                 
                 _context.User.Add(user);
                 await _context.SaveChangesAsync();
+                
+                customer.IdUser = user.Id;
+                await _context.SaveChangesAsync();
             }
 
             try
@@ -215,7 +221,27 @@ namespace AuroraIgloosAPI.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
 
-            return CreatedAtAction("GetCustomer", new { id = customer.Id }, customer);
+            return CreatedAtAction(nameof(GetCustomer), new { id = customer.Id }, new CustomerDTO
+            {
+                Id = customer.Id,
+                IdPerson = person.Id,
+                Name = person.Name ?? "",
+                Surname = person.Surname ?? "",
+                Email = person.Email ?? "",
+                Phone = person.PhoneNumber ?? "",
+                Street = address.Street ?? "",
+                StreetNumber = address.StreetNumber ?? "",
+                HouseNumber = address.HouseNumber ?? "",
+                City = address.City ?? "",
+                Country = address.Country ?? "",
+                PostalCode = address.PostalCode ?? "",
+
+                IdUser = customer.IdUser,
+                Login = customer.IdUser != null ? customerDto.Login : null,
+                UserRoleId = customerDto.CreateUser ? (customerDto.UserRoleId ?? 3) : null,
+                UserTypeId = customerDto.CreateUser ? (customerDto.UserTypeId ?? 2) : null,
+                CreateUser = customerDto.CreateUser
+            });
         }
 
         // DELETE: api/Customers/5
@@ -254,10 +280,42 @@ namespace AuroraIgloosAPI.Controllers
             
             return customer;
         }
+        
+        [Authorize(Roles="Admin")]
+        [HttpPost("{id}/create-user")]
+        public async Task<IActionResult> CreateUserForCustomer(int id, CreateCustomerUserDTO dto)
+        {
+            var customer = await _context.Customer.FirstOrDefaultAsync(c => c.Id == id);
+            if (customer == null) return NotFound("Customer not found");
+
+            if (customer.IdUser != null) return Conflict("Customer already has an account.");
+
+            var loginTaken = await _context.User.AnyAsync(u => u.Login == dto.Login);
+            if (loginTaken) return Conflict("Login already exists.");
+
+            var user = new User
+            {
+                Login = dto.Login,
+                UserRoleId = dto.UserRoleId,
+                UserTypeId = dto.UserTypeId
+            };
+            user.PasswordHash = _passwordHasher.HashPassword(user, dto.Password);
+
+            _context.User.Add(user);
+            await _context.SaveChangesAsync();
+
+            customer.IdUser = user.Id;
+            await _context.SaveChangesAsync();
+
+            return Ok(new { userId = user.Id });
+        }
 
         private bool CustomerExists(int id)
         {
             return _context.Customer.Any(e => e.Id == id);
         }
+        
     }
+    
+    
 }
