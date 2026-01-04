@@ -29,4 +29,19 @@ namespace AuroraIgloosAPI.DTOs
         
         public string? PhotoUrl { get; set; }
     }
+
+    public class TripRowDTO
+    {
+        public int TripId { get; set; }
+        public string Name { get; set; } = "";
+
+        public int Duration { get; set; }
+        public decimal PricePerPerson { get; set; }
+
+        public string? ShortDescription { get; set; }
+        public string? LongDescription { get; set; }
+
+        public string LevelOfDifficultyName { get; set; } = "";
+        public string SeasonName { get; set; } = "";
+    }
 }

@@ -28,4 +28,21 @@ namespace AuroraIgloosAPI.DTOs
         public string? PhotoUrl { get; set; }
 
     }
+
+    public class IglooRowDTO
+    {
+        public int IglooId { get; set; }
+
+        public int Capacity { get; set; }
+        public int PricePerNight { get; set; }
+
+        public Discount? Discount { get; set; }
+        public string? Description { get; set; }
+        public string Name { get; set; } = "";
+
+        // wyliczenia:
+        public int BookingsCount { get; set; }
+        public decimal TotalRevenue { get; set; }
+        public double OccupancyPercent { get; set; }
+    }
 }

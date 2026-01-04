@@ -6,10 +6,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 using AuroraIgloosAPI.Models;
+using AuroraIgloosAPI.Reports.Generators;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
+using QuestPDF.Infrastructure;
 
 namespace AuroraIgloosAPI
 {
@@ -46,6 +48,10 @@ namespace AuroraIgloosAPI
             
             // password hasher
             builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
+            
+            builder.Services.AddScoped<DashboardLogic>();
+            builder.Services.AddScoped<IReportGenerator, QuestPdfReportGenerator>();
+            builder.Services.AddScoped<IReportGenerator, ClosedXmlReportGenerator>();
 
             var jwt = builder.Configuration.GetSection("Jwt");
             var keyBytes = Encoding.UTF8.GetBytes(jwt["Key"]);
@@ -87,6 +93,8 @@ namespace AuroraIgloosAPI
 
 
             var app = builder.Build();
+            
+            QuestPDF.Settings.License = LicenseType.Community;
 
             // Konfiguracja �rodowiska
             if (app.Environment.IsDevelopment())
