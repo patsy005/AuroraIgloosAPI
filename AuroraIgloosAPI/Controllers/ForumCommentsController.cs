@@ -8,9 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using AuroraIgloosAPI.Models;
 using AuroraIgloosAPI.Models.Contexts;
 using AuroraIgloosAPI.DTOs;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AuroraIgloosAPI.Controllers
 {
+    [Authorize(Roles = "Admin,Staff,ReadOnly")]
     [Route("api/[controller]")]
     [ApiController]
     public class ForumCommentsController : ControllerBase
@@ -23,12 +25,13 @@ namespace AuroraIgloosAPI.Controllers
         }
 
         // GET: api/ForumComments
+        [Authorize(Roles = "Admin,Staff,ReadOnly")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ForumCommentDTO>>> GetForumComment()
         {
             var comments = await _context.ForumComment
                 .Include(c => c.Employee)
-                    .ThenInclude(e => e.User)
+                    .ThenInclude(e => e.Person)
                     .ThenInclude(u => u.Address)
                 .Include(c => c.ForumPost)
                 .Select(c => new ForumCommentDTO
@@ -38,8 +41,8 @@ namespace AuroraIgloosAPI.Controllers
                     IdEmployee = c.IdEmployee,
                     Comment = c.Comment,
                     CommentDate = c.CommentDate,
-                    EmployeeName = c.Employee.User.Name,
-                    EmployeeSurname = c.Employee.User.Surname,
+                    EmployeeName = c.Employee.Person.Name,
+                    EmployeeSurname = c.Employee.Person.Surname,
                     EmployeePhotoUrl = c.Employee.PhotoUrl,
                     PostTitle = c.ForumPost.Title
                 })
@@ -49,12 +52,13 @@ namespace AuroraIgloosAPI.Controllers
         }
 
         // GET: api/ForumComments/5
+        [Authorize(Roles = "Admin,Staff,ReadOnly")]
         [HttpGet("{id}")]
         public async Task<ActionResult<ForumCommentDTO>> GetForumComment(int id)
         {
             var comment = await _context.ForumComment
                 .Include(c => c.Employee)
-                    .ThenInclude(e => e.User)
+                    .ThenInclude(e => e.Person)
                     .ThenInclude(u => u.Address)
                 .Include(c => c.ForumPost)
                 .Where(c => c.Id == id)
@@ -65,8 +69,8 @@ namespace AuroraIgloosAPI.Controllers
                     IdEmployee = c.IdEmployee,
                     Comment = c.Comment,
                     CommentDate = c.CommentDate,
-                    EmployeeName = c.Employee.User.Name,
-                    EmployeeSurname = c.Employee.User.Surname,
+                    EmployeeName = c.Employee.Person.Name,
+                    EmployeeSurname = c.Employee.Person.Surname,
                     EmployeePhotoUrl = c.Employee.PhotoUrl,
                     PostTitle = c.ForumPost.Title
                 })
@@ -82,6 +86,7 @@ namespace AuroraIgloosAPI.Controllers
 
         // PUT: api/ForumComments/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize(Roles = "Admin,Staff")]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutForumComment(int id, ForumCommentDTO forumCommentDto)
         {
@@ -90,7 +95,7 @@ namespace AuroraIgloosAPI.Controllers
             if(!ModelState.IsValid) return BadRequest(ModelState);
 
             var employee = await _context.Employee
-                .Include(e => e.User)
+                .Include(e => e.Person)
                     .ThenInclude(u => u.Address)
                 .FirstOrDefaultAsync(e => e.Id == forumCommentDto.IdEmployee);
 
@@ -103,7 +108,7 @@ namespace AuroraIgloosAPI.Controllers
 
             var comment = await _context.ForumComment
                 .Include(c => c.Employee)
-                    .ThenInclude(e => e.User)
+                    .ThenInclude(e => e.Person)
                     .ThenInclude(u => u.Address)
                 .Include(c => c.ForumPost)
                 .FirstOrDefaultAsync(c => c.Id == id);
@@ -139,13 +144,14 @@ namespace AuroraIgloosAPI.Controllers
 
         // POST: api/ForumComments
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize(Roles = "Admin,Staff")]
         [HttpPost]
         public async Task<ActionResult<ForumComment>> PostForumComment(ForumCommentDTO forumCommentDto)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
             var employee = await _context.Employee
-                .Include(e => e.User)
+                .Include(e => e.Person)
                     .ThenInclude(u => u.Address)
                 .FirstOrDefaultAsync(e => e.Id == forumCommentDto.IdEmployee);
 
@@ -177,8 +183,8 @@ namespace AuroraIgloosAPI.Controllers
                 IdEmployee = comment.IdEmployee,
                 Comment = comment.Comment,
                 CommentDate = comment.CommentDate,
-                EmployeeName = comment.Employee.User.Name,
-                EmployeeSurname = comment.Employee.User.Surname,
+                EmployeeName = comment.Employee.Person.Name,
+                EmployeeSurname = comment.Employee.Person.Surname,
                 EmployeePhotoUrl = comment.Employee.PhotoUrl,
                 PostTitle = comment.ForumPost.Title
             };
@@ -187,12 +193,13 @@ namespace AuroraIgloosAPI.Controllers
         }
 
         // DELETE: api/ForumComments/5
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteForumComment(int id)
         {
             var comment = await _context.ForumComment
                 .Include(c => c.Employee)
-                    .ThenInclude(e => e.User)
+                    .ThenInclude(e => e.Person)
                     .ThenInclude(u => u.Address)
                 .Include(c => c.ForumPost)
                 .FirstOrDefaultAsync(c => c.Id == id);

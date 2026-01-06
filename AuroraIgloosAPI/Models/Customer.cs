@@ -10,8 +10,11 @@ namespace AuroraIgloosAPI.Models;
 public partial class Customer
 {
     public int Id { get; set; }
-    public int IdUser { get; set; }
+    public int IdPerson { get; set; }
+    
+    public int? IdUser { get; set; }
 
 
-    public required User User { get; set; }
+    public required Person Person { get; set; }
+    public User? User { get; set; }
 }

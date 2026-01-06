@@ -8,9 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using AuroraIgloosAPI.Models;
 using AuroraIgloosAPI.Models.Contexts;
 using AuroraIgloosAPI.DTOs;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AuroraIgloosAPI.Controllers
 {
+    [Authorize(Roles = "Admin,Staff,ReadOnly")]
     [Route("api/[controller]")]
     [ApiController]
     public class ForumPostsController : ControllerBase
@@ -23,12 +25,13 @@ namespace AuroraIgloosAPI.Controllers
         }
 
         // GET: api/ForumPosts
+        [Authorize(Roles = "Admin,Staff,ReadOnly")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ForumPostDTO>>> GetForumPost()
         {
             var posts = await _context.ForumPost
                 .Include(p => p.Employee)
-                .ThenInclude(e => e.User)
+                .ThenInclude(e => e.Person)
                 .ThenInclude(u => u.Address)
                 .Include(p => p.Category)
                 .Include(p => p.ForumComment)
@@ -42,9 +45,7 @@ namespace AuroraIgloosAPI.Controllers
                     PostDate = p.PostDate,
                     Category = p.Category.Name ?? "",
                     Tags = p.Tags ?? "",
-                    EmployeeName = p.Employee.User.Name ?? "",
-                    EmployeeSurname = p.Employee.User.Surname ?? "",
-                    EmployeePhotoUrl = p.Employee.PhotoUrl ?? "",
+                    Employee = p.Employee,
                     ForumComment = p.ForumComment.Select(c => new ForumCommentDTO
                     {
                         Id = c.Id,
@@ -52,8 +53,8 @@ namespace AuroraIgloosAPI.Controllers
                         IdEmployee = c.IdEmployee,
                         Comment = c.Comment ?? "",
                         CommentDate = c.CommentDate,
-                        EmployeeName = c.Employee.User.Name ?? "",
-                        EmployeeSurname = c.Employee.User.Surname ?? "",
+                        EmployeeName = c.Employee.Person.Name ?? "",
+                        EmployeeSurname = c.Employee.Person.Surname ?? "",
                         EmployeePhotoUrl = c.Employee.PhotoUrl ?? "",
                         PostTitle = p.Title ?? "",
                     }).ToList(), // Convert ForumComment to list here
@@ -65,12 +66,13 @@ namespace AuroraIgloosAPI.Controllers
         }
 
         // GET: api/ForumPosts/5
+        [Authorize(Roles = "Admin,Staff,ReadOnly")]
         [HttpGet("{id}")]
         public async Task<ActionResult<ForumPostDTO>> GetForumPost(int id)
         {
             var post = await _context.ForumPost
                 .Include(p => p.Employee)
-                    .ThenInclude(e => e.User)
+                    .ThenInclude(e => e.Person)
                     .ThenInclude(u => u.Address)
                 .Include(p => p.Category)
                 .Include(p => p.ForumComment)
@@ -85,9 +87,7 @@ namespace AuroraIgloosAPI.Controllers
                     PostDate = p.PostDate,
                     Category = p.Category.Name ?? "",
                     Tags = p.Tags ?? "",
-                    EmployeeName = p.Employee.User.Name ?? "",
-                    EmployeeSurname = p.Employee.User.Surname ?? "",
-                    EmployeePhotoUrl = p.Employee.PhotoUrl ?? "",
+                    Employee = p.Employee,
                     ForumComment = p.ForumComment.Select(c => new ForumCommentDTO
                     {
                         Id = c.Id,
@@ -95,8 +95,8 @@ namespace AuroraIgloosAPI.Controllers
                         IdEmployee = c.IdEmployee,
                         Comment = c.Comment ?? "",
                         CommentDate = c.CommentDate,
-                        EmployeeName = c.Employee.User.Name ?? "",
-                        EmployeeSurname = c.Employee.User.Surname ?? "",
+                        EmployeeName = c.Employee.Person.Name ?? "",
+                        EmployeeSurname = c.Employee.Person.Surname ?? "",
                         EmployeePhotoUrl = c.Employee.PhotoUrl ?? "",
                         PostTitle = p.Title ?? "",
                     }).ToList(),
@@ -116,8 +116,9 @@ namespace AuroraIgloosAPI.Controllers
 
         // PUT: api/ForumPosts/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize(Roles = "Admin,Staff")]
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutForumPost(int id, ForumPostDTO forumPostDto)
+        public async Task<IActionResult> PutForumPost(int id, ForumPostFormDTO forumPostDto)
         {
             if(id != forumPostDto.Id)
             {
@@ -136,7 +137,7 @@ namespace AuroraIgloosAPI.Controllers
                 return NotFound();
             }
 
-           var category = await _context.ForumCategory.FindAsync(forumPostDto.CategoryId);
+            var category = await _context.ForumCategory.FindAsync(forumPostDto.CategoryId);
             if (category == null)
             {
                 return BadRequest("Category not found");
@@ -151,7 +152,7 @@ namespace AuroraIgloosAPI.Controllers
             
             var post = await _context.ForumPost
                 .Include(p => p.Employee)
-                .ThenInclude(e => e.User)
+                .ThenInclude(e => e.Person)
                 .ThenInclude(u => u.Address)
                 .Include(p => p.Category)
                 .FirstOrDefaultAsync(p => p.Id == id);
@@ -162,10 +163,11 @@ namespace AuroraIgloosAPI.Controllers
             }
 
 
+            var now = DateOnly.FromDateTime(DateTime.Now);
 
             forumPost.Title = forumPostDto.Title;
             forumPost.PostContent = forumPostDto.PostContent;
-            forumPost.PostDate = forumPostDto.PostDate;
+            forumPost.UpdateDate = now;
             forumPost.CategoryId = forumPostDto.CategoryId;
             forumPost.Tags = forumPostDto.Tags;
             forumPost.IdEmployee = forumPostDto.IdEmployee;
@@ -192,8 +194,9 @@ namespace AuroraIgloosAPI.Controllers
 
         // POST: api/ForumPosts
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize(Roles = "Admin,Staff")]
         [HttpPost]
-        public async Task<ActionResult<ForumPost>> PostForumPost(ForumPostDTO forumPostDto)
+        public async Task<ActionResult<ForumPost>> PostForumPost(ForumPostFormDTO forumPostDto)
         {
             if (!ModelState.IsValid)
             {
@@ -256,9 +259,7 @@ namespace AuroraIgloosAPI.Controllers
                 PostDate = forumPost.PostDate,
                 Category = category.Name ?? "",
                 Tags = forumPost.Tags ?? "",
-                EmployeeName = employee.User?.Name ?? "",
-                EmployeeSurname = employee.User?.Surname ?? "",
-                EmployeePhotoUrl = employee.PhotoUrl ?? "",
+                Employee = forumPost.Employee,
                 ForumComment = forumComments.Select(c => new ForumCommentDTO
                 {
                     Id = c.Id,
@@ -266,8 +267,8 @@ namespace AuroraIgloosAPI.Controllers
                     IdEmployee = c.IdEmployee,
                     Comment = c.Comment ?? "",
                     CommentDate = c.CommentDate,
-                    EmployeeName = employee.User?.Name ?? "",
-                    EmployeeSurname = employee.User?.Surname ?? "",
+                    EmployeeName = employee.Person?.Name ?? "",
+                    EmployeeSurname = employee.Person?.Surname ?? "",
                     EmployeePhotoUrl = employee.PhotoUrl ?? "",
                     PostTitle = forumPost.Title ?? "",
                 }).ToList(),
@@ -279,12 +280,13 @@ namespace AuroraIgloosAPI.Controllers
         }
 
         // DELETE: api/ForumPosts/5
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteForumPost(int id)
         {
             var forumPost = await _context.ForumPost
                 .Include(p => p.Employee)
-                .ThenInclude(e => e.User)
+                .ThenInclude(e => e.Person)
                 .ThenInclude(u => u.Address)
                 .Include(p => p.Category)
                 .FirstOrDefaultAsync(Employee => Employee.Id == id);

@@ -64,53 +64,102 @@ public partial class CompanyContext : DbContext
 
     public virtual DbSet<Timezone> Timezone { get; set; }
 
+    public virtual DbSet<Person> Person { get; set; }
+    
     public virtual DbSet<User> User { get; set; }
+    
+    public virtual DbSet<UserRole> UserRole { get; set; }
+    
+    public virtual DbSet<UserType> UserType { get; set; }
+    
+    public virtual DbSet<Trip> Trip { get; set; } = null!;
+    
+    public virtual DbSet<TripSeason> TripSeason { get; set; } = null!;
+    
+    public virtual DbSet<TripLevelOfDifficulty> TripLevelOfDifficulty { get; set; } = null!;
+
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=localhost\\SQLEXPRESS;Initial Catalog=AuroraIgloos;Integrated Security=True;TrustServerCertificate=True;");
+        => optionsBuilder.UseSqlServer("Server=localhost,1433;Database=AuroraIgloosEngineering;User Id=sa;Password=JestemArielka123!;MultipleActiveResultSets=true;Encrypt=False;TrustServerCertificate=True");
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
 
-        modelBuilder.Entity<User>()
+        modelBuilder.Entity<Person>()
             .HasOne(e => e.Address)
             .WithOne()
-            .HasForeignKey<User>(u => u.IdAddress)
+            .HasForeignKey<Person>(u => u.IdAddress)
             .OnDelete(DeleteBehavior.Cascade);
 
+        // modelBuilder.Entity<User>(entity =>
+        // {
+        //     entity.HasIndex(u => u.Login).IsUnique();
+        //
+        //     entity.HasOne(u => u.UserType)
+        //         .WithMany()
+        //         .HasForeignKey(u => u.UserTypeId)
+        //         .OnDelete(DeleteBehavior.Cascade);
+        // });
+
+        modelBuilder.Entity<User>()
+            .HasOne(u => u.UserType)
+            .WithMany()
+            .HasForeignKey(u => u.UserTypeId);
+
+        modelBuilder.Entity<User>()
+            .HasOne(u => u.Role)
+            .WithMany()
+            .HasForeignKey(u => u.UserRoleId);
+
         modelBuilder.Entity<Customer>()
-            .HasOne(e => e.User)
+            .HasOne(e => e.Person)
             .WithOne()
+            .HasForeignKey<Customer>(c => c.IdPerson)
+            .OnDelete(DeleteBehavior.Cascade);
+        
+        modelBuilder.Entity<Customer>()
+            .HasOne(c => c.User)
+            .WithOne(u => u.Customer)
             .HasForeignKey<Customer>(c => c.IdUser)
+            .IsRequired(false)
             .OnDelete(DeleteBehavior.Cascade);
 
         modelBuilder.Entity<Employee>()
-            .HasOne(e => e.User)
+            .HasOne(e => e.Person)
             .WithOne()
-            .HasForeignKey<Employee>(e => e.IdUser)
+            .HasForeignKey<Employee>(e => e.IdPerson)
             .OnDelete(DeleteBehavior.Cascade);
 
         modelBuilder.Entity<Employee>()
             .HasOne(e => e.EmployeeRole)
             .WithMany()
             .HasForeignKey(e => e.RoleId);
+        
+        modelBuilder.Entity<Employee>()
+            .HasOne(e => e.User)
+            .WithOne(u => u.Employee)
+            .HasForeignKey<Employee>(e => e.IdUser)
+            .OnDelete(DeleteBehavior.Cascade);
 
-        modelBuilder.Entity<Booking>()
-            .HasOne(e => e.Employee)
-            .WithMany()
-            .HasForeignKey(e => e.CreatedById);
+        // modelBuilder.Entity<Booking>()
+        //     .HasOne(e => e.Employee)
+        //     .WithMany()
+        //     .HasForeignKey(e => e.CreatedById)
+        //     .OnDelete(DeleteBehavior.Restrict); 
 
         modelBuilder.Entity<Booking>()
             .HasOne(e => e.Customer)
             .WithMany()
-            .HasForeignKey(e => e.IdCustomer);
+            .HasForeignKey(e => e.IdCustomer)
+            .OnDelete(DeleteBehavior.Restrict); 
 
         modelBuilder.Entity<Booking>()
             .HasOne(e => e.Igloo)
             .WithMany()
-            .HasForeignKey(e => e.IdIgloo);
+            .HasForeignKey(e => e.IdIgloo)
+            .OnDelete(DeleteBehavior.Restrict); 
 
         //modelBuilder.Entity<Booking>()
         //    .HasOne(e => e.Status)
@@ -120,7 +169,14 @@ public partial class CompanyContext : DbContext
         modelBuilder.Entity<Booking>()
             .HasOne(e => e.PaymentMethod)
             .WithMany()
-            .HasForeignKey(e => e.PaymentMethodId);
+            .HasForeignKey(e => e.PaymentMethodId)
+            .OnDelete(DeleteBehavior.Restrict);
+        
+        modelBuilder.Entity<Booking>()
+            .HasOne(b => b.Trip)
+            .WithMany()
+            .HasForeignKey(b => b.TripId)
+            .OnDelete(DeleteBehavior.Restrict);
 
         //modelBuilder.Entity<Booking>()
         //    .HasOne(e => e.Currency)
@@ -156,6 +212,18 @@ public partial class CompanyContext : DbContext
             .HasOne(c => c.ForumPost)
             .WithMany(p => p.ForumComment)
             .HasForeignKey(c => c.IdPost);
+        
+        modelBuilder.Entity<Igloo>()
+            .HasOne(i => i.Discount)
+            .WithMany(d => d.Igloos)
+            .HasForeignKey(i => i.IdDiscount)
+            .OnDelete(DeleteBehavior.SetNull);
+        
+        modelBuilder.Entity<Trip>()
+            .HasOne(t => t.Guide)
+            .WithMany(e => e.GuidedTrips)
+            .HasForeignKey(t => t.GuideId)
+            .OnDelete(DeleteBehavior.Restrict);
 
         base.OnModelCreating(modelBuilder);
     }

@@ -10,7 +10,7 @@ public partial class Discount
 {
     public int Id { get; set; }
 
-    public int? IdIgloo { get; set; }
+    // public int? IdIgloo { get; set; }
 
     public string? Name { get; set; }
 
@@ -20,5 +20,11 @@ public partial class Discount
     public string? Description { get; set; }
 
 
-    public required Igloo Igloo { get; set; }
+    // public required Igloo Igloo { get; set; }
+    
+    public ICollection<Igloo> Igloos { get; set; } =  new List<Igloo>();
+    
+    public DateOnly? ValidFrom { get; set; }
+    public DateOnly? ValidTo { get; set; }
+    
 }

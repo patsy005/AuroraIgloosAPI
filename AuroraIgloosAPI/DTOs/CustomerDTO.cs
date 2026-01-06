@@ -6,7 +6,8 @@ namespace AuroraIgloosAPI.DTOs
     public class CustomerDTO
     {
         public int Id { get; set; }
-        public int? IdUser { get; set; }
+        public int ? IdUser  { get; set; }
+        public int? IdPerson { get; set; }
 
         [Required(ErrorMessage = "Name is required")]
         public required string Name { get; set; }
@@ -32,5 +33,14 @@ namespace AuroraIgloosAPI.DTOs
 
         [Required(ErrorMessage = "Country is required")]
         public required string Country { get; set; }
+        
+        [Required(ErrorMessage = "Choosing an option is required")]
+        public bool CreateUser { get; set; }
+        
+        public string? Login { get; set; }
+        public string? Password { get; set; }
+        
+        public int? UserTypeId { get; set; }
+        public int? UserRoleId { get; set; }
     }
 }

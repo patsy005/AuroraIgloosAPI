@@ -1,0 +1,16 @@
+.env
+
+# Build
+bin/
+obj/
+
+# Rider / IntelliJ
+.idea/
+
+# Visual Studio
+.vs/
+
+# User files
+*.user
+*.suo
+*.cache
