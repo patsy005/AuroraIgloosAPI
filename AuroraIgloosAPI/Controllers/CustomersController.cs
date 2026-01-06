@@ -252,9 +252,12 @@ namespace AuroraIgloosAPI.Controllers
             var customer = await _context.Customer
                 .Include(c => c.Person)
                     .ThenInclude(u => u.Address)
+                .Include(c => c.User)
                 .FirstOrDefaultAsync(c => c.Id == id);
 
             if (customer == null) return NotFound($"Customer with id {id} not found");
+            
+            if(customer.User != null) _context.User.Remove(customer.User);
 
             _context.Customer.Remove(customer);
             _context.Person.Remove(customer.Person);
