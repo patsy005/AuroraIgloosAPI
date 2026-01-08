@@ -24,7 +24,7 @@ namespace AuroraIgloosAPI
             var builder = WebApplication.CreateBuilder(args);
 
             // Pobierz connection string z appsettings.json
-            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+            var connectionString = builder.Configuration.GetConnectionString("CompanyContext");
 
             //builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 
