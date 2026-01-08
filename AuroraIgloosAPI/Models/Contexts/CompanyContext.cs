@@ -16,6 +16,7 @@ public partial class CompanyContext : DbContext
     {
     }
 
+    public DbSet<ContentBlock> ContentBlocks { get; set; }
     public virtual DbSet<Address> Address { get; set; }
 
     public virtual DbSet<Booking> Booking { get; set; }
@@ -87,6 +88,20 @@ public partial class CompanyContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
 
+        modelBuilder.Entity<ContentBlock>()
+            .HasIndex(x => x.Key)
+            .IsUnique();
+        
+        modelBuilder.Entity<ContentBlock>()
+            .Property(x => x.Key)
+            .IsRequired()
+            .HasMaxLength(120);
+
+        modelBuilder.Entity<ContentBlock>()
+            .Property(x => x.Value)
+            .IsRequired()
+            .HasMaxLength(4000);
+        
         modelBuilder.Entity<Person>()
             .HasOne(e => e.Address)
             .WithOne()
