@@ -20,17 +20,11 @@ public partial class CompanyContext : DbContext
     public virtual DbSet<Address> Address { get; set; }
 
     public virtual DbSet<Booking> Booking { get; set; }
-
-    public virtual DbSet<BookingChannel> BookingChannel { get; set; }
-
-    public virtual DbSet<BookingStatus> BookingStatus { get; set; }
-
+    
     public virtual DbSet<Currency> Currency { get; set; }
 
     public virtual DbSet<Customer> Customer { get; set; }
-
-    public virtual DbSet<CustomerNotification> CustomerNotification { get; set; }
-
+    
     public virtual DbSet<Discount> Discount { get; set; }
 
     public virtual DbSet<Employee> Employee { get; set; }
@@ -43,28 +37,12 @@ public partial class CompanyContext : DbContext
 
     public virtual DbSet<ForumPost> ForumPost { get; set; }
 
-    public virtual DbSet<ForumStatus> ForumStatus { get; set; }
-
-    public virtual DbSet<Gender> Gender { get; set; }
-
     public virtual DbSet<Igloo> Igloo { get; set; }
 
     public virtual DbSet<Invoice> Invoice { get; set; }
 
-    public virtual DbSet<Language> Language { get; set; }
-
-    public virtual DbSet<NotificationPriority> NotificationPriority { get; set; }
-
-    public virtual DbSet<NotificationType> NotificationType { get; set; }
-
     public virtual DbSet<PaymentMethod> PaymentMethod { get; set; }
-
-    public virtual DbSet<Task> Task { get; set; }
-
-    public virtual DbSet<TaskStatus> TaskStatus { get; set; }
-
-    public virtual DbSet<Timezone> Timezone { get; set; }
-
+    
     public virtual DbSet<Person> Person { get; set; }
     
     public virtual DbSet<User> User { get; set; }
