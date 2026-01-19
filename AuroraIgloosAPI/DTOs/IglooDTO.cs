@@ -26,7 +26,9 @@ namespace AuroraIgloosAPI.DTOs
         public string? Description { get; set; }
         
         public string? PhotoUrl { get; set; }
-
+        
+        // public DateOnly CreatedAt { get; set; }
+        public DateOnly LastModifiedAt { get; set; }
     }
 
     public class IglooRowDTO

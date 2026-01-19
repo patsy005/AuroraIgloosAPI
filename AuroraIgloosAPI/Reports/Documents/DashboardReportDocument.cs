@@ -19,7 +19,7 @@ namespace AuroraIgloosAPI.Reports.Documents
 
         public DocumentMetadata GetMetadata() => DocumentMetadata.Default;
 
-        // ===== DARK THEME (Twoje kolory) =====
+        // ===== DARK THEME =====
         private static class Theme
         {
             // tło całej strony / główny bg
@@ -233,7 +233,7 @@ namespace AuroraIgloosAPI.Reports.Documents
                 rows: show.Select(r => new[]
                 {
                     r.BookingId.ToString(),
-                    r.BookingDate.ToString("yyyy-MM-dd"),
+                    r.LastModifiedAt.ToString("yyyy-MM-dd"),
                     $"{r.CustomerName} {r.CustomerSurname}",
                     r.IglooName ?? "",
                     r.TripName ?? "",

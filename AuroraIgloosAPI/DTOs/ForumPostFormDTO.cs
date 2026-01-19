@@ -10,8 +10,9 @@ public class ForumPostFormDTO
 
     public string Tags { get; set; }
     
-    public  DateOnly? PostDate { get; set; }
-    
+    // public  DateOnly? PostDate { get; set; }
+    public DateOnly LastModifiedAt { get; set; }
+
     public ICollection<ForumCommentDTO>? ForumComment { get; set; }
     
 }

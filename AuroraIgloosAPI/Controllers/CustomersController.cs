@@ -39,6 +39,7 @@ namespace AuroraIgloosAPI.Controllers
                 .Include(c => c.Person)
                     .ThenInclude(u => u.Address)
                 .Include(c => c.User)
+                .OrderByDescending(c => c.LastModifiedAt)
                 .Select(c => new CustomerDTO
                 {
                     Id = c.Id,
@@ -57,6 +58,7 @@ namespace AuroraIgloosAPI.Controllers
                     Login = c.User != null ? c.User.Login : null,
                     UserRoleId = c.User != null ? c.User.UserRoleId : null,
                     UserTypeId = c.User != null ? c.User.UserTypeId : null,
+                    LastModifiedAt = DateOnly.FromDateTime(DateTime.Now)
                 })
                 .ToListAsync();
 
@@ -98,6 +100,16 @@ namespace AuroraIgloosAPI.Controllers
 
             if(customer == null) return NotFound($"Customer with id {id} not found");
             
+            var newEmail = customerDto.Email.Trim().ToLowerInvariant();
+
+            if (EmailTaken(newEmail, excludePersonId: customer.Person.Id))
+                return Conflict("Email already taken");
+            
+            var newLogin = (customerDto.Login ?? "").Trim().ToLowerInvariant();
+
+            if (LoginTaken(newLogin, excludeUserId: customer.User.Id))
+                return Conflict("Login already taken");
+            
             var isStaffOrAdmin = role == "Admin" ||  role == "Staff";
             var isOwner = customer.IdUser == userId;
             
@@ -113,6 +125,7 @@ namespace AuroraIgloosAPI.Controllers
             customer.Person.Address.HouseNumber = customerDto.HouseNumber;
             customer.Person.Address.City = customerDto.City;
             customer.Person.Address.Country = customerDto.Country;
+            customer.LastModifiedAt = DateOnly.FromDateTime(DateTime.Now);
 
             if (customer.User != null)
             {
@@ -153,6 +166,11 @@ namespace AuroraIgloosAPI.Controllers
         public async Task<ActionResult<Customer>> PostCustomer(CustomerDTO customerDto)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
+            
+            var email = (customerDto.Email ?? "").Trim().ToLowerInvariant();
+
+            if (EmailTaken(email))
+                return Conflict("Email already taken");
 
             var address = new Address
             {
@@ -192,6 +210,11 @@ namespace AuroraIgloosAPI.Controllers
                 {
                     return BadRequest("Login and Password are required when CreateUser is true.");
                 }
+                
+                var login = customerDto.Login.Trim().ToLowerInvariant();
+
+                if (LoginTaken(login))
+                    return Conflict("Login already taken");
 
                 var user = new User
                 {
@@ -240,7 +263,8 @@ namespace AuroraIgloosAPI.Controllers
                 Login = customer.IdUser != null ? customerDto.Login : null,
                 UserRoleId = customerDto.CreateUser ? (customerDto.UserRoleId ?? 3) : null,
                 UserTypeId = customerDto.CreateUser ? (customerDto.UserTypeId ?? 2) : null,
-                CreateUser = customerDto.CreateUser
+                CreateUser = customerDto.CreateUser,
+                LastModifiedAt = DateOnly.FromDateTime(DateTime.Now),
             });
         }
 
@@ -293,8 +317,10 @@ namespace AuroraIgloosAPI.Controllers
 
             if (customer.IdUser != null) return Conflict("Customer already has an account.");
 
-            var loginTaken = await _context.User.AnyAsync(u => u.Login == dto.Login);
-            if (loginTaken) return Conflict("Login already exists.");
+            var login = dto.Login.Trim().ToLowerInvariant();
+
+            if (LoginTaken(login))
+                return Conflict("Login already taken");
 
             var user = new User
             {
@@ -318,6 +344,26 @@ namespace AuroraIgloosAPI.Controllers
             return _context.Customer.Any(e => e.Id == id);
         }
         
+        private bool EmailTaken(string email, int? excludePersonId = null)
+        {
+            var formEmail = (email ?? "").Trim().ToLowerInvariant();
+            if (string.IsNullOrWhiteSpace(formEmail)) return false;
+
+            return _context.Person.Any(p =>
+                p.Email.ToLower() == formEmail &&
+                (!excludePersonId.HasValue || p.Id != excludePersonId.Value));
+        }
+
+        private bool LoginTaken(string login, int? excludeUserId = null)
+        {
+            var formLogin = (login ?? "").Trim().ToLowerInvariant();
+            if (string.IsNullOrWhiteSpace(formLogin)) return false;
+
+            return _context.User.Any(u =>
+                u.Login.ToLower() == formLogin &&
+                (!excludeUserId.HasValue || u.Id != excludeUserId.Value));
+        }
+
     }
     
     

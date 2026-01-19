@@ -79,7 +79,7 @@ public class ReportsController : ControllerBase
         // Booking.Igloo
         // Booking.Trip
         return await _context.Booking
-            .Where(b => b.BookingDate >= from && b.BookingDate <= to)
+            .Where(b => b.LastModifiedAt >= from && b.LastModifiedAt <= to)
             .Include(b => b.Customer).ThenInclude(c => c.Person)
             .Include(b => b.PaymentMethod)
             .Include(b => b.Igloo)
@@ -97,7 +97,7 @@ public class ReportsController : ControllerBase
                 CheckIn = b.CheckIn,
                 CheckOut = b.CheckOut,
 
-                BookingDate = b.BookingDate,
+                LastModifiedAt = b.LastModifiedAt,
 
                 TripDate = b.TripDate,
                 TripName = b.Trip != null ? b.Trip.Name : "",

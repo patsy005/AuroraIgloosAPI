@@ -26,7 +26,7 @@ namespace AuroraIgloosAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<TripSeasonDTO>>> GetTripSeason()
         {
-            var tripSeasons = await _context.TripSeason.ToListAsync();
+            var tripSeasons = await _context.TripSeason.OrderByDescending(s => s.LastModifiedAt).ToListAsync();
             
             return Ok(tripSeasons);
         }
@@ -55,8 +55,7 @@ namespace AuroraIgloosAPI.Controllers
             {
                 Name = tripSeasonDTO.Name,
                 Description = tripSeasonDTO.Description ?? "",
-                CreatedAt = now,
-                UpdatedAt = now,
+                LastModifiedAt = now
             };
 
             try
@@ -85,7 +84,7 @@ namespace AuroraIgloosAPI.Controllers
            
            tripSeason.Name = tripSeasonDTO.Name;
            tripSeason.Description = tripSeasonDTO.Description ?? "";
-           tripSeason.UpdatedAt = DateOnly.FromDateTime(DateTime.Now);
+           tripSeason.LastModifiedAt = DateOnly.FromDateTime(DateTime.Now);
 
            try
            {

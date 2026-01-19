@@ -26,4 +26,7 @@ public class IglooFormDTO
     public string? Description { get; set; }
         
     public IFormFile? PhotoFile { get; set; }
+    
+    // public DateOnly UpdatedAt { get; set; }
+    public DateOnly LastModifiedAt { get; set; }
 }

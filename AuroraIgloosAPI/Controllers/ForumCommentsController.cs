@@ -34,13 +34,15 @@ namespace AuroraIgloosAPI.Controllers
                     .ThenInclude(e => e.Person)
                     .ThenInclude(u => u.Address)
                 .Include(c => c.ForumPost)
+                .OrderByDescending(c => c.LastModifiedAt)
                 .Select(c => new ForumCommentDTO
                 {
                     Id = c.Id,
                     IdPost = c.IdPost,
                     IdEmployee = c.IdEmployee,
                     Comment = c.Comment,
-                    CommentDate = c.CommentDate,
+                    // CommentDate = c.CommentDate,
+                    LastModifiedAt = c.LastModifiedAt,
                     EmployeeName = c.Employee.Person.Name,
                     EmployeeSurname = c.Employee.Person.Surname,
                     EmployeePhotoUrl = c.Employee.PhotoUrl,
@@ -62,13 +64,14 @@ namespace AuroraIgloosAPI.Controllers
                     .ThenInclude(u => u.Address)
                 .Include(c => c.ForumPost)
                 .Where(c => c.Id == id)
+                .OrderByDescending(c => c.LastModifiedAt)
                 .Select(c => new ForumCommentDTO
                 {
                     Id = c.Id,
                     IdPost = c.IdPost,
                     IdEmployee = c.IdEmployee,
                     Comment = c.Comment,
-                    CommentDate = c.CommentDate,
+                    LastModifiedAt = c.LastModifiedAt,
                     EmployeeName = c.Employee.Person.Name,
                     EmployeeSurname = c.Employee.Person.Surname,
                     EmployeePhotoUrl = c.Employee.PhotoUrl,
@@ -118,7 +121,7 @@ namespace AuroraIgloosAPI.Controllers
             comment.IdPost = forumCommentDto.IdPost;
             comment.IdEmployee = forumCommentDto.IdEmployee;
             comment.Comment = forumCommentDto.Comment;
-            comment.CommentDate = forumCommentDto.CommentDate ?? DateOnly.FromDateTime(DateTime.Now);
+            comment.LastModifiedAt = DateOnly.FromDateTime(DateTime.Now);
             comment.Employee = employee;
             comment.ForumPost = post;
 
@@ -168,7 +171,7 @@ namespace AuroraIgloosAPI.Controllers
                 IdPost = forumCommentDto.IdPost,
                 IdEmployee = forumCommentDto.IdEmployee,
                 Comment = forumCommentDto.Comment,
-                CommentDate = forumCommentDto.CommentDate ?? DateOnly.FromDateTime(DateTime.Now),
+                LastModifiedAt = DateOnly.FromDateTime(DateTime.Now),
                 Employee = employee,
                 ForumPost = post
             };
@@ -182,7 +185,7 @@ namespace AuroraIgloosAPI.Controllers
                 IdPost = comment.IdPost,
                 IdEmployee = comment.IdEmployee,
                 Comment = comment.Comment,
-                CommentDate = comment.CommentDate,
+                LastModifiedAt = comment.LastModifiedAt,
                 EmployeeName = comment.Employee.Person.Name,
                 EmployeeSurname = comment.Employee.Person.Surname,
                 EmployeePhotoUrl = comment.Employee.PhotoUrl,

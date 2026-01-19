@@ -26,7 +26,10 @@ namespace AuroraIgloosAPI.DTOs
 
         public bool? EarlyCheckInRequest { get; set; }
         public bool? LateCheckOutRequest { get; set; }
-        public DateOnly? BookingDate { get; set; }
+        // public DateOnly? BookingDate { get; set; }
+        
+        public DateOnly LastModifiedAt { get; set; }
+
         public string? CustomerName { get; set; }
         public string? CustomerSurname { get; set; }
         public string? CustomerEmail { get; set; }
@@ -44,6 +47,8 @@ namespace AuroraIgloosAPI.DTOs
         public string? TripName { get; set; }
         
         public int Guests { get; set; }
+        
+        public DateOnly? UpdatedAt { get; set; }
     }
 
     public class BookingRowDTO
@@ -59,7 +64,9 @@ namespace AuroraIgloosAPI.DTOs
         public DateOnly? CheckIn { get; set; }
         public DateOnly? CheckOut { get; set; }
 
-        public DateOnly BookingDate { get; set; }
+        // public DateOnly BookingDate { get; set; }
+
+        public DateOnly LastModifiedAt { get; set; }
 
         public DateOnly? TripDate { get; set; }
         public string TripName { get; set; } = "";

@@ -22,9 +22,9 @@ public partial class Booking
     
     public string? Notes { get; set; }
     
-    public DateOnly BookingDate { get; set; }
-    public DateOnly UpdateDate { get; set; }
-    
+    // public DateOnly BookingDate { get; set; }
+    // public DateOnly UpdateDate { get; set; }
+    //
     public int Guests { get; set; }
     
     // igloo booking only
@@ -41,6 +41,10 @@ public partial class Booking
     public Trip? Trip { get; set; }
     
     public DateOnly? TripDate { get; set; }
+    
+    public DateOnly LastModifiedAt { get; set; }
+
+
     
     
 }

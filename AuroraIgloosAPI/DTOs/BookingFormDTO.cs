@@ -26,8 +26,9 @@ public class BookingFormDTO
 
     public bool? EarlyCheckInRequest { get; set; }
     public bool? LateCheckOutRequest { get; set; }
-    public DateOnly? BookingDate { get; set; }
-        
+    // public DateOnly? BookingDate { get; set; }
+    public DateOnly LastModifiedAt { get; set; }
+
     public int? TripId { get; set; }
     
     public int Guests { get; set; }

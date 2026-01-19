@@ -24,4 +24,7 @@ public partial class Employee
     public User User { get; set; }
     
     public ICollection<Trip> GuidedTrips { get; set; } = new List<Trip>();
+    
+    public DateOnly LastModifiedAt { get; set; }
+
 }

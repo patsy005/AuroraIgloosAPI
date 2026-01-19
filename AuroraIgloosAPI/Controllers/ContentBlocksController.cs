@@ -9,7 +9,6 @@ namespace AuroraIgloosAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Admin")]
     public class ContentBlocksController : ControllerBase
     {
         private readonly CompanyContext _context;
@@ -20,10 +19,12 @@ namespace AuroraIgloosAPI.Controllers
         }
 
         // GET: api/ContentBlocks
+        [Authorize(Roles = "Admin,Staff,ReadOnly")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ContentBlockDTO>>> GetAll()
         {
             var items = await _context.ContentBlocks
+                .OrderByDescending(c => c.LastModifiedAt)
                 .Select(cb => new ContentBlockDTO
                 {
                     Id = cb.Id,
@@ -36,6 +37,7 @@ namespace AuroraIgloosAPI.Controllers
         }
 
         // GET: api/ContentBlocks/5
+        [Authorize(Roles = "Admin,Staff,ReadOnly")]
         [HttpGet("{id}")]
         public async Task<ActionResult<ContentBlockDTO>> GetById(int id)
         {
@@ -55,6 +57,7 @@ namespace AuroraIgloosAPI.Controllers
         
 
         // POST: api/ContentBlocks
+        [Authorize(Roles = "Admin,Staff")]
         [HttpPost]
         public async Task<ActionResult<ContentBlockDTO>> Create([FromBody] ContentBlockCreateDTO dto)
         {
@@ -68,7 +71,8 @@ namespace AuroraIgloosAPI.Controllers
             var entity = new ContentBlock
             {
                 Key = dto.Key,
-                Value = dto.Value
+                Value = dto.Value,
+                LastModifiedAt = DateOnly.FromDateTime(DateTime.Now)
             };
 
             _context.ContentBlocks.Add(entity);
@@ -86,13 +90,15 @@ namespace AuroraIgloosAPI.Controllers
             {
                 Id = entity.Id,
                 Key = entity.Key,
-                Value = entity.Value
+                Value = entity.Value,
+                LastModifiedAt = entity.LastModifiedAt
             };
 
             return CreatedAtAction(nameof(GetById), new { id = entity.Id }, result);
         }
 
         // PUT: api/ContentBlocks/5
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] ContentBlockUpdateDTO dto)
         {
@@ -109,6 +115,7 @@ namespace AuroraIgloosAPI.Controllers
 
             entity.Key = dto.Key;
             entity.Value = dto.Value;
+            entity.LastModifiedAt = DateOnly.FromDateTime(DateTime.Now);
 
             try
             {
@@ -123,6 +130,7 @@ namespace AuroraIgloosAPI.Controllers
         }
 
         // DELETE: api/ContentBlocks/5
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> Delete(int id)
         {

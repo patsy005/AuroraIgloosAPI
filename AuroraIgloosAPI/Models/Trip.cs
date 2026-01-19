@@ -23,8 +23,7 @@ public class Trip
     public int GuideId { get; set; }
     public Employee? Guide { get; set; }
     
-    public DateOnly CreatedAt { get; set; }
-    public DateOnly UpdatedAt { get; set; }
+    public DateOnly LastModifiedAt { get; set; }
     
     public string? PhotoUrl { get; set; }
 }

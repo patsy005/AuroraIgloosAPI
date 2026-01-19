@@ -36,6 +36,7 @@ namespace AuroraIgloosAPI.Controllers
                 .Include(e => e.Person)
                 .Include(e => e.EmployeeRole)
                 .Include(e => e.User)
+                .OrderByDescending(e => e.LastModifiedAt)
                 .Select(e => new EmployeeDTO
                 {
                     Id = e.Id,
@@ -56,7 +57,8 @@ namespace AuroraIgloosAPI.Controllers
                     Login = e.User.Login ?? "",
                     UserTypeId = e.User.UserTypeId,
                     UserRoleId = e.User.UserRoleId,
-                    Password = e.User.PasswordHash
+                    Password = e.User.PasswordHash,
+                    LastModifiedAt = e.LastModifiedAt,
                 })
                 .ToListAsync();
 
@@ -93,6 +95,16 @@ namespace AuroraIgloosAPI.Controllers
                 .FirstOrDefaultAsync(e => e.Id == id);
 
             if(employee == null) return NotFound($"Employee with id {id} not found");
+            
+            var newEmail = (employeeDto.Email ?? "").Trim().ToLowerInvariant();
+            
+            if(EmailTaken(newEmail, excludePersonId: employee.Person.Id))
+                return Conflict($"Email already taken");
+            
+            var newLogin = (employeeDto.Login ?? "").Trim().ToLowerInvariant();
+            
+            if(LoginTaken(newLogin, excludeUserId: employee.User.Id))
+                return Conflict($"Login already taken");
 
             employee.Person.Name = employeeDto.Name ?? employee.Person.Name;
             employee.Person.Surname = employeeDto.Surname ?? employee.Person.Surname;
@@ -111,6 +123,8 @@ namespace AuroraIgloosAPI.Controllers
             employee.User.Login = employeeDto.Login ?? employee.User.Login;
             employee.User.UserTypeId = employeeDto.UserTypeId ?? employee.User.UserTypeId;
             employee.User.UserRoleId = employeeDto.UserRoleId ?? employee.User.UserRoleId;
+            
+            employee.LastModifiedAt = DateOnly.FromDateTime(DateTime.Now);
             
             if (!string.IsNullOrWhiteSpace(employeeDto.Password))
             {
@@ -185,6 +199,20 @@ namespace AuroraIgloosAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
+            
+            var email = (employeeDto.Email ?? "").Trim().ToLowerInvariant();
+
+            if (EmailTaken(email))
+            {
+                return Conflict("Email already taken");
+            }
+            
+            var login = (employeeDto.Login ?? "").Trim().ToLowerInvariant();
+
+            if (LoginTaken(login))
+            {
+                return Conflict("Login already taken");
+            }
 
             var address = new Address
             {
@@ -203,7 +231,7 @@ namespace AuroraIgloosAPI.Controllers
             {
                 Name = employeeDto.Name ?? "",
                 Surname = employeeDto.Surname ?? "",
-                Email = employeeDto.Email ?? "",
+                Email = email ?? "",
                 PhoneNumber = employeeDto.PhoneNumber ?? "",
                 Address = address
             };
@@ -221,7 +249,7 @@ namespace AuroraIgloosAPI.Controllers
             
             var user = new User
             {
-                Login = employeeDto.Login ?? "",
+                Login = login ?? "",
                 // UserTypeId = 1 // Employee
                 UserTypeId = employeeDto.UserTypeId ?? 1,
                 UserRoleId = employeeDto.UserRoleId ?? 4,
@@ -267,6 +295,7 @@ namespace AuroraIgloosAPI.Controllers
                 EmployeeRole = role,
                 User = user,
                 IdUser = user.Id,
+                LastModifiedAt = DateOnly.FromDateTime(DateTime.Now),
             };
 
             try
@@ -312,5 +341,26 @@ namespace AuroraIgloosAPI.Controllers
         {
             return _context.Employee.Any(e => e.Id == id);
         }
+
+        private bool EmailTaken(string email, int? excludePersonId = null)
+        {
+            var formEmail = (email ?? "").Trim().ToLowerInvariant();
+            if (string.IsNullOrWhiteSpace(formEmail)) return false;
+
+            return _context.Person.Any(p =>
+                p.Email.ToLower() == formEmail &&
+                (!excludePersonId.HasValue || p.Id != excludePersonId.Value));
+        }
+
+        private bool LoginTaken(string login, int? excludeUserId = null)
+        {
+            var formLogin = (login ?? "").Trim().ToLowerInvariant();
+            if (string.IsNullOrWhiteSpace(formLogin)) return false;
+
+            return _context.User.Any(u =>
+                u.Login.ToLower() == formLogin &&
+                (!excludeUserId.HasValue || u.Id != excludeUserId.Value));
+        }
+
     }
 }

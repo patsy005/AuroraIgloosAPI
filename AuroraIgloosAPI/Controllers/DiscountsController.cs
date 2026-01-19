@@ -28,7 +28,7 @@ namespace AuroraIgloosAPI.Controllers
         public async Task<ActionResult<IEnumerable<DiscountDTO>>> GetDiscount()
         {
             var discounts = await _context.Discount
-                // .Include(d => d.Igloo)
+                .OrderByDescending(d => d.LastModifiedAt)
                 .Select( d => new DiscountDTO
                 {
                     Id = d.Id,
@@ -69,24 +69,18 @@ namespace AuroraIgloosAPI.Controllers
             if(id != discountDto.Id) return BadRequest("Id mismatch");
 
             if(!ModelState.IsValid) return BadRequest(ModelState);
-
-            // var igloo = await _context.Igloo.FindAsync(discountDto.IdIgloo);
-            //
-            // if(igloo == null) return NotFound($"Igloo with id {discountDto.IdIgloo} not found");
-
+            
             var discount = await _context.Discount
-                // .Include(d => d.Igloo)
                 .FirstOrDefaultAsync(d => d.Id == id);
 
             if (discount == null) return NotFound($"Discount with id {id} not found");
 
-            // discount.IdIgloo = discountDto.IdIgloo;
             discount.Name = discountDto.Name;
             discount.Discount1 = discountDto.Discount;
             discount.Description = discountDto.Description;
-            // discount.Igloo = igloo;
             discount.ValidFrom = discountDto.ValidFrom ?? null;
             discount.ValidTo = discountDto.ValidTo ?? null;
+            discount.LastModifiedAt = DateOnly.FromDateTime(DateTime.Now);
 
             try
             {
@@ -114,19 +108,14 @@ namespace AuroraIgloosAPI.Controllers
         {
             if(!ModelState.IsValid) return BadRequest(ModelState);
 
-            // var igloo = await _context.Igloo.FindAsync(discountDto.IdIgloo);
-            //
-            // if (igloo == null) return NotFound($"Igloo with id {discountDto.IdIgloo} not found");
-
             var discount = new Discount
             {
-                // IdIgloo = discountDto.IdIgloo,
                 Name = discountDto.Name,
                 Discount1 = discountDto.Discount,
                 Description = discountDto.Description,
                 ValidFrom = discountDto.ValidFrom ?? null,
                 ValidTo = discountDto.ValidTo ?? null,
-                // Igloo = igloo
+                LastModifiedAt = DateOnly.FromDateTime(DateTime.Now),
             };
 
             try
@@ -148,7 +137,6 @@ namespace AuroraIgloosAPI.Controllers
         public async Task<IActionResult> DeleteDiscount(int id)
         {
             var discount = await _context.Discount
-                // .Include(d => d.Igloo)
                 .FirstOrDefaultAsync(d => d.Id == id);
 
             if (discount == null) return NotFound($"Discount with id {id} not found");

@@ -30,6 +30,8 @@ namespace AuroraIgloosAPI.Controllers
         {
             var igloos = await _context.Igloo
                 .Include(i => i.Discount)
+                
+                .OrderByDescending(i => i.LastModifiedAt)
                 .Select(i => new IglooDTO
                 {
                     Id = i.Id,
@@ -40,6 +42,7 @@ namespace AuroraIgloosAPI.Controllers
                     IdDiscount = i.IdDiscount,
                     PhotoUrl = i.PhotoUrl ?? "",
                     Description = i.Description ?? "",
+                    LastModifiedAt = i.LastModifiedAt,
                     
                 })
 
@@ -81,13 +84,14 @@ namespace AuroraIgloosAPI.Controllers
                 .FirstOrDefaultAsync(i => i.Id == id);
 
             if(igloo == null) return NotFound($"Igloo with id {id} not found");
-
+            
             igloo.Name = iglooDto.Name;
             igloo.Capacity = iglooDto.Capacity;
             igloo.PricePerNight = iglooDto.PricePerNight;
             igloo.Discount = iglooDto.Discount;
             igloo.IdDiscount = iglooDto.IdDiscount;
             igloo.Description = iglooDto.Description;
+            igloo.LastModifiedAt = DateOnly.FromDateTime(DateTime.Now);
 
             if (iglooDto.PhotoFile != null && iglooDto.PhotoFile.Length > 0)
             {
@@ -193,6 +197,7 @@ namespace AuroraIgloosAPI.Controllers
                 IdDiscount = iglooDto.IdDiscount,
                 PhotoUrl = photoPath,
                 Description = iglooDto.Description,
+                LastModifiedAt = DateOnly.FromDateTime(DateTime.Now),
             };
 
             try

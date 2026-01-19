@@ -28,4 +28,7 @@ public partial class Igloo
     public string? PhotoUrl { get; set; }
     
     public string? Description { get; set; }
+    
+    public DateOnly LastModifiedAt { get; set; }
+
 }

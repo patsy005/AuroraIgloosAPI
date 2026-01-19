@@ -17,4 +17,7 @@ public partial class Customer
 
     public required Person Person { get; set; }
     public User? User { get; set; }
+    
+    public DateOnly LastModifiedAt { get; set; }
+
 }

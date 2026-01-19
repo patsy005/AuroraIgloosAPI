@@ -28,4 +28,6 @@ public class EmployeeFormDTO
 
     // Zdjęcie – PRZYCHODZI z formularza
     public IFormFile? PhotoFile { get; set; }
+    
+    public DateOnly LastModifiedAt { get; set; }
 }

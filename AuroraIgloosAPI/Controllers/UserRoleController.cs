@@ -30,7 +30,7 @@ public class UserRoleController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<UserRoleDTO>>> GetUserRoles()
     {
-        var userRole = await _context.UserRole.ToListAsync();
+        var userRole = await _context.UserRole.OrderByDescending(u => u.LastModifiedAt).ToListAsync();
         
         return Ok(userRole);
     }
@@ -62,6 +62,7 @@ public class UserRoleController : ControllerBase
         
         userRole.Name = userRoleDTO.Name;
         userRole.Description = userRoleDTO.Description;
+        userRole.LastModifiedAt = DateOnly.FromDateTime(DateTime.Now);
 
         try
         {
@@ -93,6 +94,7 @@ public class UserRoleController : ControllerBase
         {
             Name = userRoleDTO.Name,
             Description = userRoleDTO.Description,
+            LastModifiedAt = DateOnly.FromDateTime(DateTime.Now),
         };
 
         try

@@ -29,5 +29,7 @@ namespace AuroraIgloosAPI.DTOs
         public int GuideId { get; set; }
         
         public IFormFile? PhotoFile { get; set; }
+        
+        public DateOnly LastModifiedAt { get; set; }
     }
 }

@@ -31,6 +31,7 @@ namespace AuroraIgloosAPI.Controllers
                 .Include(t => t.Season)
                 .Include(t => t.LevelOfDifficulty)
                 .Include(t => t.Guide)
+                .OrderByDescending(t => t.LastModifiedAt)
                 .Select(t => new TripDTO
                 {
                     Id = t.Id,
@@ -45,8 +46,7 @@ namespace AuroraIgloosAPI.Controllers
                     LevelOfDifficultyName = t.LevelOfDifficulty.Name ?? "",
                     SeasonId = t.SeasonId,
                     SeasonName = t.Season.Name ?? "",
-                    CreatedAt = t.CreatedAt,
-                    UpdatedAt = t.UpdatedAt,
+                    LastModifiedAt = t.LastModifiedAt,
                     GuideName = t.Guide.Person.Name ?? "",
                     PhotoUrl = t.PhotoUrl ?? "",
                 })
@@ -111,8 +111,7 @@ namespace AuroraIgloosAPI.Controllers
                 GuideId = tripDTO.GuideId,
                 LevelOfDifficultyId = tripDTO.LevelOfDifficultyId,
                 SeasonId = tripDTO.SeasonId,
-                CreatedAt = now,
-                UpdatedAt = now,
+                LastModifiedAt = now,
                 PhotoUrl = photoPath
             };
 
@@ -150,7 +149,7 @@ namespace AuroraIgloosAPI.Controllers
             trip.GuideId = tripDTO.GuideId;
             trip.LevelOfDifficultyId = tripDTO.LevelOfDifficultyId;
             trip.SeasonId = tripDTO.SeasonId;
-            trip.UpdatedAt = DateOnly.FromDateTime(DateTime.UtcNow);
+            trip.LastModifiedAt = DateOnly.FromDateTime(DateTime.UtcNow);
             
             if (tripDTO.PhotoFile != null && tripDTO.PhotoFile.Length > 0)
             {

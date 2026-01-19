@@ -4,6 +4,7 @@ using AuroraIgloosAPI.Models.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AuroraIgloosAPI.Migrations
 {
     [DbContext(typeof(CompanyContext))]
-    partial class CompanyContextModelSnapshot : ModelSnapshot
+    [Migration("20260117102312_AddCreatedAtAndUpdatedAt")]
+    partial class AddCreatedAtAndUpdatedAt
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -64,11 +67,17 @@ namespace AuroraIgloosAPI.Migrations
                     b.Property<decimal>("Amount")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<DateOnly>("BookingDate")
+                        .HasColumnType("date");
+
                     b.Property<DateOnly?>("CheckIn")
                         .HasColumnType("date");
 
                     b.Property<DateOnly?>("CheckOut")
                         .HasColumnType("date");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<bool?>("EarlyCheckInRequest")
                         .HasColumnType("bit");
@@ -81,9 +90,6 @@ namespace AuroraIgloosAPI.Migrations
 
                     b.Property<int?>("IdIgloo")
                         .HasColumnType("int");
-
-                    b.Property<DateOnly>("LastModifiedAt")
-                        .HasColumnType("date");
 
                     b.Property<bool?>("LateCheckOutRequest")
                         .HasColumnType("bit");
@@ -99,6 +105,12 @@ namespace AuroraIgloosAPI.Migrations
 
                     b.Property<int?>("TripId")
                         .HasColumnType("int");
+
+                    b.Property<DateOnly>("UpdateDate")
+                        .HasColumnType("date");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -121,13 +133,16 @@ namespace AuroraIgloosAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Key")
                         .IsRequired()
                         .HasMaxLength(120)
                         .HasColumnType("nvarchar(120)");
 
-                    b.Property<DateOnly>("LastModifiedAt")
-                        .HasColumnType("date");
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Value")
                         .IsRequired()
@@ -166,14 +181,17 @@ namespace AuroraIgloosAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("IdPerson")
                         .HasColumnType("int");
 
                     b.Property<int?>("IdUser")
                         .HasColumnType("int");
 
-                    b.Property<DateOnly>("LastModifiedAt")
-                        .HasColumnType("date");
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -195,6 +213,9 @@ namespace AuroraIgloosAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
@@ -202,11 +223,11 @@ namespace AuroraIgloosAPI.Migrations
                         .HasColumnType("decimal(18,2)")
                         .HasColumnName("discount");
 
-                    b.Property<DateOnly>("LastModifiedAt")
-                        .HasColumnType("date");
-
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<DateOnly?>("ValidFrom")
                         .HasColumnType("date");
@@ -227,20 +248,23 @@ namespace AuroraIgloosAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("IdPerson")
                         .HasColumnType("int");
 
                     b.Property<int>("IdUser")
                         .HasColumnType("int");
 
-                    b.Property<DateOnly>("LastModifiedAt")
-                        .HasColumnType("date");
-
                     b.Property<string>("PhotoUrl")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("RoleId")
                         .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -263,14 +287,17 @@ namespace AuroraIgloosAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateOnly>("LastModifiedAt")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("RoleDescription")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("RoleName")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -285,11 +312,14 @@ namespace AuroraIgloosAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateOnly>("LastModifiedAt")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -307,14 +337,17 @@ namespace AuroraIgloosAPI.Migrations
                     b.Property<string>("Comment")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateOnly?>("CommentDate")
+                        .HasColumnType("date");
+
                     b.Property<int?>("IdEmployee")
                         .HasColumnType("int");
 
                     b.Property<int?>("IdPost")
                         .HasColumnType("int");
 
-                    b.Property<DateOnly>("LastModifiedAt")
-                        .HasColumnType("date");
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -339,12 +372,12 @@ namespace AuroraIgloosAPI.Migrations
                     b.Property<int>("IdEmployee")
                         .HasColumnType("int");
 
-                    b.Property<DateOnly>("LastModifiedAt")
-                        .HasColumnType("date");
-
                     b.Property<string>("PostContent")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateOnly?>("PostDate")
+                        .HasColumnType("date");
 
                     b.Property<string>("Tags")
                         .HasColumnType("nvarchar(max)");
@@ -352,6 +385,9 @@ namespace AuroraIgloosAPI.Migrations
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateOnly?>("UpdateDate")
+                        .HasColumnType("date");
 
                     b.HasKey("Id");
 
@@ -373,14 +409,14 @@ namespace AuroraIgloosAPI.Migrations
                     b.Property<int?>("Capacity")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("IdDiscount")
                         .HasColumnType("int");
-
-                    b.Property<DateOnly>("LastModifiedAt")
-                        .HasColumnType("date");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -390,6 +426,9 @@ namespace AuroraIgloosAPI.Migrations
 
                     b.Property<decimal?>("PricePerNight")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -428,11 +467,14 @@ namespace AuroraIgloosAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateOnly>("LastModifiedAt")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -449,7 +491,7 @@ namespace AuroraIgloosAPI.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("IdAddress")
                         .HasColumnType("int");
@@ -468,9 +510,6 @@ namespace AuroraIgloosAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Email")
-                        .IsUnique();
-
                     b.HasIndex("IdAddress")
                         .IsUnique();
 
@@ -485,14 +524,14 @@ namespace AuroraIgloosAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<DateOnly>("CreatedAt")
+                        .HasColumnType("date");
+
                     b.Property<int>("Duration")
                         .HasColumnType("int");
 
                     b.Property<int>("GuideId")
                         .HasColumnType("int");
-
-                    b.Property<DateOnly>("LastModifiedAt")
-                        .HasColumnType("date");
 
                     b.Property<int>("LevelOfDifficultyId")
                         .HasColumnType("int");
@@ -517,6 +556,9 @@ namespace AuroraIgloosAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateOnly>("UpdatedAt")
+                        .HasColumnType("date");
+
                     b.HasKey("Id");
 
                     b.HasIndex("GuideId");
@@ -536,11 +578,11 @@ namespace AuroraIgloosAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<DateOnly>("CreatedAt")
+                        .HasColumnType("date");
+
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateOnly>("LastModifiedAt")
-                        .HasColumnType("date");
 
                     b.Property<int>("Level")
                         .HasColumnType("int");
@@ -548,6 +590,9 @@ namespace AuroraIgloosAPI.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateOnly>("UpdatedAt")
+                        .HasColumnType("date");
 
                     b.HasKey("Id");
 
@@ -562,15 +607,18 @@ namespace AuroraIgloosAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<DateOnly>("CreatedAt")
+                        .HasColumnType("date");
+
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateOnly>("LastModifiedAt")
-                        .HasColumnType("date");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateOnly>("UpdatedAt")
+                        .HasColumnType("date");
 
                     b.HasKey("Id");
 
@@ -585,16 +633,19 @@ namespace AuroraIgloosAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateOnly>("LastModifiedAt")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Login")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PasswordHash")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("UserRoleId")
                         .HasColumnType("int");
@@ -603,9 +654,6 @@ namespace AuroraIgloosAPI.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Login")
-                        .IsUnique();
 
                     b.HasIndex("UserRoleId");
 
@@ -622,16 +670,19 @@ namespace AuroraIgloosAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateOnly>("LastModifiedAt")
-                        .HasColumnType("date");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -646,12 +697,15 @@ namespace AuroraIgloosAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateOnly>("LastModifiedAt")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Type")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 

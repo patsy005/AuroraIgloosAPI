@@ -21,7 +21,7 @@ namespace AuroraIgloosAPI.BussinessLogic
 
 
             var currentBookings = _context.Booking
-                .Where(b => b.BookingDate >= from && b.BookingDate <= to)
+                .Where(b => b.LastModifiedAt >= from && b.LastModifiedAt <= to)
                 .ToList();
 
             var currentCheckIns = currentBookings
@@ -44,7 +44,7 @@ namespace AuroraIgloosAPI.BussinessLogic
             var occupancyPercent = maxOccupancy == 0 ? 0 : (double)occupancyCount / maxOccupancy * 100;
 
             var prevBookings = _context.Booking
-                .Where(b => b.BookingDate >= previousFrom && b.BookingDate <= previousTo)
+                .Where(b => b.LastModifiedAt >= previousFrom && b.LastModifiedAt <= previousTo)
                 .ToList();
 
             var prevCheckIns = prevBookings
@@ -88,22 +88,22 @@ namespace AuroraIgloosAPI.BussinessLogic
             // Pobieramy tylko te bookingi, które są potrzebne
             var all = _context.Booking
                 .Where(b =>
-                    (b.BookingDate >= from && b.BookingDate <= to) ||
-                    (b.BookingDate >= prevFrom && b.BookingDate <= prevTo)
+                    (b.LastModifiedAt >= from && b.LastModifiedAt <= to) ||
+                    (b.LastModifiedAt >= prevFrom && b.LastModifiedAt <= prevTo)
                 )
-                .Select(b => new { b.BookingDate, b.Amount })
+                .Select(b => new { b.LastModifiedAt, b.Amount })
                 .ToList();
 
             static string Key(DateOnly d) => $"{d.Year:D4}-{d.Month:D2}";
 
             var current = all
-                .Where(x => x.BookingDate >= from && x.BookingDate <= to)
-                .GroupBy(x => Key(x.BookingDate))
+                .Where(x => x.LastModifiedAt >= from && x.LastModifiedAt <= to)
+                .GroupBy(x => Key(x.LastModifiedAt))
                 .ToDictionary(g => g.Key, g => g.Sum(x => x.Amount)); // Amount jest decimal, nie nullable u Ciebie
 
             var previous = all
-                .Where(x => x.BookingDate >= prevFrom && x.BookingDate <= prevTo)
-                .GroupBy(x => Key(x.BookingDate))
+                .Where(x => x.LastModifiedAt >= prevFrom && x.LastModifiedAt <= prevTo)
+                .GroupBy(x => Key(x.LastModifiedAt))
                 .ToDictionary(g => g.Key, g => g.Sum(x => x.Amount));
 
             var startMonth = new DateOnly(from.Year, from.Month, 1);

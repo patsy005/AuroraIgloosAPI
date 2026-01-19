@@ -9,7 +9,9 @@ namespace AuroraIgloosAPI.DTOs
         public required int CategoryId { get; set; }
         public required string Title { get; set; }
         public required string PostContent { get; set; }
-        public  DateOnly? PostDate { get; set; }
+        // public  DateOnly? PostDate { get; set; }
+        public DateOnly LastModifiedAt { get; set; }
+
         public string? Category { get; set; }
         public string? Tags { get; set; }
 

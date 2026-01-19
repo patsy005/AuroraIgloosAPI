@@ -27,4 +27,7 @@ public partial class Discount
     public DateOnly? ValidFrom { get; set; }
     public DateOnly? ValidTo { get; set; }
     
+    public DateOnly LastModifiedAt { get; set; }
+
+    
 }

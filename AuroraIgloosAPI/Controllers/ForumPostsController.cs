@@ -35,6 +35,7 @@ namespace AuroraIgloosAPI.Controllers
                 .ThenInclude(u => u.Address)
                 .Include(p => p.Category)
                 .Include(p => p.ForumComment)
+                .OrderByDescending(p => p.LastModifiedAt)
                 .Select(p => new ForumPostDTO
                 {
                     Id = p.Id,
@@ -42,7 +43,7 @@ namespace AuroraIgloosAPI.Controllers
                     CategoryId = p.CategoryId,
                     Title = p.Title ?? "",
                     PostContent = p.PostContent ?? "",
-                    PostDate = p.PostDate,
+                    LastModifiedAt = p.LastModifiedAt,
                     Category = p.Category.Name ?? "",
                     Tags = p.Tags ?? "",
                     Employee = p.Employee,
@@ -52,7 +53,7 @@ namespace AuroraIgloosAPI.Controllers
                         IdPost = c.IdPost,
                         IdEmployee = c.IdEmployee,
                         Comment = c.Comment ?? "",
-                        CommentDate = c.CommentDate,
+                        LastModifiedAt = c.LastModifiedAt,
                         EmployeeName = c.Employee.Person.Name ?? "",
                         EmployeeSurname = c.Employee.Person.Surname ?? "",
                         EmployeePhotoUrl = c.Employee.PhotoUrl ?? "",
@@ -84,7 +85,7 @@ namespace AuroraIgloosAPI.Controllers
                     CategoryId = p.CategoryId,
                     Title = p.Title ?? "",
                     PostContent = p.PostContent ?? "",
-                    PostDate = p.PostDate,
+                    LastModifiedAt = p.LastModifiedAt,
                     Category = p.Category.Name ?? "",
                     Tags = p.Tags ?? "",
                     Employee = p.Employee,
@@ -94,7 +95,7 @@ namespace AuroraIgloosAPI.Controllers
                         IdPost = c.IdPost,
                         IdEmployee = c.IdEmployee,
                         Comment = c.Comment ?? "",
-                        CommentDate = c.CommentDate,
+                        LastModifiedAt = c.LastModifiedAt,
                         EmployeeName = c.Employee.Person.Name ?? "",
                         EmployeeSurname = c.Employee.Person.Surname ?? "",
                         EmployeePhotoUrl = c.Employee.PhotoUrl ?? "",
@@ -167,7 +168,7 @@ namespace AuroraIgloosAPI.Controllers
 
             forumPost.Title = forumPostDto.Title;
             forumPost.PostContent = forumPostDto.PostContent;
-            forumPost.UpdateDate = now;
+            forumPost.LastModifiedAt = now;
             forumPost.CategoryId = forumPostDto.CategoryId;
             forumPost.Tags = forumPostDto.Tags;
             forumPost.IdEmployee = forumPostDto.IdEmployee;
@@ -222,7 +223,7 @@ namespace AuroraIgloosAPI.Controllers
                 IdPost = c.IdPost,
                 IdEmployee = c.IdEmployee,
                 Comment = c.Comment,
-                CommentDate = c.CommentDate,
+                LastModifiedAt = c.LastModifiedAt,
                 Employee = employee // Assuming the employee is the same for all comments
             }).ToList() ?? new List<ForumComment>();
 
@@ -231,7 +232,7 @@ namespace AuroraIgloosAPI.Controllers
                 IdEmployee = employee.Id,
                 Title = forumPostDto.Title,
                 PostContent = forumPostDto.PostContent,
-                PostDate = forumPostDto.PostDate ?? DateOnly.FromDateTime(DateTime.Now),
+                LastModifiedAt = DateOnly.FromDateTime(DateTime.Now),
                 CategoryId = category.Id,
                 Tags = forumPostDto.Tags,
                 Employee = employee,
@@ -256,7 +257,7 @@ namespace AuroraIgloosAPI.Controllers
                 CategoryId = forumPost.CategoryId,
                 Title = forumPost.Title ?? "",
                 PostContent = forumPost.PostContent ?? "",
-                PostDate = forumPost.PostDate,
+                LastModifiedAt = forumPost.LastModifiedAt,
                 Category = category.Name ?? "",
                 Tags = forumPost.Tags ?? "",
                 Employee = forumPost.Employee,
@@ -266,7 +267,7 @@ namespace AuroraIgloosAPI.Controllers
                     IdPost = c.IdPost,
                     IdEmployee = c.IdEmployee,
                     Comment = c.Comment ?? "",
-                    CommentDate = c.CommentDate,
+                    LastModifiedAt = c.LastModifiedAt,
                     EmployeeName = employee.Person?.Name ?? "",
                     EmployeeSurname = employee.Person?.Surname ?? "",
                     EmployeePhotoUrl = employee.PhotoUrl ?? "",

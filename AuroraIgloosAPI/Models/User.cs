@@ -17,5 +17,8 @@ public class User
     public Employee? Employee { get; set; }
     public Customer? Customer { get; set; }
     
+    public DateOnly LastModifiedAt { get; set; }
+
+    
     
 }

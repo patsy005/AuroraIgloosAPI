@@ -31,6 +31,7 @@ public class UserTypeController : ControllerBase
     public async Task<ActionResult<IEnumerable<UserTypeDTO>>> GetUserTypes()
     {
         var userType = await _context.UserType
+            .OrderByDescending(t => t.LastModifiedAt)
             .Select(type => new UserTypeDTO
             {
                 Id = type.Id,
@@ -75,6 +76,7 @@ public class UserTypeController : ControllerBase
             return NotFound();
         }
         userType.Type = userTypeDTO.Type;
+        userType.LastModifiedAt = DateOnly.FromDateTime(DateTime.Now);
 
         try
         {
@@ -105,6 +107,7 @@ public class UserTypeController : ControllerBase
         var userType = new UserType
         {
             Type = userTypeDTO.Type,
+            LastModifiedAt = DateOnly.FromDateTime(DateTime.Now)
         };
 
         try

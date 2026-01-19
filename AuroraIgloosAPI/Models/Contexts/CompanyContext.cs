@@ -76,20 +76,18 @@ public partial class CompanyContext : DbContext
             .HasMaxLength(4000);
         
         modelBuilder.Entity<Person>()
+            .HasIndex(p => p.Email)
+            .IsUnique();
+        
+        modelBuilder.Entity<Person>()
             .HasOne(e => e.Address)
             .WithOne()
             .HasForeignKey<Person>(u => u.IdAddress)
             .OnDelete(DeleteBehavior.Cascade);
 
-        // modelBuilder.Entity<User>(entity =>
-        // {
-        //     entity.HasIndex(u => u.Login).IsUnique();
-        //
-        //     entity.HasOne(u => u.UserType)
-        //         .WithMany()
-        //         .HasForeignKey(u => u.UserTypeId)
-        //         .OnDelete(DeleteBehavior.Cascade);
-        // });
+        modelBuilder.Entity<User>()
+            .HasIndex(u => u.Login)
+            .IsUnique();
 
         modelBuilder.Entity<User>()
             .HasOne(u => u.UserType)

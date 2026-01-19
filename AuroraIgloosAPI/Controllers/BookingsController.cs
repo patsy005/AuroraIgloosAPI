@@ -45,13 +45,16 @@ namespace AuroraIgloosAPI.Controllers
                     .ThenInclude(t => t.Season)
                 .Include(b => b.Trip)
                     .ThenInclude(t => t.LevelOfDifficulty)
+                
+                .OrderByDescending(b => b.LastModifiedAt)
+                
                 .Select(b => new BookingDTO
                 {
                     Id = b.Id,
                     IdIgloo = b.IdIgloo,
                     IdCustomer = b.IdCustomer,
                     // CreatedById = b.CreatedById,
-                    BookingDate = b.BookingDate,
+                    LastModifiedAt = b.LastModifiedAt,
                     CheckIn = b.CheckIn,
                     CheckOut = b.CheckOut,
                     Amount = b.Amount,
@@ -68,6 +71,7 @@ namespace AuroraIgloosAPI.Controllers
                     Guests = b.Guests,
                     EarlyCheckInRequest = b.EarlyCheckInRequest,
                     LateCheckOutRequest = b.LateCheckOutRequest,
+                    
 
                 })
                 .ToListAsync();
@@ -139,7 +143,7 @@ namespace AuroraIgloosAPI.Controllers
 
             booking.IdIgloo = bookingDto.IdIgloo;
             booking.IdCustomer = bookingDto.IdCustomer;
-            booking.BookingDate = bookingDto.BookingDate ?? booking.BookingDate;
+            booking.LastModifiedAt = now;
             booking.CheckIn = bookingDto.CheckIn;
             booking.CheckOut = bookingDto.CheckOut;
             booking.Amount = bookingDto.Amount;
@@ -148,7 +152,7 @@ namespace AuroraIgloosAPI.Controllers
             booking.PaymentMethodId = bookingDto.PaymentMethodId;
             booking.Amount = totalAmount ?? booking.Amount;
             booking.TripId = bookingDto.TripId;
-            booking.UpdateDate = now;
+            // booking.UpdateDate = now;
             booking.Guests = bookingDto.Guests;
             booking.TripDate = bookingDto.TripDate;
 
@@ -202,7 +206,7 @@ namespace AuroraIgloosAPI.Controllers
                 Amount = totalAmount ?? 0.0m,
                 EarlyCheckInRequest = bookingDto.EarlyCheckInRequest ?? null,
                 LateCheckOutRequest = bookingDto.LateCheckOutRequest ?? null,
-                BookingDate = DateOnly.FromDateTime(DateTime.Now),
+                LastModifiedAt = DateOnly.FromDateTime(DateTime.Now),
                 TripId = bookingDto.TripId ?? null,
                 Guests = bookingDto.Guests,
                 TripDate = bookingDto.TripDate,
@@ -231,7 +235,7 @@ namespace AuroraIgloosAPI.Controllers
                     Id = b.Id,
                     IdIgloo = b.IdIgloo,
                     IdCustomer = b.IdCustomer,
-                    BookingDate = b.BookingDate,
+                    LastModifiedAt = b.LastModifiedAt,
                     CheckIn = b.CheckIn,
                     CheckOut = b.CheckOut,
                     Amount = b.Amount,
@@ -301,7 +305,7 @@ namespace AuroraIgloosAPI.Controllers
                     Id = b.Id,
                     IdIgloo = b.IdIgloo,
                     IdCustomer = b.IdCustomer,
-                    BookingDate = b.BookingDate,
+                    LastModifiedAt = b.LastModifiedAt,
                     CheckIn = b.CheckIn,
                     CheckOut = b.CheckOut,
                     Amount = b.Amount,
@@ -449,7 +453,7 @@ namespace AuroraIgloosAPI.Controllers
 
             if (bookingDto.IdIgloo.HasValue)
             {
-                iglooPrice = bookingsLogic.CalculateBookingTotalAmount(bookingDto.IdIgloo, bookingDto.CheckIn, bookingDto.CheckOut, bookingDto.BookingDate);
+                iglooPrice = bookingsLogic.CalculateBookingTotalAmount(bookingDto.IdIgloo, bookingDto.CheckIn, bookingDto.CheckOut, bookingDto.LastModifiedAt);
             }
 
             if (bookingDto.TripId.HasValue)

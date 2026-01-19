@@ -101,7 +101,7 @@ namespace AuroraIgloosAPI.Reports.Generators
                 var row = i + 2;
 
                 ws.Cell(row, 1).Value = r.BookingId;
-                ws.Cell(row, 2).Value = r.BookingDate.ToString("yyyy-MM-dd");
+                ws.Cell(row, 2).Value = r.LastModifiedAt.ToString("yyyy-MM-dd");
                 ws.Cell(row, 3).Value = r.CustomerName;
                 ws.Cell(row, 4).Value = r.CustomerSurname;
                 ws.Cell(row, 5).Value = r.CustomerEmail;

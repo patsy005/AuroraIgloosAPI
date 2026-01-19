@@ -11,4 +11,6 @@ public class ContentBlock
     
     [Required]
     public string Value { get; set; }
+    
+    public DateOnly LastModifiedAt { get; set; }
 }

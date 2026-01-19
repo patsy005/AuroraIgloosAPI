@@ -33,5 +33,7 @@ namespace AuroraIgloosAPI.DTOs
         public int? UserTypeId  { get; set; }
         
         public int? UserRoleId { get; set; }
+        
+        public DateOnly LastModifiedAt { get; set; }
     }
 }

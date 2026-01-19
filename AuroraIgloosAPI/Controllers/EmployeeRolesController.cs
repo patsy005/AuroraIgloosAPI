@@ -30,11 +30,13 @@ namespace AuroraIgloosAPI.Controllers
         public async Task<ActionResult<IEnumerable<EmployeeRoleDTO>>> GetEmployeeRole()
         {
             var employeeRole = await _context.EmployeeRole
+                .OrderByDescending(r => r.LastModifiedAt)
                 .Select(e => new EmployeeRoleDTO
                 {
                     Id = e.Id,
                     RoleName = e.RoleName,
                     RoleDescription = e.RoleDescription,
+                    LastModifiedAt = e.LastModifiedAt,
                 })
                 .ToListAsync();
 
@@ -74,6 +76,7 @@ namespace AuroraIgloosAPI.Controllers
             
             employeeRole.RoleName = employeeRoleDTO.RoleName;
             employeeRole.RoleDescription = employeeRoleDTO.RoleDescription;
+            employeeRole.LastModifiedAt = DateOnly.FromDateTime(DateTime.Now);
 
             try
             {
@@ -100,7 +103,14 @@ namespace AuroraIgloosAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<EmployeeRole>> PostEmployeeRole(EmployeeRole employeeRole)
         {
-            _context.EmployeeRole.Add(employeeRole);
+            var role = new EmployeeRole
+            {
+                RoleName = employeeRole.RoleName,
+                RoleDescription = employeeRole.RoleDescription,
+                LastModifiedAt = DateOnly.FromDateTime(DateTime.Now),
+            };
+            
+            _context.EmployeeRole.Add(role);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetEmployeeRole", new { id = employeeRole.Id }, employeeRole);

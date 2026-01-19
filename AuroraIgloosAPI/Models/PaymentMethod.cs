@@ -13,6 +13,9 @@ public partial class PaymentMethod
 
  
     public string? Name { get; set; }
+    
+    public DateOnly LastModifiedAt { get; set; }
+
 
    
 }

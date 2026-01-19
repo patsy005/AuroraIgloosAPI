@@ -14,9 +14,13 @@ public partial class ForumComment
     public int? IdPost { get; set; }
     public int? IdEmployee { get; set; }
     public string? Comment { get; set; }
-    public DateOnly? CommentDate { get; set; }
+    // public DateOnly? CommentDate { get; set; }
 
     public Employee? Employee { get; set; }
 
     public ForumPost? ForumPost { get; set; }
+    
+    // public DateTime? UpdatedAt { get; set; }
+
+    public DateOnly LastModifiedAt { get; set; }
 }

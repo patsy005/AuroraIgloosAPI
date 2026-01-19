@@ -28,7 +28,7 @@ namespace AuroraIgloosAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ForumCategory>>> GetForumCategory()
         {
-            return await _context.ForumCategory.ToListAsync();
+            return await _context.ForumCategory.OrderByDescending(cat => cat.LastModifiedAt).ToListAsync();
         }
 
         // GET: api/ForumCategories/5
@@ -53,11 +53,18 @@ namespace AuroraIgloosAPI.Controllers
         public async Task<IActionResult> PutForumCategory(int id, ForumCategory forumCategory)
         {
             if (id != forumCategory.Id)
-            {
-                return BadRequest();
-            }
+                return BadRequest("Invalid Id");
 
-            _context.Entry(forumCategory).State = EntityState.Modified;
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var category = await _context.ForumCategory.FindAsync(id);
+            
+            if (category == null)
+                return NotFound($"Category with id {id} not found");
+
+            category.Name = forumCategory.Name;
+            category.LastModifiedAt = DateOnly.FromDateTime(DateTime.Now);
 
             try
             {
@@ -66,13 +73,8 @@ namespace AuroraIgloosAPI.Controllers
             catch (DbUpdateConcurrencyException)
             {
                 if (!ForumCategoryExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                    return NotFound($"TripLevel with id {id} not found");
+                throw;
             }
 
             return NoContent();
@@ -84,7 +86,13 @@ namespace AuroraIgloosAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<ForumCategory>> PostForumCategory(ForumCategory forumCategory)
         {
-            _context.ForumCategory.Add(forumCategory);
+            var category = new ForumCategory
+            {
+                Name = forumCategory.Name,
+                LastModifiedAt = DateOnly.FromDateTime(DateTime.Now)
+            };
+            
+            _context.ForumCategory.Add(category);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetForumCategory", new { id = forumCategory.Id }, forumCategory);

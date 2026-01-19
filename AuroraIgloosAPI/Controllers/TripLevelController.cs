@@ -26,7 +26,7 @@ namespace AuroraIgloosAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<TripLevelOfDifficulty>>> GetTripLevel()
         {
-            var tripSeasons = await _context.TripLevelOfDifficulty.ToListAsync();
+            var tripSeasons = await _context.TripLevelOfDifficulty.OrderByDescending(l => l.LastModifiedAt).ToListAsync();
             
             return Ok(tripSeasons);
         }
@@ -55,8 +55,7 @@ namespace AuroraIgloosAPI.Controllers
             {
                 Name = tripLevelDTO.Name,
                 Description = tripLevelDTO.Description ?? "",
-                CreatedAt = now,
-                UpdatedAt = now,
+                LastModifiedAt = now
             };
 
             try
@@ -89,7 +88,7 @@ namespace AuroraIgloosAPI.Controllers
 
             tripLevel.Name = tripLevelDTO.Name;
             tripLevel.Description = tripLevelDTO.Description ?? "";
-            tripLevel.UpdatedAt = DateOnly.FromDateTime(DateTime.Now);
+            tripLevel.LastModifiedAt = DateOnly.FromDateTime(DateTime.Now);
 
             try
             {

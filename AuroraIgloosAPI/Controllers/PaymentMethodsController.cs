@@ -26,7 +26,7 @@ namespace AuroraIgloosAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<PaymentMethod>>> GetPaymentMethod()
         {
-            return await _context.PaymentMethod.ToListAsync();
+            return await _context.PaymentMethod.OrderByDescending(pm => pm.LastModifiedAt).ToListAsync();
         }
 
         // GET: api/PaymentMethods/5
@@ -50,11 +50,17 @@ namespace AuroraIgloosAPI.Controllers
         public async Task<IActionResult> PutPaymentMethod(int id, PaymentMethod paymentMethod)
         {
             if (id != paymentMethod.Id)
-            {
-                return BadRequest();
-            }
+                return BadRequest("Invalid Id");
 
-            _context.Entry(paymentMethod).State = EntityState.Modified;
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var method = await _context.PaymentMethod.FindAsync(id);
+            if (method == null)
+                return NotFound($"Pyment method with id {id} not found");
+
+            paymentMethod.Name = paymentMethod.Name;
+            paymentMethod.LastModifiedAt = DateOnly.FromDateTime(DateTime.Now);
 
             try
             {
@@ -63,13 +69,8 @@ namespace AuroraIgloosAPI.Controllers
             catch (DbUpdateConcurrencyException)
             {
                 if (!PaymentMethodExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                    return NotFound($"Payment method with id {id} not found");
+                throw;
             }
 
             return NoContent();
@@ -81,7 +82,12 @@ namespace AuroraIgloosAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<PaymentMethod>> PostPaymentMethod(PaymentMethod paymentMethod)
         {
-            _context.PaymentMethod.Add(paymentMethod);
+            var method = new PaymentMethod
+            {
+                Name = paymentMethod.Name,
+                LastModifiedAt = DateOnly.FromDateTime(DateTime.Now),
+            };
+            _context.PaymentMethod.Add(method);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetPaymentMethod", new { id = paymentMethod.Id }, paymentMethod);
